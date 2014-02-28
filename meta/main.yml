@@ -1,0 +1,16 @@
+---
+dependencies:
+  - { role: repo-epel }
+
+galaxy_info:
+  author: geerlingguy
+  description: Apache 2.x for RHEL/CentOS 6.x.
+  company: "Midwestern Mac, LLC"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.4
+  platforms:
+  - name: EL
+    versions:
+      - 6
+  categories:
+    - web

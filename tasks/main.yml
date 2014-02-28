@@ -1,0 +1,21 @@
+---
+# Apache.
+- name: Install Apache.
+  yum: name={{ item }} state=installed enablerepo=epel
+  with_items:
+    - httpd
+    - httpd-devel
+    - mod_ssl
+    - openssh
+
+# Copy httpd config into place.
+- name: Copy httpd config files into place.
+  template: src={{ item.src }} dest={{ item.dest }} owner=root group=root mode=0644
+  notify: restart apache
+  with_items:
+  - {src: 'httpd.conf.j2', dest: '/etc/httpd/conf/httpd.conf'}
+  - {src: 'vhosts.conf.j2', dest: '/etc/httpd/conf/vhosts.conf'}
+
+# Set Apache to run at startup.
+- name: Ensure Apache is started.
+  service: name=httpd state=started enabled=yes
