@@ -1,6 +1,6 @@
-# Role Name
+# Ansible Role: Apache 2.x
 
-Apache 2.x for RHEL/CentOS 6.x by geerlingguy.
+An Ansible Role that installs Apache 2.x on RedHat Enterprise Linux or CentOS 6.x servers.
 
 ## Requirements
 
