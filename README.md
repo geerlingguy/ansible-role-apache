@@ -8,7 +8,7 @@ None.
 
 ## Role Variables
 
-Available variables are listed below, along with the default value (see `vars/main.yml`):
+Available variables are listed below, along with default values (see `vars/main.yml`):
 
     apache_listen_port: 80
 
