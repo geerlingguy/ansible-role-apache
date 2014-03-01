@@ -40,6 +40,11 @@ Note that this role doesn't configure SSL support out of the box; you would need
     apache_vhosts:
       - {servername: "example.com", documentroot: "/var/www/vhosts/example_com"}
 
+## TODO
+
+  - Use `lineinfile` rather than monolithic httpd.conf template.
+  - Conditionally configure Apache for Ubuntu as well (one role to rule them all).
+
 ## License
 
 MIT / BSD
