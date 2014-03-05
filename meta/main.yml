@@ -1,6 +1,6 @@
 ---
 dependencies:
-  - { role: repo-epel }
+  - { role: geerlingguy.repo-epel }
 
 galaxy_info:
   author: geerlingguy
