@@ -1,7 +1,7 @@
 ---
 # Apache.
 - name: Install Apache.
-  yum: name={{ item }} state=installed enablerepo=epel
+  yum: name={{ item }} state=installed enablerepo={{ apache_enablerepo }}
   with_items:
     - httpd
     - httpd-devel

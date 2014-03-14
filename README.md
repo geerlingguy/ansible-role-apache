@@ -1,6 +1,6 @@
 # Ansible Role: Apache 2.x
 
-An Ansible Role that installs Apache 2.x on RedHat Enterprise Linux or CentOS 6.x servers.
+An Ansible Role that installs Apache 2.x on RHEL/CentOS 6.x.
 
 ## Requirements
 
@@ -9,6 +9,10 @@ None.
 ## Role Variables
 
 Available variables are listed below, along with default values (see `vars/main.yml`):
+
+    apache_enablerepo: ""
+
+The repository to use when installing Apache. If you'd like later versions of Apache than are available in the OS's core repositories, use a repository like EPEL (which can be installed with the `geerlingguy.repo-epel` role).
 
     apache_listen_port: 80
 
@@ -24,7 +28,7 @@ Note that this role doesn't configure SSL support out of the box; you would need
 
 ## Dependencies
 
-  - geerlingguy.repo-epel (Installs the EPEL repository for CentOS 6.x).
+None.
 
 ## Example Playbook
 
