@@ -20,7 +20,3 @@
     name={{ apache_daemon }}
     state=started
     enabled=yes
-
-- name: Test task that always reports a change.
-  command: date
-  changed_when: true
