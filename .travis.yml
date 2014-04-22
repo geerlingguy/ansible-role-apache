@@ -9,7 +9,7 @@ before_install:
 install:
   - pip install ansible==1.5.0
 script:
-  - ansible-playbook -i tests/inventory tests/$SITE --syntax-check
-  - ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
-  - bash tests/idempotence.sh
-  - curl http://localhost/
+  - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
+  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
+  - "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo | grep -q 'changed=0.*failed=0' && exit 0 || exit 1"
+  - "curl http://localhost/"
