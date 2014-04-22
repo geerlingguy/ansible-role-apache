@@ -10,6 +10,8 @@
 cd ../
 
 # Run playbook, and exit with 0 status if 'changed=0' found (good).
+pwd
+echo "ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo"
 ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo | grep -q 'changed=0' && exit 0
 
 # Exit with a non-zero status if 'changed=0' was not found.
