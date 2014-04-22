@@ -20,7 +20,7 @@ script:
     ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)"
+    || (echo 'Idempotence test: fail' && exit 1)
 
   # Request a page via Apache, to make sure Apache is running and responds.
   - "curl http://localhost/"
