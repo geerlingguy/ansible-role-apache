@@ -11,5 +11,5 @@ install:
 script:
   - ansible-playbook -i tests/inventory tests/$SITE --syntax-check
   - ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
-  - ./tests/idempotence.sh
+  - bash tests/idempotence.sh
   - curl http://localhost/
