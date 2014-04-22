@@ -1,3 +1,5 @@
 ---
 - name: restart apache
-  command: service httpd restart
+  service: >
+    name={{ apache_daemon }}
+    state=restarted

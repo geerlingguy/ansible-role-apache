@@ -1,21 +1,22 @@
 ---
-# Apache.
-- name: Install Apache.
-  yum: name={{ item }} state=installed enablerepo={{ apache_enablerepo }}
-  with_items:
-    - httpd
-    - httpd-devel
-    - mod_ssl
-    - openssh
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
 
-# Copy httpd config into place.
-- name: Copy httpd config files into place.
-  template: src={{ item.src }} dest={{ item.dest }} owner=root group=root mode=0644
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Add apache vhosts configuration.
+  template: >
+    src=vhosts.conf.j2
+    dest={{ apache_conf_path }}/vhosts.conf
+    owner=root group=root mode=644
   notify: restart apache
-  with_items:
-  - {src: 'httpd.conf.j2', dest: '/etc/httpd/conf/httpd.conf'}
-  - {src: 'vhosts.conf.j2', dest: '/etc/httpd/conf/vhosts.conf'}
 
-# Set Apache to run at startup.
-- name: Ensure Apache is started.
-  service: name=httpd state=started enabled=yes
+- name: Ensure Apache is started and enabled on boot.
+  service: >
+    name={{ apache_daemon }}
+    state=started
+    enabled=yes

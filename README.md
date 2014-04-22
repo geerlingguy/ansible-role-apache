@@ -1,6 +1,6 @@
 # Ansible Role: Apache 2.x
 
-An Ansible Role that installs Apache 2.x on RHEL/CentOS 6.x.
+An Ansible Role that installs Apache 2.x on RHEL/CentOS and Debian/Ubuntu.
 
 ## Requirements
 
@@ -12,7 +12,7 @@ Available variables are listed below, along with default values (see `vars/main.
 
     apache_enablerepo: ""
 
-The repository to use when installing Apache. If you'd like later versions of Apache than are available in the OS's core repositories, use a repository like EPEL (which can be installed with the `geerlingguy.repo-epel` role).
+The repository to use when installing Apache (only used on RHEL/CentOS systems). If you'd like later versions of Apache than are available in the OS's core repositories, use a repository like EPEL (which can be installed with the `geerlingguy.repo-epel` role).
 
     apache_listen_port: 80
 
@@ -44,10 +44,10 @@ None.
     apache_vhosts:
       - {servername: "example.com", documentroot: "/var/www/vhosts/example_com"}
 
-## TODO
+On Debian/Ubuntu hosts, if you get the error `Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?`, You should add a task to make sure your apt_cache is up to date, like:
 
-  - Use `lineinfile` rather than monolithic httpd.conf template.
-  - Conditionally configure Apache for Ubuntu as well (one role to rule them all).
+    - name: Update apt cache if needed.
+      apt: update_cache=yes cache_valid_time=3600
 
 ## License
 
