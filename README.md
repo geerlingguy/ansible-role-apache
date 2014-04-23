@@ -20,6 +20,10 @@ The repository to use when installing Apache (only used on RHEL/CentOS systems).
 
 The port on which apache should be listening. Useful if you have another service (like a reverse proxy) listening on port 80.
 
+    apache_create_vhosts: true
+
+If set to true, a vhosts file, managed by this role's variables (see below), will be created and placed in the Apache configuration folder. If set to false, you can place your own vhosts file into Apache's configuration folder and skip the convenient (but more basic) one added by this role.
+
     apache_vhosts:
       # Additional optional properties: 'serveradmin, extra_parameters'.
       - {servername: "local.dev", documentroot: "/var/www/html"}

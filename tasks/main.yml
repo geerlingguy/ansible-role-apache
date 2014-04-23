@@ -14,6 +14,7 @@
     dest={{ apache_conf_path }}/vhosts.conf
     owner=root group=root mode=644
   notify: restart apache
+  when: apache_create_vhosts
 
 - name: Ensure Apache is started and enabled on boot.
   service: >
