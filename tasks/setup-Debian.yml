@@ -24,8 +24,8 @@
 
 - name: Enable Apache mods.
   file: >
-    src=/etc/apache2/mods-available/{{ item }}
-    dest=/etc/apache2/mods-enabled/{{ item }}
+    src={{ apache_server_root }}/mods-available/{{ item }}
+    dest={{ apache_server_root }}/mods-enabled/{{ item }}
     state=link
   with_items: apache_mods_enabled
   notify: restart apache

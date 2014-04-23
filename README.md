@@ -32,6 +32,11 @@ Add a set of properties per virtualhost, including `servername` (required), `doc
 
 Note that this role doesn't configure SSL support out of the box; you would need to add in additional tasks to listen on port 443 and add your own VirtualHost directives for SSL. This may be improved in the future :)
 
+    apache_mods_enabled:
+      - rewrite.load
+
+(Debian/Ubuntu ONLY) Which Apache mods to enable (these will be symlinked into the apporopriate location). See the `mods-available` directory inside the apache configuration directory (`/etc/apache2/mods-available` by default) for all the available mods.
+
 ## Dependencies
 
 None.
