@@ -8,7 +8,5 @@ apache_packages:
     - apache2-utils
     - apache2.2-bin
     - apache2.2-common
-apache_vhosts:
-  - {servername: "local.dev", documentroot: "/var/www"}
 apache_mods_enabled:
   - rewrite.load
