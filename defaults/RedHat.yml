@@ -1,0 +1,11 @@
+---
+apache_daemon: httpd
+apache_server_root: /etc/httpd
+apache_conf_path: /etc/httpd/conf.d
+apache_packages:
+  - httpd
+  - httpd-devel
+  - mod_ssl
+  - openssh
+apache_vhosts:
+  - {servername: "local.dev", documentroot: "/var/www/html"}
