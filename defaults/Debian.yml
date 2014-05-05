@@ -1,0 +1,14 @@
+---
+apache_daemon: apache2
+apache_server_root: /etc/apache2
+apache_conf_path: /etc/apache2/sites-enabled
+apache_packages:
+    - apache2
+    - apache2-mpm-prefork
+    - apache2-utils
+    - apache2.2-bin
+    - apache2.2-common
+apache_vhosts:
+  - {servername: "local.dev", documentroot: "/var/www"}
+apache_mods_enabled:
+  - rewrite.load
