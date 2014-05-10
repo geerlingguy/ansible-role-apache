@@ -1,11 +1,11 @@
 ---
-- name: Ensure Apache is installed.
+- name: Ensure Apache is installed (Debian).
   apt: >
     name={{ item }}
     state=installed
   with_items: apache_packages
 
-- name: Configure Apache.
+- name: Configure Apache (Debian).
   lineinfile: >
     dest="{{ apache_server_root }}/ports.conf"
     regexp="{{ item.regexp }}"
@@ -22,7 +22,7 @@
   }
   notify: restart apache
 
-- name: Enable Apache mods.
+- name: Enable Apache mods (Debian).
   file: >
     src={{ apache_server_root }}/mods-available/{{ item }}
     dest={{ apache_server_root }}/mods-enabled/{{ item }}
