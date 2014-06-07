@@ -8,3 +8,21 @@ apache_create_vhosts: true
 apache_vhosts:
   # Additional properties: 'serveradmin, extra_parameters'.
   - {servername: "local.dev", documentroot: "/var/www/html"}
+
+apache_version: 2.2
+
+apt_apache_packages:
+    - apache2
+    - apache2-mpm-prefork
+    - apache2-utils
+    - apache2.2-bin
+    - apache2.2-common
+
+apache_mods_enabled:
+  - rewrite.load
+
+yml_apache_packages:
+  - httpd
+  - httpd-devel
+  - mod_ssl
+  - openssh
