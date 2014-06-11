@@ -26,3 +26,5 @@ yml_apache_packages:
   - httpd-devel
   - mod_ssl
   - openssh
+
+remove_defaults_site: false
