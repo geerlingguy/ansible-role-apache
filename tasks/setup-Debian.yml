@@ -3,7 +3,7 @@
   apt: >
     name={{ item }}
     state=installed
-  with_items: apache_packages
+  with_items: apt_apache_packages
 
 - name: Configure Apache (Debian).
   lineinfile: >
@@ -29,3 +29,17 @@
     state=link
   with_items: apache_mods_enabled
   notify: restart apache
+
+- name: Disable default apache site
+  file:
+    path: "{{ apache_conf_path }}/000-default.conf"
+    state: absent
+  notify: restart apache
+  when: remove_defaults_site
+
+- name: Disable default-ssl apache site
+  file:
+    path: "{{ apache_conf_path }}/000-default-ssl.conf"
+    state: absent
+  notify: restart apache
+  when: remove_defaults_site
