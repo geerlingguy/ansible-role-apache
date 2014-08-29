@@ -11,9 +11,4 @@ install:
 
 script:
   - "ansible-playbook -i inventory/travis.ini test.yml --connection=local --sudo"
-  - >
-    ansible-playbook -i tests/inventory tests/$SITE --connection=local --sudo
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
-  - "curl http://localhost/"
+  - test "200" == "`curl -s -o /dev/null -w "%{http_code}" http://localhost`"
