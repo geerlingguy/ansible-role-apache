@@ -1,0 +1,13 @@
+---
+- hosts: all
+  sudo: yes
+  vars_files:
+    - "vars/main.yml"
+    - "defaults/main.yml"
+    - "defaults/{{ ansible_os_family }}.yml"
+  tasks:
+    - include: "tasks/main.yml"
+  handlers:
+    - include: "handlers/main.yml"
+
+# ex: ft=ansible et ts=2 sw=2:
