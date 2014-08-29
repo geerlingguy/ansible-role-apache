@@ -10,10 +10,12 @@
 
 - name: Disable default apache host.
   file: >
-    path="{{ apache_conf_path }}/000-default.conf"
+    path="{{ apache_default_vhost }}"
     state=absent
   notify: restart apache
-  when: apache_disable_default_site
+  when:
+    - apache_disable_default_site
+    - apache_default_vhost is defined
 
 - name: Add apache vhosts configuration.
   template: >
