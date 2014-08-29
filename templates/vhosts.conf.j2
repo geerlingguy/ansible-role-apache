@@ -11,7 +11,7 @@ DirectoryIndex index.php index.html
 {% endif %}
   <Directory "{{ vhost.documentroot }}">
     AllowOverride All
-    Options -Indexes FollowSymLinks
+    Options -Indexes +FollowSymLinks
     Order allow,deny
     Allow from all
   </Directory>

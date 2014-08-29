@@ -7,6 +7,7 @@ apache_packages:
     - apache2-mpm-prefork
     - apache2-utils
     - apache2.2-bin
-    - apache2.2-common
 apache_mods_enabled:
   - rewrite.load
+
+# ex: ft=ansible et ts=2 sw=2:
