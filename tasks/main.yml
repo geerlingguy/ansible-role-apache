@@ -8,6 +8,13 @@
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
+- name: Disable default apache host.
+  file: >
+    path="{{ apache_conf_path }}/000-default.conf"
+    state=absent
+  notify: restart apache
+  when: apache_disable_default_site
+
 - name: Add apache vhosts configuration.
   template: >
     src=vhosts.conf.j2
@@ -21,3 +28,5 @@
     name={{ apache_daemon }}
     state=started
     enabled=yes
+
+# ex: ft=ansible et ts=2 sw=2:
