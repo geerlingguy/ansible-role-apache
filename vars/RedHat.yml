@@ -7,3 +7,6 @@ apache_packages:
   - httpd-devel
   - mod_ssl
   - openssh
+  - libselinux-python
+
+# ex: ft=ansible et ts=2 sw=2:
