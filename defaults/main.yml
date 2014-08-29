@@ -1,14 +1,11 @@
 ---
 apache_enablerepo: ""
-
 apache_listen_port: 80
-
 apache_disable_default_site: true
-
 apache_create_vhosts: true
 
-apache_vhosts:
-  # Additional properties: 'serveradmin, extra_parameters'.
-  - {servername: "localhost", documentroot: "/var/www/html"}
+# Additional properties: 'serveradmin, extra_parameters'.
+#apache_vhosts:
+#  - {servername: "localhost", documentroot: "/var/www/html"}
 
 # ex: ft=ansible et ts=2 sw=2:
