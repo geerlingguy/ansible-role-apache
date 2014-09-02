@@ -14,9 +14,16 @@ DirectoryIndex index.php index.html
     Options -Indexes +FollowSymLinks
     Order allow,deny
     Allow from all
+  {% if vhost.directory_extra_parameters is defined %}
+  {% for param_name, param_value in vhost.directory_extra_parameters|reverse %}
+    {{ param_name }} {{ param_value }}
+  {% endfor %}
+  {% endif %}
   </Directory>
 {% if vhost.extra_parameters is defined %}
-  {{ vhost.extra_parameters }}
+{% for param_name, param_value in vhost.extra_parameters|reverse %}
+  {{ param_name }} {{ param_value }}
+{% endfor %}
 {% endif %}
 </VirtualHost>
 
