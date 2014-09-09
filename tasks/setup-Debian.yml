@@ -22,10 +22,7 @@
   }
   notify: restart apache
 
-- name: Enable Apache mods (Debian).
-  file: >
-    src={{ apache_server_root }}/mods-available/{{ item }}
-    dest={{ apache_server_root }}/mods-enabled/{{ item }}
-    state=link
+- name: Enable apache2 module
+  apache2_module: state=present name={{ item }}
   with_items: apache_mods_enabled
   notify: restart apache
