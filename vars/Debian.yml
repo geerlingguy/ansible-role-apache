@@ -8,5 +8,3 @@ apache_packages:
     - apache2-utils
     - apache2.2-bin
     - apache2.2-common
-apache_mods_enabled:
-  - rewrite.load
