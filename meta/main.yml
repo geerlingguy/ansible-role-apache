@@ -16,6 +16,9 @@ galaxy_info:
     - all
   - name: Ubuntu
     versions:
-    - all
+    - precise
+    - raring
+    - saucy
+    - trusty
   categories:
     - web

@@ -12,13 +12,5 @@
     regexp="{{ item.regexp }}"
     line="{{ item.line }}"
     state=present
-  with_items:
-  - {
-    regexp: "^Listen ",
-    line: "Listen {{ apache_listen_port }}"
-  }
-  - {
-    regexp: "^NameVirtualHost ",
-    line: "NameVirtualHost *:{{ apache_listen_port }}"
-  }
+  with_items: apache_ports_configuration_items
   notify: restart apache
