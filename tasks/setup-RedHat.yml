@@ -1,12 +1,12 @@
 ---
-- name: Ensure Apache is installed (RedHat).
+- name: Ensure Apache is installed.
   yum: >
     name={{ item }}
     state=installed
     enablerepo={{ apache_enablerepo }}
   with_items: apache_packages
 
-- name: Configure Apache (RedHat).
+- name: Configure Apache.
   lineinfile: >
     dest={{ apache_server_root }}/conf/{{ apache_daemon }}.conf
     regexp="{{ item.regexp }}"
