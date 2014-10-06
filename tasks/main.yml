@@ -19,15 +19,17 @@
   when: ansible_os_family == 'Debian'
 
 - name: Add apache vhosts configuration.
-  template: >
-    src=vhosts-{{ apache_vhosts_version }}.conf.j2
-    dest={{ apache_conf_path }}/vhosts.conf
-    owner=root group=root mode=644
+  template:
+    src: "vhosts-{{ apache_vhosts_version }}.conf.j2"
+    dest: "{{ apache_conf_path }}/vhosts.conf"
+    owner: root
+    group: root
+    mode: 0644
   notify: restart apache
   when: apache_create_vhosts
 
 - name: Ensure Apache is started and enabled on boot.
-  service: >
-    name={{ apache_daemon }}
-    state=started
-    enabled=yes
+  service:
+    name: "{{ apache_daemon }}"
+    state: started
+    enabled: yes

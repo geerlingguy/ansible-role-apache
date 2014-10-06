@@ -1,16 +1,16 @@
 ---
 - name: Ensure Apache is installed.
-  yum: >
-    name={{ item }}
-    state=installed
-    enablerepo={{ apache_enablerepo }}
+  yum:
+    name: "{{ item }}"
+    state: installed
+    enablerepo: "{{ apache_enablerepo }}"
   with_items: apache_packages
 
 - name: Configure Apache.
-  lineinfile: >
-    dest={{ apache_server_root }}/conf/{{ apache_daemon }}.conf
-    regexp="{{ item.regexp }}"
-    line="{{ item.line }}"
-    state=present
+  lineinfile:
+    dest: "{{ apache_server_root }}/conf/{{ apache_daemon }}.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
   with_items: apache_ports_configuration_items
   notify: restart apache
