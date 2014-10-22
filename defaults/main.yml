@@ -11,3 +11,5 @@ apache_create_vhosts: true
 apache_vhosts:
   # Additional properties: 'serveradmin, extra_parameters'.
   - {servername: "local.dev", documentroot: "/var/www/html"}
+
+apache_vhosts_version: "2.2"
