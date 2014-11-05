@@ -17,3 +17,23 @@
     mode: 0644
   notify: restart apache
   when: apache_create_vhosts
+
+- name: Remove apache default ssl vhosts configuration.
+  template:
+    src: "ssl.conf.j2"
+    dest: "{{ apache_conf_path }}/ssl.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+  when: apache_create_vhosts
+  
+- name: Remove apache default ssl vhosts configuration.
+  template:
+    src: "vhosts-ssl.conf.j2"
+    dest: "{{ apache_conf_path }}/vhosts-ssl.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+  when: apache_create_vhosts

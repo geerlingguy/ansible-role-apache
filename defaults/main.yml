@@ -2,6 +2,7 @@
 apache_enablerepo: ""
 
 apache_listen_port: 80
+apache_listen_ssl_port: 443
 
 apache_mods_enabled:
   - rewrite.load
