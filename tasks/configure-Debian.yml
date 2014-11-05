@@ -31,3 +31,4 @@
     src: "{{ apache_conf_path }}/sites-available/vhosts.conf"
     dest: "{{ apache_conf_path }}/sites-enabled/vhosts.conf"
     state: link
+  when: apache_create_vhosts
