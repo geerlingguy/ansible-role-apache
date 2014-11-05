@@ -15,7 +15,7 @@ LoadModule ssl_module modules/mod_ssl.so
 # When we also provide SSL we have to listen to the
 # the HTTPS port in addition.
 #
-Listen 443
+Listen {{ apache_listen_ssl_port }}
 
 ##
 ##  SSL Global Context
@@ -66,37 +66,3 @@ SSLRandomSeed connect builtin
 #
 SSLCryptoDevice builtin
 #SSLCryptoDevice ubsec
-
-##
-## SSL Virtual Host Context
-##
-{% for vhost in apache_vhosts %}
-<VirtualHost *:{{ apache_listen_ssl_port }}>
-
-    ServerName {{ vhost.servername }}:{{ apache_listen_ssl_port }}
-    DocumentRoot {{ vhost.documentroot }}
-
-{% if vhost.serveradmin is defined %}
-    ServerAdmin {{ vhost.serveradmin }}
-{% endif %}
-
-    # Use separate log files for the SSL virtual host; note that LogLevel
-    # is not inherited from httpd.conf.
-    ErrorLog logs/ssl_error_log
-    TransferLog logs/ssl_access_log
-    LogLevel warn
-
-    SSLEngine on
-    SSLProtocol all -SSLv2
-    SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW
-    SSLCertificateFile /etc/pki/tls/certs/localhost.crt
-    SSLCertificateKeyFile /etc/pki/tls/private/localhost.key
-
-    SetEnvIf User-Agent ".*MSIE.*" \
-         nokeepalive ssl-unclean-shutdown \
-         downgrade-1.0 force-response-1.0
-
-         CustomLog logs/ssl_request_log \
-          "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
-</VirtualHost>
-{% endfor %}
