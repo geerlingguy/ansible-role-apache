@@ -20,3 +20,13 @@ apache_ports_configuration_items:
     regexp: "^NameVirtualHost ",
     line: "NameVirtualHost *:{{ apache_listen_port }}"
   }
+
+apache_security_configuration_items:
+  - {
+    regexp: "^ServerSignature ",
+    line: "ServerSignature {{ apache_security_server_signature }}"
+  }
+  - {
+    regexp: "^ServerTokens ",
+    line: "ServerTokens {{ apache_security_server_tokens }}"
+  }

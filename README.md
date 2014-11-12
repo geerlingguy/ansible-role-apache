@@ -21,6 +21,14 @@ The repository to use when installing Apache (only used on RHEL/CentOS systems).
 
 The ports on which apache should be listening. Useful if you have another service (like a reverse proxy) listening on port 80 or 443 and need to change the defaults.
 
+    #Default: On
+    apache_security_server_signature: "Off"
+    
+    #Default: OS
+    apache_security_server_tokens: "Prod"
+
+The apache security configuration variables. Both ServerSignature and ServerTokens can be changed to the allowed values within the vars/main.yml file.
+
     apache_create_vhosts: true
 
 If set to true, a vhosts file, managed by this role's variables (see below), will be created and placed in the Apache configuration folder. If set to false, you can place your own vhosts file into Apache's configuration folder and skip the convenient (but more basic) one added by this role.

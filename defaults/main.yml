@@ -29,3 +29,6 @@ apache_vhosts_version: "2.2"
 apache_mods_enabled:
   - rewrite.load
   - ssl.load
+
+apache_security_server_signature: "On"
+apache_security_server_tokens: "OS"
