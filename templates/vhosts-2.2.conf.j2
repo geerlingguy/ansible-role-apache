@@ -5,6 +5,9 @@ DirectoryIndex index.php index.html
 {% for vhost in apache_vhosts %}
 <VirtualHost *:{{ apache_listen_port }}>
   ServerName {{ vhost.servername }}
+{% if vhost.serveralias is defined %}
+  ServerAlias {{ vhost.serveralias }}
+{% endif %}
   DocumentRoot {{ vhost.documentroot }}
 
 {% if vhost.serveradmin is defined %}
@@ -27,6 +30,9 @@ DirectoryIndex index.php index.html
 {% for vhost in apache_vhosts_ssl %}
 <VirtualHost *:{{ apache_listen_port_ssl }}>
   ServerName {{ vhost.servername }}
+{% if vhost.serveralias is defined %}
+  ServerAlias {{ vhost.serveralias }}
+{% endif %}
   DocumentRoot {{ vhost.documentroot }}
 
   SSLEngine on
