@@ -19,6 +19,7 @@
 - name: Get installed version of Apache.
   command: "{{ apache_daemon }} -v"
   changed_when: false
+  always_run: yes
   register: _apache_version
 
 - name: Create apache_version variable.
