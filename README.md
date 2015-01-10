@@ -58,6 +58,11 @@ The SSL protocols and cipher suites that are used/allowed when clients make secu
 
 (Debian/Ubuntu ONLY) Which Apache mods to enable (these will be symlinked into the apporopriate location). See the `mods-available` directory inside the apache configuration directory (`/etc/apache2/mods-available` by default) for all the available mods.
 
+    apache_packages:
+      - [platform-specific]
+
+The list of packages to be installed. This defaults to a set of platform-specific packages for RedHat or Debian-based systems (see `vars/RedHat.yml` and `vars/Debian.yml` for the default values).
+
 ## Dependencies
 
 None.
