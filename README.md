@@ -22,14 +22,15 @@ The repository to use when installing Apache (only used on RHEL/CentOS systems).
 The ports on which apache should be listening. Useful if you have another service (like a reverse proxy) listening on port 80 or 443 and need to change the defaults.
 
     apache_create_vhosts: true
+    apache_vhosts_filename: "vhosts.conf"
 
 If set to true, a vhosts file, managed by this role's variables (see below), will be created and placed in the Apache configuration folder. If set to false, you can place your own vhosts file into Apache's configuration folder and skip the convenient (but more basic) one added by this role.
 
     apache_vhosts:
-      # Additional optional properties: 'serveradmin, extra_parameters'.
+      # Additional optional properties: 'serveradmin, serveralias, extra_parameters'.
       - {servername: "local.dev", documentroot: "/var/www/html"}
 
-Add a set of properties per virtualhost, including `servername` (required), `documentroot` (required), `serveradmin` (optional: the admin email address for this server), and `extra_parameters` (you can add whatever you'd like in here).
+Add a set of properties per virtualhost, including `servername` (required), `documentroot` (required), `serveradmin` (optional), `serveralias` (optional) and `extra_parameters` (optional: you can add whatever additional configuration lines you'd like in here).
 
     apache_vhosts_ssl: []
 
@@ -50,10 +51,6 @@ Other SSL directives can be managed with other SSL-related role variables.
     apache_ssl_cipher_suite: "AES256+EECDH:AES256+EDH"
 
 The SSL protocols and cipher suites that are used/allowed when clients make secure connections to your server. These are secure/sane defaults, but for maximum security, performand, and/or compatibility, you may need to adjust these settings.
-
-	apache_vhosts_filename: 'vhosts.conf'
-	
-The filename used for the vhost configuration.
 
     apache_mods_enabled:
       - rewrite.load
