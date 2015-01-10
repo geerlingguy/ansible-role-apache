@@ -51,6 +51,10 @@ Other SSL directives can be managed with other SSL-related role variables.
 
 The SSL protocols and cipher suites that are used/allowed when clients make secure connections to your server. These are secure/sane defaults, but for maximum security, performand, and/or compatibility, you may need to adjust these settings.
 
+	apache_vhosts_filename: 'vhosts.conf'
+	
+The filename used for the vhost configuration.
+
     apache_mods_enabled:
       - rewrite.load
       - ssl.load

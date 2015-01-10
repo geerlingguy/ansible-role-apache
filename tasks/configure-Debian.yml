@@ -19,7 +19,7 @@
 - name: Add apache vhosts configuration.
   template:
     src: "vhosts-{{ apache_vhosts_version }}.conf.j2"
-    dest: "{{ apache_conf_path }}/sites-available/vhosts.conf"
+    dest: "{{ apache_conf_path }}/sites-available/{{ apache_vhosts_filename }}"
     owner: root
     group: root
     mode: 0644
@@ -28,7 +28,7 @@
 
 - name: Add vhost symlink in sites-enabled.
   file:
-    src: "{{ apache_conf_path }}/sites-available/vhosts.conf"
-    dest: "{{ apache_conf_path }}/sites-enabled/vhosts.conf"
+    src: "{{ apache_conf_path }}/sites-available/{{ apache_vhosts_filename }}"
+    dest: "{{ apache_conf_path }}/sites-enabled/{{ apache_vhosts_filename }}"
     state: link
   when: apache_create_vhosts
