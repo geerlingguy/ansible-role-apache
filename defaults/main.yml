@@ -28,3 +28,6 @@ apache_ssl_cipher_suite: "AES256+EECDH:AES256+EDH"
 apache_mods_enabled:
   - rewrite.load
   - ssl.load
+
+apache_security_server_signature: "On"
+apache_security_server_tokens: "OS"
