@@ -4,6 +4,7 @@ apache_enablerepo: ""
 apache_listen_port: 80
 apache_listen_port_ssl: 443
 
+apache_remove_default_vhost: false
 apache_create_vhosts: true
 apache_vhosts_filename: "vhosts.conf"
 

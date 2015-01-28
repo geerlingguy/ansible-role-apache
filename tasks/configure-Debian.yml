@@ -32,3 +32,9 @@
     dest: "{{ apache_conf_path }}/sites-enabled/{{ apache_vhosts_filename }}"
     state: link
   when: apache_create_vhosts
+  
+- name: Remove default vhost symlink in sites-enabled.
+  file:
+    path: "{{ apache_conf_path }}/sites-enabled/{{ apache_default_vhost_filename }}"
+    state: absent
+  when: apache_remove_default_vhost
