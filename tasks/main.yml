@@ -17,7 +17,7 @@
 
 # Figure out what version of Apache is installed.
 - name: Get installed version of Apache.
-  command: "{{ apache_daemon }} -v"
+  shell: "{{apache_daemon_path}}{{ apache_daemon }} -v"
   changed_when: false
   always_run: yes
   register: _apache_version
