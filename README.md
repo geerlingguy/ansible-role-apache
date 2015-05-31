@@ -55,8 +55,9 @@ The SSL protocols and cipher suites that are used/allowed when clients make secu
     apache_mods_enabled:
       - rewrite.load
       - ssl.load
+    apache_mods_disabled: []
 
-(Debian/Ubuntu ONLY) Which Apache mods to enable (these will be symlinked into the apporopriate location). See the `mods-available` directory inside the apache configuration directory (`/etc/apache2/mods-available` by default) for all the available mods.
+(Debian/Ubuntu ONLY) Which Apache mods to enable or disable (these will be symlinked into the appropriate location). See the `mods-available` directory inside the apache configuration directory (`/etc/apache2/mods-available` by default) for all the available mods.
 
     apache_packages:
       - [platform-specific]
