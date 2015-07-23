@@ -38,10 +38,12 @@
     src: "{{ apache_conf_path }}/sites-available/{{ apache_vhosts_filename }}"
     dest: "{{ apache_conf_path }}/sites-enabled/{{ apache_vhosts_filename }}"
     state: link
+  notify: restart apache
   when: apache_create_vhosts
-  
-- name: Remove default vhost symlink in sites-enabled.
+
+- name: Remove default vhost in sites-enabled.
   file:
     path: "{{ apache_conf_path }}/sites-enabled/{{ apache_default_vhost_filename }}"
     state: absent
+  notify: restart apache
   when: apache_remove_default_vhost

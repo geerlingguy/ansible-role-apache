@@ -26,6 +26,10 @@ The ports on which apache should be listening. Useful if you have another servic
 
 If set to true, a vhosts file, managed by this role's variables (see below), will be created and placed in the Apache configuration folder. If set to false, you can place your own vhosts file into Apache's configuration folder and skip the convenient (but more basic) one added by this role.
 
+    apache_remove_default_vhost: false
+
+On Debian/Ubuntu, a default virtualhost is included in Apache's configuration. Set this to `true` to remove that default virtualhost configuration file.
+
     apache_vhosts:
       # Additional optional properties: 'serveradmin, serveralias, extra_parameters'.
       - {servername: "local.dev", documentroot: "/var/www/html"}
