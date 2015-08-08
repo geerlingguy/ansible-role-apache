@@ -14,10 +14,10 @@ __apache_packages:
 
 apache_ports_configuration_items:
   - {
-    regexp: "^Listen ",
-    line: "Listen {{ apache_listen_port }}"
+    regexp: "^Listen .*$",
+    replace: "Listen {{ apache_listen_port }}"
   }
   - {
-    regexp: "^NameVirtualHost ",
-    line: "NameVirtualHost *:{{ apache_listen_port }}"
+    regexp: "^NameVirtualHost .*$",
+    replace: "NameVirtualHost *:{{ apache_listen_port }}"
   }

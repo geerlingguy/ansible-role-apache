@@ -11,6 +11,14 @@ __apache_packages:
 
 apache_ports_configuration_items:
   - {
-    regexp: "^Listen ",
-    line: "Listen {{ apache_listen_port }}"
+    regexp: "^Listen .*$",
+    replace: "Listen {{ apache_listen_port }}"
+  }
+  - {
+    regexp: "^<IfModule ssl_module>\n\tListen .*$",
+    replace: "<IfModule ssl_module>\n\tListen {{ apache_listen_port_ssl }}"
+  }
+  - {
+    regexp: "^<IfModule mod_gnutls.c>\n\tListen .*$",
+    replace: "<IfModule mod_gnutls.c>\n\tListen {{ apache_listen_port_ssl }}"
   }
