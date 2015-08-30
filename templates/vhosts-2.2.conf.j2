@@ -41,7 +41,7 @@ DirectoryIndex index.php index.html
   SSLHonorCipherOrder On
   SSLCertificateFile {{ vhost.certificate_file }}
   SSLCertificateKeyFile {{ vhost.certificate_key_file }}
-{% if vhost.certificate_chain_file is defined %}
+{% if vhost.certificate_chain_file|default(False) %}
   SSLCertificateChainFile {{ vhost.certificate_chain_file }}
 {% endif %}
 
