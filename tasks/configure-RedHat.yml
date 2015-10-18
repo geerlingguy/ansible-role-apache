@@ -8,6 +8,16 @@
   with_items: apache_ports_configuration_items
   notify: restart apache
 
+- name: Setup access log files
+  file: path=/{{ item.accesslog }} state=touch mode=0660 owner=apache group=apache
+  with_items: apache_vhosts
+  when: item.accesslog is defined
+
+- name: Setup error log files
+  file: path=/{{ item.errorlog }} state=touch mode=0660 owner=apache group=apache
+  with_items: apache_vhosts
+  when: item.errorlog is defined
+
 - name: Add apache vhosts configuration.
   template:
     src: "vhosts-{{ apache_vhosts_version }}.conf.j2"
