@@ -35,13 +35,16 @@ On Debian/Ubuntu, a default virtualhost is included in Apache's configuration. S
       - servername: "local.dev"
         documentroot: "/var/www/html"
 
-Add a set of properties per virtualhost, including `servername` (required), `documentroot` (required), `serveradmin` (optional), `serveralias` (optional) and `extra_parameters` (optional: you can add whatever additional configuration lines you'd like in here).
+
+Add a set of properties per virtualhost, including `servername` (required), `documentroot` (required), `serveradmin` (optional), `serveralias` (optional), accesslog (optional, combined by default, folder must exist), errorlog (optional, folder must exist) and `extra_parameters` (optional: you can add whatever additional configuration lines you'd like in here).
 
 Here's an example using `extra_parameters` to add a RewriteRule to redirect all requests to the `www.` site:
 
       - servername: "www.local.dev"
         serveralias: "local.dev"
         documentroot: "/var/www/html"
+        accesslog: "/var/log/httpd/accesslog_local.dev"
+        errorlog: "/var/log/httpd/errorlog_local.dev"
         extra_parameters: |
           RewriteCond %{HTTP_HOST} !^www\. [NC]
           RewriteRule ^(.*)$ http://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
