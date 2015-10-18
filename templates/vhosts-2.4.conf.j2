@@ -9,6 +9,12 @@ DirectoryIndex index.php index.html
   ServerAlias {{ vhost.serveralias }}
 {% endif %}
   DocumentRoot {{ vhost.documentroot }}
+{% if vhost.accesslog is defined %}
+  CustomLog "{{ vhost.accesslog }}" combined
+{% endif %}
+{% if vhost.errorlog is defined %}
+  ErrorLog "{{ vhost.errorlog }}"
+{% endif %}
 
 {% if vhost.serveradmin is defined %}
   ServerAdmin {{ vhost.serveradmin }}
@@ -33,6 +39,12 @@ DirectoryIndex index.php index.html
   ServerAlias {{ vhost.serveralias }}
 {% endif %}
   DocumentRoot {{ vhost.documentroot }}
+{% if vhost.accesslog is defined %}
+  CustomLog "{{ vhost.accesslog }}" combined
+{% endif %}
+{% if vhost.errorlog is defined %}
+  ErrorLog "{{ vhost.errorlog }}"
+{% endif %}
 
   SSLEngine on
   SSLCipherSuite {{ apache_ssl_cipher_suite }}
