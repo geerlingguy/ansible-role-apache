@@ -15,8 +15,8 @@ apache_vhosts:
   # Additional properties: 'serveradmin, serveralias, accesslog file (combined by default, folder must exist), errorlog file (folder must exist), extra_parameters'.
   - servername: "local.dev"
     documentroot: "/var/www/html"
-    accesslog: "/var/log/httpd/accesslog_local.dev"
-    errorlog: "/var/log/httpd/errorlog_local.dev"
+#   accesslog: "/var/log/httpd/accesslog_local.dev"
+#   errorlog: "/var/log/httpd/errorlog_local.dev"
 
 apache_vhosts_ssl: []
   # Additional properties: 'serveradmin, extra_parameters'.
