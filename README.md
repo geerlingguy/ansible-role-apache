@@ -80,6 +80,10 @@ The SSL protocols and cipher suites that are used/allowed when clients make secu
 
 The list of packages to be installed. This defaults to a set of platform-specific packages for RedHat or Debian-based systems (see `vars/RedHat.yml` and `vars/Debian.yml` for the default values).
 
+    apache_state: started
+
+Set initial apache state. Recommended values: `started` or `stopped`
+
 ## Dependencies
 
 None.

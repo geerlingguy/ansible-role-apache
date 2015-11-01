@@ -39,8 +39,8 @@
 - include: configure-Debian.yml
   when: ansible_os_family == 'Debian'
 
-- name: Ensure Apache is started and enabled on boot.
+- name: Ensure Apache has selected state and enabled on boot.
   service:
     name: "{{ apache_daemon }}"
-    state: started
+    state: "{{ apache_state }}"
     enabled: yes
