@@ -82,7 +82,7 @@ The list of packages to be installed. This defaults to a set of platform-specifi
 
     apache_state: started
 
-Set initial apache state. Recommended values: `started` or `stopped`
+Set initial Apache daemon state to be enforced when this role is run. This should generally remain `started`, but you can set it to `stopped` if you need to fix the Apache config during a playbook run or otherwise would not like Apache started at the time this role is run.
 
 ## Dependencies
 
