@@ -9,7 +9,5 @@ __apache_packages:
   - apache2-utils
 
 apache_ports_configuration_items:
-  - {
-    regexp: "^Listen ",
+  - regexp: "^Listen "
     line: "Listen {{ apache_listen_port }}"
-  }
