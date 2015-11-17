@@ -14,10 +14,14 @@ DirectoryIndex index.php index.html
   ServerAdmin {{ vhost.serveradmin }}
 {% endif %}
   <Directory "{{ vhost.documentroot }}">
-    AllowOverride All
-    Options -Indexes FollowSymLinks
-    Order allow,deny
-    Allow from all
+    {% if vhost.directory_parameters is defined %}
+      {{ vhost.directory_parameters }}
+    {% else %}
+      AllowOverride All
+      Options -Indexes FollowSymLinks
+      Order allow,deny
+      Allow from all
+    {% endif %}
   </Directory>
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
@@ -49,10 +53,14 @@ DirectoryIndex index.php index.html
   ServerAdmin {{ vhost.serveradmin }}
 {% endif %}
   <Directory "{{ vhost.documentroot }}">
-    AllowOverride All
-    Options -Indexes FollowSymLinks
-    Order allow,deny
-    Allow from all
+    {% if vhost.directory_parameters is defined %}
+      {{ vhost.directory_parameters }}
+    {% else %}
+      AllowOverride All
+      Options -Indexes FollowSymLinks
+      Order allow,deny
+      Allow from all
+    {% endif %}
   </Directory>
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
