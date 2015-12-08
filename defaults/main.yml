@@ -1,6 +1,9 @@
 ---
 apache_enablerepo: ""
 
+apache_global_settings: |
+  DirectoryIndex index.php index.html
+
 apache_listen_port: 80
 apache_listen_port_ssl: 443
 

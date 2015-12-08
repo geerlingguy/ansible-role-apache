@@ -18,6 +18,12 @@ The repository to use when installing Apache (only used on RHEL/CentOS systems).
 
     apache_listen_port: 80
     apache_listen_port_ssl: 443
+    
+This role doesn't manage the apache configuration files (yet), however you can set/overwrite apache config inside the vhost file but outside the VirtualHost config. In order to do this change the `apache_global_settigs` variable.
+
+    apache_global_settigs: |
+      DirectoryIndex index.php index.html
+      # Other apache global settings
 
 The ports on which apache should be listening. Useful if you have another service (like a reverse proxy) listening on port 80 or 443 and need to change the defaults.
 
