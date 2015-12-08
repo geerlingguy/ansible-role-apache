@@ -23,6 +23,11 @@
   with_items: apache_mods_disabled
   notify: restart apache
 
+- name: Create .htpasswd file(s).
+  command: htpasswd -cb {{ item.auth_file }} {{ item.auth_username }} {{ item.auth_password }}
+  with_items: apache_vhosts
+  when: item.auth_file is defined and item.auth_username is defined and item.auth_password is defined
+
 - name: Add apache vhosts configuration.
   template:
     src: "vhosts-{{ apache_vhosts_version }}.conf.j2"

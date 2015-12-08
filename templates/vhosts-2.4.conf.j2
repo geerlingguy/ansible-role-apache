@@ -16,7 +16,14 @@ DirectoryIndex index.php index.html
   <Directory "{{ vhost.documentroot }}">
     AllowOverride All
     Options -Indexes +FollowSymLinks
+{% if vhost.auth_file is defined %}
+    AuthType Basic
+    AuthName "Restricted Area"
+    AuthUserFile "{{ vhost.auth_file }}"
+    Require valid-user
+{% else %}
     Require all granted
+{% endif %}
   </Directory>
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
