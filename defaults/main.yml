@@ -1,9 +1,6 @@
 ---
 apache_enablerepo: ""
 
-apache_global_settings: |
-  DirectoryIndex index.php index.html
-
 apache_listen_port: 80
 apache_listen_port_ssl: 443
 
@@ -13,6 +10,9 @@ apache_vhosts_filename: "vhosts.conf"
 # On Debian/Ubuntu, a default virtualhost is included in Apache's configuration.
 # Set this to `true` to remove that default.
 apache_remove_default_vhost: false
+
+apache_global_settings: |
+  DirectoryIndex index.php index.html
 
 apache_vhosts:
   # Additional properties: 'serveradmin, serveralias, extra_parameters'.

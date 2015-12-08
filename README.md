@@ -18,12 +18,6 @@ The repository to use when installing Apache (only used on RHEL/CentOS systems).
 
     apache_listen_port: 80
     apache_listen_port_ssl: 443
-    
-This role doesn't manage the apache configuration files (yet), however you can set/overwrite apache config inside the vhost file but outside the VirtualHost config. In order to do this change the `apache_global_settigs` variable.
-
-    apache_global_settigs: |
-      DirectoryIndex index.php index.html
-      # Other apache global settings
 
 The ports on which apache should be listening. Useful if you have another service (like a reverse proxy) listening on port 80 or 443 and need to change the defaults.
 
@@ -35,6 +29,12 @@ If set to true, a vhosts file, managed by this role's variables (see below), wil
     apache_remove_default_vhost: false
 
 On Debian/Ubuntu, a default virtualhost is included in Apache's configuration. Set this to `true` to remove that default virtualhost configuration file.
+
+    apache_global_settings: |
+      DirectoryIndex index.php index.html
+      # Add other global settings on subsequent lines.
+
+You can add or override global Apache configuration settings in the role-provided vhosts file (assuming `apache_create_vhosts` is true) using this variable. By default it only sets the DirectoryIndex configuration.
 
     apache_vhosts:
       # Additional optional properties: 'serveradmin, serveralias, extra_parameters'.
