@@ -56,3 +56,8 @@ apache_restart_state: restarted
 # Apache package state; use `installed` to make sure it's installed, or `latest` if
 # you want to upgrade or switch versions using a new repo.
 apache_packages_state: installed
+
+# Override the http.conf file as a jinja template
+#apache_httpdconf_file: centos-6-sample.http.conf.j2
+# Set to "no" if you want to deploy only if it does not exist
+#apache_httpdconf_file_force_override: no

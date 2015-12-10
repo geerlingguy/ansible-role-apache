@@ -7,6 +7,15 @@
     state: present
   with_items: {{ apache_ports_configuration_items | union(apache_configuration_items) }}
   notify: restart apache
+  when: apache_httpdconf_file is not defined
+
+- name: Override default Apache conf.
+  template:
+    src: "{{ apache_httpdconf_file }}"
+    dest: "{{ apache_server_root }}/conf/{{ apache_daemon }}.conf"
+    force: "{{ apache_httpdconf_file_force_overwrite | default('yes') }}"
+  notify: restart apache
+  when: apache_httpdconf_file is defined
 
 - name: Check whether certificates defined in vhosts exist.
   stat: path={{ item.certificate_file }}

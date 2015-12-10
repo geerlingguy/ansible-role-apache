@@ -40,6 +40,11 @@ On Debian/Ubuntu, a default virtualhost is included in Apache's configuration. S
 
 You can add or override global Apache configuration settings in the role-provided vhosts file (assuming `apache_create_vhosts` is true) using this variable. By default it only sets the DirectoryIndex configuration.
 
+    apache_httpdconf_file: centos-6-sample.http.conf.j2
+    apache_httpdconf_file_force_overwrite: no
+
+# You can override the entire http.conf/apache2.conf file by providing a default config file.  Samples (default) conf files for Debian 7 and Centos 6 have been included in the template directory.  You can also set whether the file is overwritten if it already exists.
+
     apache_vhosts:
       # Additional optional properties: 'serveradmin, serveralias, extra_parameters'.
       - servername: "local.dev"
