@@ -30,7 +30,7 @@ If set to true, a vhosts file, managed by this role's variables (see below), wil
 
 On Debian/Ubuntu, a default virtualhost is included in Apache's configuration. Set this to `true` to remove that default virtualhost configuration file.
 
-    apache_global_settings: |
+    apache_global_vhost_settings: |
       DirectoryIndex index.php index.html
       # Add other global settings on subsequent lines.
 

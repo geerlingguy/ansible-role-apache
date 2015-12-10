@@ -11,7 +11,7 @@ apache_vhosts_filename: "vhosts.conf"
 # Set this to `true` to remove that default.
 apache_remove_default_vhost: false
 
-apache_global_settings: |
+apache_global_vhost_settings: |
   DirectoryIndex index.php index.html
 
 apache_vhosts:
