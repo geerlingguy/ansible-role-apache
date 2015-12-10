@@ -20,7 +20,7 @@ apache_htpasswd:
   #   password: "mypassword"
 
 apache_vhosts:
-  # Additional properties: 'serveradmin, serveralias, extra_parameters, authuserfile'.
+  # Additional properties: 'serveradmin, serveralias, authuserfile, extra_parameters'.
   - servername: "local.dev"
     documentroot: "/var/www/html"
 
