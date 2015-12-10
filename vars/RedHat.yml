@@ -11,6 +11,7 @@ __apache_packages:
   - httpd-devel
   - mod_ssl
   - openssh
+  - python-passlib
 
 apache_ports_configuration_items:
   - regexp: "^Listen "

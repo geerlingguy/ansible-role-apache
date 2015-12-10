@@ -8,6 +8,8 @@
   with_items: apache_ports_configuration_items
   notify: restart apache
 
+# Todo: Add creating of htpasswd.
+
 - name: Add apache vhosts configuration.
   template:
     src: "vhosts-{{ apache_vhosts_version }}.conf.j2"
