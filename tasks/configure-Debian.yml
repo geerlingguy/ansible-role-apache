@@ -23,10 +23,9 @@
   with_items: apache_mods_disabled
   notify: restart apache
 
-- name: Create htpasswd file (if defined).
-  htpasswd: path={{ item.auth_file }} name={{ item.auth_username }} password={{ item.auth_password }} state=present
-  with_items: apache_vhosts
-  when: item.auth_file is defined and item.auth_username is defined and item.auth_password is defined
+- name: Add htpasswd configuration.
+  htpasswd: path={{ item.file }} name={{ item.username }} password={{ item.password }} state=present
+  with_items: apache_htpasswd
 
 - name: Add apache vhosts configuration.
   template:

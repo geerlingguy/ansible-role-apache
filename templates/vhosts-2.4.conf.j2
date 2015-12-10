@@ -15,10 +15,10 @@
   <Directory "{{ vhost.documentroot }}">
     AllowOverride All
     Options -Indexes +FollowSymLinks
-{% if vhost.auth_file is defined %}
+{% if vhost.authuserfile is defined %}
     AuthType Basic
     AuthName "Restricted Area"
-    AuthUserFile "{{ vhost.auth_file }}"
+    AuthUserFile "{{ vhost.authuserfile }}"
     Require valid-user
 {% else %}
     Require all granted

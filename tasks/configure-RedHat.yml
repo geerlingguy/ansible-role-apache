@@ -8,7 +8,9 @@
   with_items: apache_ports_configuration_items
   notify: restart apache
 
-# Todo: Add creating of htpasswd.
+- name: Add htpasswd configuration.
+  htpasswd: path={{ item.file }} name={{ item.username }} password={{ item.password }} state=present
+  with_items: apache_htpasswd
 
 - name: Add apache vhosts configuration.
   template:

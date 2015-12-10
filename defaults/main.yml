@@ -14,8 +14,13 @@ apache_remove_default_vhost: false
 apache_global_settings: |
   DirectoryIndex index.php index.html
 
+apache_htpasswd:
+  # - file: "/var/www/.htpasswd"
+  #   username: "myuser"
+  #   password: "mypassword"
+
 apache_vhosts:
-  # Additional properties: 'serveradmin, serveralias, extra_parameters'.
+  # Additional properties: 'serveradmin, serveralias, extra_parameters, authuserfile'.
   - servername: "local.dev"
     documentroot: "/var/www/html"
 
