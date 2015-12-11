@@ -3,7 +3,16 @@ DirectoryIndex index.php index.html
 
 {# Set up VirtualHosts #}
 {% for vhost in apache_vhosts %}
+{% if vhost.port is defined %}
+<VirtualHost *:{{ vhost.port }}>
+{% else %}
+{% if apache_listen_port is iterable %}
+<VirtualHost *:{{ apache_listen_port|join(" *:") }}>
+{% else %}
 <VirtualHost *:{{ apache_listen_port }}>
+{% endif %}
+
+{% endif %}
   ServerName {{ vhost.servername }}
 {% if vhost.serveralias is defined %}
   ServerAlias {{ vhost.serveralias }}

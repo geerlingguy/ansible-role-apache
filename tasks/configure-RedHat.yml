@@ -2,10 +2,16 @@
 - name: Configure Apache.
   lineinfile:
     dest: "{{ apache_server_root }}/conf/{{ apache_daemon }}.conf"
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
-    state: present
-  with_items: apache_ports_configuration_items
+    regexp: "^Listen "
+    state: absent
+    
+- name: Configure Apache Ports.
+  template:
+    src: ports-2.2.conf.j2
+    dest: "{{ apache_server_root }}/conf.d/ports.conf"
+    owner: root
+    group: root
+    mode: 0644
   notify: restart apache
 
 - name: Add apache vhosts configuration.

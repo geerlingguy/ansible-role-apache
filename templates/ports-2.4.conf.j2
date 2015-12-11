@@ -1,0 +1,11 @@
+# Don't edit manually!
+# {{ ansible_managed }}
+
+{% if apache_listen_port is iterable %}
+{% for port in apache_listen_port %}
+Listen {{ port }}
+{% endfor %}
+
+{% else %}
+Listen {{ apache_listen_port }}
+{% endif %}
