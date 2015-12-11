@@ -7,7 +7,7 @@
     
 - name: Configure Apache Ports.
   template:
-    src: ports-2.2.conf.j2
+    src: ports-{{ apache_vhosts_version }}.conf.j2
     dest: "{{ apache_server_root }}/conf.d/ports.conf"
     owner: root
     group: root
