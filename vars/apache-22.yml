@@ -7,6 +7,6 @@ apache_ports_configuration_items:
     line: "Listen {{ apache_listen_port }}"
   }
   - {
-    regexp: "^NameVirtualHost ",
+    regexp: "^#?NameVirtualHost ",
     line: "NameVirtualHost *:{{ apache_listen_port }}"
   }
