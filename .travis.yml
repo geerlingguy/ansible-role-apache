@@ -18,19 +18,37 @@ script:
   #
   # Run test playbook on Ubuntu container
   #
+
+    # Syntax check
   - sudo docker run ubuntu:ansible ansible-playbook /etc/ansible/test.yml --syntax-check
+    # Test role
   - sudo docker run ubuntu:ansible ansible-playbook /etc/ansible/test.yml
+    # Idempotence test
+  - >
+    sudo docker run ubuntu:ansible ansible-playbook /etc/ansible/test.yml
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
 
   #
   # Run test playbook on CentOS container
   #
 
-  # Run container in detached state
+    # Run container in detached state
   - sudo docker run --detach --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro centos:ansible /usr/lib/systemd/systemd > "${CONTAINER_ID}"
 
+    # Syntax check
   - sudo docker exec "$(cat ${CONTAINER_ID})" ansible-playbook /etc/ansible/test.yml --syntax-check
+    # Test role
   - sudo docker exec "$(cat ${CONTAINER_ID})" ansible-playbook /etc/ansible/test.yml
-  # Clean up
+    # Idempotence test
+  - >
+    sudo docker exec "$(cat ${CONTAINER_ID})" ansible-playbook /etc/ansible/test.yml
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+    # Clean up
   - sudo docker stop "$(cat ${CONTAINER_ID})"
 
 notifications:
