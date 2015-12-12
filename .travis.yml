@@ -11,8 +11,8 @@ before_install:
   - sudo docker pull centos:7
   - sudo docker pull ubuntu:14.04
   # Customize containers
-  - sudo docker build --rm=true --file=Dockerfile.centos --tag=centos:ansible tests
-  - sudo docker build --rm=true --file=Dockerfile.ubuntu --tag=ubuntu:ansible tests
+  - sudo docker build --rm=true --file=tests/Dockerfile.centos --tag=centos:ansible tests
+  - sudo docker build --rm=true --file=tests/Dockerfile.ubuntu --tag=ubuntu:ansible tests
 
 script:
   #
