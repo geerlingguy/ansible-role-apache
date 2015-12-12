@@ -1,62 +1,39 @@
 sudo: required
 env:
-  - CONTAINER_ID=$(mktemp)
+  - container_id=$(mktemp) distribution=centos version=7
+  - container_id=$(mktemp) distribution=ubuntu version=14.04
 
 services:
   - docker
 
 before_install:
   - sudo apt-get update
-  # Pull containers
-  - sudo docker pull centos:7
-  - sudo docker pull ubuntu:14.04
-  # Customize containers
-  - sudo docker build --rm=true --file=tests/Dockerfile.centos --tag=centos:ansible tests
-  - sudo docker build --rm=true --file=tests/Dockerfile.ubuntu --tag=ubuntu:ansible tests
+  # Pull container
+  - sudo docker pull ${distribution}:${version}
+  # Customize container
+  - sudo docker build --rm=true --file=tests/Dockerfile.${distribution} --tag=${distribution}:ansible tests
 
 script:
   #
-  # Run test playbook on Ubuntu container
+  # Run test playbook
   #
 
     # Run container in detached state
-  - sudo docker run --detach ubuntu:ansible /sbin/init > "${CONTAINER_ID}"
-
+  - sudo docker run --detach ${distribution}:ansible /sbin/init > "${container_id}"
 
     # Syntax check
-  - sudo docker exec "$(cat ${CONTAINER_ID})" ansible-playbook /etc/ansible/test.yml --syntax-check
+  - sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/test.yml --syntax-check
     # Test role
-  - sudo docker exec "$(cat ${CONTAINER_ID})" ansible-playbook /etc/ansible/test.yml
+  - sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/test.yml
     # Idempotence test
   - >
-    sudo docker exec "$(cat ${CONTAINER_ID})" ansible-playbook /etc/ansible/test.yml
+    sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/test.yml
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
     # Clean up
-  - sudo docker stop "$(cat ${CONTAINER_ID})"
-
-  #
-  # Run test playbook on CentOS container
-  #
-
-    # Run container in detached state
-  - sudo docker run --detach --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro centos:ansible /usr/lib/systemd/systemd > "${CONTAINER_ID}"
-
-    # Syntax check
-  - sudo docker exec "$(cat ${CONTAINER_ID})" ansible-playbook /etc/ansible/test.yml --syntax-check
-    # Test role
-  - sudo docker exec "$(cat ${CONTAINER_ID})" ansible-playbook /etc/ansible/test.yml
-    # Idempotence test
-  - >
-    sudo docker exec "$(cat ${CONTAINER_ID})" ansible-playbook /etc/ansible/test.yml
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
-
-    # Clean up
-  - sudo docker stop "$(cat ${CONTAINER_ID})"
+  - sudo docker stop "$(cat ${container_id})"
 
 notifications:
   email: false
