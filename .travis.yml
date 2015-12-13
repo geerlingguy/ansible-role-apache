@@ -3,6 +3,7 @@ sudo: required
 env:
   # CentOS 7.
   - container_id: $(mktemp)
+    dockerfile: Dockerfile.centos-7
     distribution: centos
     version: 7
     init: /usr/lib/systemd/systemd
@@ -10,6 +11,7 @@ env:
 
   # Ubuntu 14.04.
   - container_id: $(mktemp)
+    dockerfile: Dockerfile.ubuntu-14
     distribution: ubuntu
     version: 14.04
     init: /sbin/init
@@ -23,7 +25,7 @@ before_install:
   # Pull container.
   - "sudo docker pull ${distribution}:${version}"
   # Customize container.
-  - "sudo docker build --rm=true --file=tests/Dockerfile.${distribution} --tag=${distribution}:ansible tests"
+  - "sudo docker build --rm=true --file=tests/${dockerfile} --tag=${distribution}:ansible tests"
 
 script:
   # Run container in detached state.
