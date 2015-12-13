@@ -2,18 +2,26 @@ sudo: required
 
 env:
   # CentOS 7.
-  - container_id: $(mktemp)
-    dockerfile: Dockerfile.centos-7
-    distribution: centos
+  - distribution: centos
     version: 7
+    container_id: $(mktemp)
+    dockerfile: Dockerfile.centos-7
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
+  # Ubuntu 12.04.
+  - distribution: ubuntu
+    version: 12.04
+    container_id: $(mktemp)
+    dockerfile: Dockerfile.ubuntu-12
+    init: /sbin/init
+    run_opts: ""
+
   # Ubuntu 14.04.
-  - container_id: $(mktemp)
-    dockerfile: Dockerfile.ubuntu-14
-    distribution: ubuntu
+  - distribution: ubuntu
     version: 14.04
+    container_id: $(mktemp)
+    dockerfile: Dockerfile.ubuntu-14
     init: /sbin/init
     run_opts: ""
 
