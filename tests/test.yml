@@ -8,4 +8,4 @@
       - servername: "example.com"
         documentroot: "/var/www/vhosts/example_com"
   roles:
-    - geerlingguy.apache
+    - role_under_test
