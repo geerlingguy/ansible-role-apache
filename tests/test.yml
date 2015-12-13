@@ -1,5 +1,6 @@
 ---
 - hosts: all
+
   vars:
     apache_listen_port_ssl: 443
     apache_create_vhosts: true
@@ -7,5 +8,6 @@
     apache_vhosts:
       - servername: "example.com"
         documentroot: "/var/www/vhosts/example_com"
+
   roles:
     - role_under_test
