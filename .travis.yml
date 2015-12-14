@@ -1,27 +1,20 @@
 sudo: required
 
 env:
-  # CentOS 7.
   - distribution: centos
-    version: 7
-    container_id: $(mktemp)
-    dockerfile: Dockerfile.centos-7
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-
-  # Ubuntu 12.04.
-  - distribution: ubuntu
-    version: 12.04
-    container_id: $(mktemp)
-    dockerfile: Dockerfile.ubuntu-12
+    version: 6
     init: /sbin/init
     run_opts: ""
-
-  # Ubuntu 14.04.
+  - distribution: centos
+    version: 7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
   - distribution: ubuntu
     version: 14.04
-    container_id: $(mktemp)
-    dockerfile: Dockerfile.ubuntu-14
+    init: /sbin/init
+    run_opts: ""
+  - distribution: ubuntu
+    version: 12.04
     init: /sbin/init
     run_opts: ""
 
@@ -30,14 +23,15 @@ services:
 
 before_install:
   - sudo apt-get update
-  # Pull container.
-  - "sudo docker pull ${distribution}:${version}"
-  # Customize container.
-  - "sudo docker build --rm=true --file=tests/${dockerfile} --tag=${distribution}:ansible tests"
+  # Pull container
+  - 'sudo docker pull ${distribution}:${version}'
+  # Customize container
+  - 'sudo docker build --rm=true --file=tests/Dockerfile.${distribution}-${version} --tag=${distribution}-${version}:ansible tests'
 
 script:
-  # Run container in detached state.
-  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${distribution}:ansible "${init}" > "${container_id}"'
+  - container_id=$(mktemp)
+    # Run container in detached state
+  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${distribution}-${version}:ansible "${init}" > "${container_id}"'
 
   # Ansible syntax check.
   - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
