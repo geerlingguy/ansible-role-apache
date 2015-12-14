@@ -6,3 +6,5 @@ RUN yum install -y ansible
 
 # Install Ansible inventory file
 RUN echo -e '[local]\nlocalhost ansible_connection=local' > /etc/ansible/hosts
+
+CMD ["/sbin/init"]
