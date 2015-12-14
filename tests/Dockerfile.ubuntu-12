@@ -1,10 +1,7 @@
 FROM ubuntu:12.04
 
-# Add `apt-add-repository`.
-RUN apt-get install python-software-properties
-
 # Install Ansible
-RUN apt-get install -y software-properties-common git
+RUN apt-get install -y software-properties-common python-software-properties git
 RUN apt-add-repository -y ppa:ansible/ansible
 RUN apt-get update
 RUN apt-get install -y ansible
