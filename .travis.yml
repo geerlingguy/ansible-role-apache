@@ -1,6 +1,11 @@
 sudo: required
 env:
   - distribution: centos
+    version: 6
+    init: /sbin/init
+    run_opts: ""
+    container_id: $(mktemp)
+  - distribution: centos
     version: 7
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
