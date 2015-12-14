@@ -1,14 +1,6 @@
 sudo: required
 
 env:
-  # CentOS 6.
-  - distribution: centos
-    version: 6
-    container_id: $(mktemp)
-    dockerfile: Dockerfile.centos-6
-    init: /sbin/init
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-
   # CentOS 7.
   - distribution: centos
     version: 7
