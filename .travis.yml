@@ -22,7 +22,7 @@ services:
   - docker
 
 before_install:
-  - sudo apt-get update
+  # - sudo apt-get update
   # Pull container
   - 'sudo docker pull ${distribution}:${version}'
   # Customize container
