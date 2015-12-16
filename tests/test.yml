@@ -1,5 +1,13 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: all
+
+  vars:
+    apache_listen_port_ssl: 443
+    apache_create_vhosts: true
+    apache_vhosts_filename: "vhosts.conf"
+    apache_vhosts:
+      - servername: "example.com"
+        documentroot: "/var/www/vhosts/example_com"
+
   roles:
-    - ansible-role-apache
+    - role_under_test
