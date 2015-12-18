@@ -8,14 +8,6 @@
   with_items: apache_ports_configuration_items
   notify: restart apache
 
-- name: Override default Apache conf.
-  template:
-    src: "{{ apache_httpdconf_file }}"
-    dest: "{{ apache_server_root }}/{{ apache_daemon }}.conf"
-    force: "{{ apache_httpdconf_file_force_overwrite | default('yes') }}"
-  notify: restart apache
-  when: apache_httpdconf_file is defined
-
 - name: Enable Apache mods.
   file:
     src: "{{ apache_server_root }}/mods-available/{{ item }}"
@@ -55,3 +47,11 @@
     state: absent
   notify: restart apache
   when: apache_remove_default_vhost
+
+- name: Override default Apache configurations.
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ apache_server_root }}/{{ item.dest }}"
+    force: "{{ item.force | default('yes') }}"
+  notify: restart apache
+  with_items: apache_config_files

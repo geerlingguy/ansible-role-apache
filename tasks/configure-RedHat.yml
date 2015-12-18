@@ -11,11 +11,11 @@
 
 - name: Override default Apache conf.
   template:
-    src: "{{ apache_httpdconf_file }}"
-    dest: "{{ apache_server_root }}/conf/{{ apache_daemon }}.conf"
-    force: "{{ apache_httpdconf_file_force_overwrite | default('yes') }}"
+    src: "{{ item.src }}"
+    dest: "{{ apache_server_root }}/{{ item.dest }}"
+    force: "{{ item.force | default('yes') }}"
   notify: restart apache
-  when: apache_httpdconf_file is defined
+  with_items: apache_config_files
 
 - name: Add apache vhosts configuration.
   template:
