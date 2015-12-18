@@ -55,3 +55,4 @@
     force: "{{ item.force | default('yes') }}"
   notify: restart apache
   with_items: apache_config_files
+
