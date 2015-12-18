@@ -61,3 +61,7 @@ apache_packages_state: installed
 #apache_httpdconf_file: centos-6-sample.http.conf.j2
 # Set to "no" if you want to deploy only if it does not exist
 #apache_httpdconf_file_force_override: no
+
+# Override apache config files as jinja templates.
+apache_config_files: []
+#  - { src: path/relative/to/playbook/afile.cnf, dest: conf.modules.d/00-mpm.conf, force: no }
