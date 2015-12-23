@@ -19,8 +19,15 @@
   <Directory "{{ vhost.documentroot }}">
     AllowOverride All
     Options -Indexes FollowSymLinks
+{% if vhost.authuserfile is defined %}
+    AuthType Basic
+    AuthName "Restricted Area"
+    AuthUserFile "{{ vhost.authuserfile }}"
+    Require valid-user
+{% else %}
     Order allow,deny
     Allow from all
+{% endif %}
   </Directory>
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
