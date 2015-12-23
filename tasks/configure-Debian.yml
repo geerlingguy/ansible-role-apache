@@ -23,6 +23,11 @@
   with_items: apache_mods_disabled
   notify: restart apache
 
+- name: Add htpasswd configuration.
+  htpasswd: path={{ item.file }} name={{ item.username }} password={{ item.password }} state=present
+  with_items: apache_htpasswd
+  when: apache_htpasswd
+
 - name: Add apache vhosts configuration.
   template:
     src: "vhosts-{{ apache_vhosts_version }}.conf.j2"
