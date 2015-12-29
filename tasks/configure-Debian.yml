@@ -33,6 +33,16 @@
   notify: restart apache
   when: apache_create_vhosts
 
+- name: Add apache envvars.
+  template:
+    src: "envvars.conf.j2"
+    dest: "{{ apache_conf_path }}/envvars"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+  when: apache_create_envvars
+
 - name: Add vhost symlink in sites-enabled.
   file:
     src: "{{ apache_conf_path }}/sites-available/{{ apache_vhosts_filename }}"

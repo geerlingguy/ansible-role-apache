@@ -11,3 +11,22 @@ __apache_packages:
 apache_ports_configuration_items:
   - regexp: "^Listen "
     line: "Listen {{ apache_listen_port }}"
+
+# Set to true to manipulate the envvars
+apache_create_envvars: false
+
+apache_envvars_multiple_instances_suffix: "-${APACHE_CONFDIR##/etc/apache2-}"
+apache_envvars_run_user: www-data
+apache_envvars_run_group: www-data
+apache_envvars_pid_file: /var/run/apache2/apache2$SUFFIX.pid
+apache_envvars_run_dir: /var/run/apache2$SUFFIX
+apache_envvars_lock_dir: /var/lock/apache2$SUFFIX
+apache_envvars_log_dir: /var/log/apache2$SUFFIX
+apache_envvars_lynx_enable: false
+apache_envvars_lynx: 'www-browser -dump'
+apache_envvars_ulimit_enable: false
+apache_envvars_ulimit: 'ulimit -n 65536'
+apache_envvars_arguments_enable: false
+apache_envvars_arguments: ""
+apache_envvars_maintscript_debug_enable: false
+apache_envvars_maintscript_debug: 1

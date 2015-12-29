@@ -1,0 +1,55 @@
+# envvars - default environment variables for apache2ctl
+
+# this won't be correct after changing uid
+unset HOME
+
+# for supporting multiple apache2 instances
+if [ "${APACHE_CONFDIR##/etc/apache2-}" != "${APACHE_CONFDIR}" ] ; then
+SUFFIX={{ apache_envvars_multiple_instances_suffix }}
+else
+SUFFIX=
+fi
+
+# Since there is no sane way to get the parsed apache2 config in scripts, some
+# settings are defined via environment variables and then used in apache2ctl,
+# /etc/init.d/apache2, /etc/logrotate.d/apache2, etc.
+export APACHE_RUN_USER={{ apache_envvars_run_user }}
+export APACHE_RUN_GROUP={{ apache_envvars_run_group }}
+# temporary state file location. This might be changed to /run in Wheezy+1
+export APACHE_PID_FILE={{ apache_envvars_pid_file }}
+export APACHE_RUN_DIR={{ apache_envvars_run_dir }}
+export APACHE_LOCK_DIR={{ apache_envvars_lock_dir }}
+# Only /var/log/apache2 is handled by /etc/logrotate.d/apache2.
+export APACHE_LOG_DIR={{ apache_envvars_log_dir }}
+
+## The locale used by some modules like mod_dav
+export LANG=C
+## Uncomment the following line to use the system default locale instead:
+#. /etc/default/locale
+
+export LANG
+
+{% if apache_envvars_lynx_enable %}
+## The command to get the status for 'apache2ctl status'.
+## Some packages providing 'www-browser' need '--dump' instead of '-dump'.
+export APACHE_LYNX={{ apache_envvars_lynx }}
+{% endif %}
+
+{% if apache_envvars_lynx_enable %}
+## If you need a higher file descriptor limit, uncomment and adjust the
+## following line (default is 8192):
+APACHE_ULIMIT_MAX_FILES= {{ apache_envvars_ulimit }}
+{% endif %}
+
+{% if apache_envvars_arguments_enable %}
+## If you would like to pass arguments to the web server, add them below
+## to the APACHE_ARGUMENTS environment.
+export APACHE_ARGUMENTS={{ apache_envvars_arguments }}
+{% endif %}
+
+{% if apache_envvars_maintscript_debug_enable %}
+## Enable the debug mode for maintainer scripts.
+## This will produce a verbose output on package installations of web server modules and web application
+## installations which interact with Apache
+export APACHE2_MAINTSCRIPT_DEBUG={{ apache_envvars_maintscript_debug }}
+{% endif %}
