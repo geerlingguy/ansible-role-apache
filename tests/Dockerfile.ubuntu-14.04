@@ -1,4 +1,5 @@
 FROM ubuntu:14.04
+RUN apt-get update
 
 # Install Ansible
 RUN apt-get install -y software-properties-common git
