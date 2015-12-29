@@ -15,6 +15,9 @@
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
+- include: setup-Solaris.yml
+  when: ansible_os_family == 'Solaris'
+
 # Figure out what version of Apache is installed.
 - name: Get installed version of Apache.
   shell: "{{ apache_daemon_path }}{{ apache_daemon }} -v"
