@@ -41,6 +41,6 @@
 
 - name: Ensure Apache has selected state and enabled on boot.
   service:
-    name: "{{ apache_daemon }}"
+    name: "{{ apache_service }}"
     state: "{{ apache_state }}"
     enabled: yes
