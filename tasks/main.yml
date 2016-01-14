@@ -42,6 +42,9 @@
 - include: configure-Debian.yml
   when: ansible_os_family == 'Debian'
 
+- include: configure-Solaris.yml
+  when: ansible_os_family == 'Solaris'
+
 - name: Ensure Apache has selected state and enabled on boot.
   service:
     name: "{{ apache_service }}"
