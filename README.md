@@ -92,6 +92,10 @@ The list of packages to be installed. This defaults to a set of platform-specifi
 
 Set initial Apache daemon state to be enforced when this role is run. This should generally remain `started`, but you can set it to `stopped` if you need to fix the Apache config during a playbook run or otherwise would not like Apache started at the time this role is run.
 
+    apache_ignore_missing_ssl_certificate: true
+
+Create SSL vHosts regardless of whether their certificate exists or not. It might be handy to set this to `false` if you e.g. use Let’s encrypt, which triggers certificate generation with a running webserver. You might need to run your playbook multiple times to really get all SSL vHosts going if another part of your playbook takes care of certificate generation. (but OTOH Apache won’t complain about missing certificates anymore).
+
 ## Dependencies
 
 None.
