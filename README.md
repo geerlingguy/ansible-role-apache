@@ -94,7 +94,7 @@ Set initial Apache daemon state to be enforced when this role is run. This shoul
 
     apache_ignore_missing_ssl_certificate: true
 
-Create SSL vHosts regardless of whether their certificate exists or not. It might be handy to set this to `false` if you e.g. use Let’s encrypt, which triggers certificate generation with a running webserver. You might need to run your playbook multiple times to really get all SSL vHosts going if another part of your playbook takes care of certificate generation. (but OTOH Apache won’t complain about missing certificates anymore).
+If you would like to only create SSL vhosts when the vhost certificate is present (e.g. when using Let’s Encrypt), set `apache_ignore_missing_ssl_certificate` to `false`. When doing this, you might need to run your playbook more than once so all the vhosts are configured (if another part of the playbook generates the SSL certificates).
 
 ## Dependencies
 
