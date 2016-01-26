@@ -22,3 +22,5 @@ galaxy_info:
     - trusty
   categories:
     - web
+
+allow_duplicates: yes
