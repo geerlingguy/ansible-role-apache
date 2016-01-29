@@ -5,7 +5,11 @@
 <VirtualHost *:{{ apache_listen_port }}>
   ServerName {{ vhost.servername }}
 {% if vhost.serveralias is defined %}
-  ServerAlias {{ vhost.serveralias }}
+  {% if vhost.serveralias is string %}
+    ServerAlias {{ vhost.serveralias }}
+  {% else %}
+    ServerAlias {{ vhost.serveralias|join(' ') }}
+  {% endif %}
 {% endif %}
 {% if vhost.documentroot is defined %}
   DocumentRoot {{ vhost.documentroot }}
@@ -18,7 +22,14 @@
   <Directory "{{ vhost.documentroot }}">
     AllowOverride All
     Options -Indexes +FollowSymLinks
+{% if vhost.authuserfile is defined %}
+    AuthType Basic
+    AuthName "Restricted Area"
+    AuthUserFile "{{ vhost.authuserfile }}"
+    Require valid-user
+{% else %}
     Require all granted
+{% endif %}
   </Directory>
 {% endif %}
 {% if vhost.extra_parameters is defined %}
