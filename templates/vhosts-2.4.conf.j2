@@ -5,11 +5,7 @@
 <VirtualHost *:{{ apache_listen_port }}>
   ServerName {{ vhost.servername }}
 {% if vhost.serveralias is defined %}
-  {% if vhost.serveralias is string %}
-    ServerAlias {{ vhost.serveralias }}
-  {% else %}
-    ServerAlias {{ vhost.serveralias|join(' ') }}
-  {% endif %}
+  ServerAlias {{ vhost.serveralias }}
 {% endif %}
 {% if vhost.documentroot is defined %}
   DocumentRoot {{ vhost.documentroot }}
