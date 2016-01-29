@@ -52,14 +52,6 @@ You can add or override global Apache configuration settings in the role-provide
 
 Add a set of properties per virtualhost, including `servername` (required), `documentroot` (required), `serveradmin` (optional), `serveralias` (optional), `authuserfile` (optional) and `extra_parameters` (optional: you can add whatever additional configuration lines you'd like in here).
 
-When having multiple server aliases the `serveralias` can be given as an array:
-
-      - servername: "www.local.dev"
-        serveralias: 
-          - "local.dev"
-          - "my.local.dev"
-        documentroot: "/var/www/html"
-
 Here's an example using `extra_parameters` to add a RewriteRule to redirect all requests to the `www.` site:
 
       - servername: "www.local.dev"
