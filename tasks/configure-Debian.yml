@@ -23,10 +23,10 @@
   with_items: apache_mods_disabled
   notify: restart apache
 
-- name: Add htpasswd configuration.
-  htpasswd: path={{ item.file }} name={{ item.username }} password={{ item.password }} state=present
-  with_items: apache_htpasswd
-  when: apache_htpasswd
+- name: Check whether certificates defined in vhosts exist.
+  stat: path={{ item.certificate_file }}
+  register: apache_ssl_certificates
+  with_items: apache_vhosts_ssl
 
 - name: Add apache vhosts configuration.
   template:
