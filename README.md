@@ -8,6 +8,8 @@ An Ansible Role that installs Apache 2.x on RHEL/CentOS and Debian/Ubuntu.
 
 If you are using SSL/TLS, you will need to provide your own certificate and key files. You can generate a self-signed certificate with a command like `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout example.key -out example.crt`.
 
+If you are using Apache with PHP, I recommend using the `geerlingguy.php` role to install PHP, and you can either use mod_php (by adding the proper package, e.g. `libapache2-mod-php5` for Ubuntu, to `php_packages`), or by also using `geerlingguy.apache-php-fpm` to connect Apache to PHP via FPM. See that role's README for more info.
+
 ## Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
@@ -89,6 +91,10 @@ The list of packages to be installed. This defaults to a set of platform-specifi
     apache_state: started
 
 Set initial Apache daemon state to be enforced when this role is run. This should generally remain `started`, but you can set it to `stopped` if you need to fix the Apache config during a playbook run or otherwise would not like Apache started at the time this role is run.
+
+    apache_ignore_missing_ssl_certificate: true
+
+If you would like to only create SSL vhosts when the vhost certificate is present (e.g. when using Let’s Encrypt), set `apache_ignore_missing_ssl_certificate` to `false`. When doing this, you might need to run your playbook more than once so all the vhosts are configured (if another part of the playbook generates the SSL certificates).
 
 ## Dependencies
 
