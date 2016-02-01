@@ -12,6 +12,9 @@
 - include: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
+- include: setup-Suse.yml
+  when: ansible_os_family == 'Suse'
+
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
 
@@ -38,6 +41,9 @@
 # Configure Apache.
 - include: configure-RedHat.yml
   when: ansible_os_family == 'RedHat'
+
+- include: configure-Suse.yml
+  when: ansible_os_family == 'Suse'
 
 - include: configure-Debian.yml
   when: ansible_os_family == 'Debian'

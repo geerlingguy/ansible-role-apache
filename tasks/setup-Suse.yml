@@ -1,0 +1,6 @@
+---
+- name: Ensure Apache is installed.
+  zypper:
+    name: "{{ item }}"
+    state: installed
+  with_items: apache_packages
