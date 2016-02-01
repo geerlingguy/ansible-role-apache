@@ -1,5 +1,5 @@
 ---
-- name: Ensure Apache is installed.
+- name: Ensure Apache is installed on Solaris.
   pkg5:
     name: "{{ item }}"
     state: installed
