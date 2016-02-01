@@ -12,8 +12,14 @@
 - include: setup-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
+- include: setup-Suse.yml
+  when: ansible_os_family == 'Suse'
+
 - include: setup-Debian.yml
   when: ansible_os_family == 'Debian'
+
+- include: setup-Solaris.yml
+  when: ansible_os_family == 'Solaris'
 
 # Figure out what version of Apache is installed.
 - name: Get installed version of Apache.
@@ -36,11 +42,17 @@
 - include: configure-RedHat.yml
   when: ansible_os_family == 'RedHat'
 
+- include: configure-Suse.yml
+  when: ansible_os_family == 'Suse'
+
 - include: configure-Debian.yml
   when: ansible_os_family == 'Debian'
 
+- include: configure-Solaris.yml
+  when: ansible_os_family == 'Solaris'
+
 - name: Ensure Apache has selected state and enabled on boot.
   service:
-    name: "{{ apache_daemon }}"
+    name: "{{ apache_service }}"
     state: "{{ apache_state }}"
     enabled: yes
