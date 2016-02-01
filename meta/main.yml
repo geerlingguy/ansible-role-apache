@@ -20,6 +20,8 @@ galaxy_info:
       - raring
       - saucy
       - trusty
+    - name: Suse
+      - all
     - name: Solaris
       versions:
       - 11.3
