@@ -21,6 +21,7 @@ galaxy_info:
       - saucy
       - trusty
     - name: Suse
+      versions:
       - all
     - name: Solaris
       versions:
