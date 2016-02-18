@@ -14,7 +14,7 @@ __apache_packages:
   - openssh
 
 apache_ports_configuration_items:
-  - regexp: "^Listen "
+  - regexp: "^Listen {{ apache_listen_port }}$"
     line: "Listen {{ apache_listen_port }}"
-  - regexp: "^#?NameVirtualHost "
+  - regexp: "^#?NameVirtualHost *:{{ apache_listen_port }}$"
     line: "NameVirtualHost *:{{ apache_listen_port }}"
