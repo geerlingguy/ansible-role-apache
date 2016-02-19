@@ -16,5 +16,5 @@ __apache_packages:
 apache_ports_configuration_items:
   - regexp: "^Listen {{ apache_listen_port }}$"
     line: "Listen {{ apache_listen_port }}"
-  - regexp: "^#?NameVirtualHost *:{{ apache_listen_port }}$"
+  - regexp: "^#?NameVirtualHost \\*:{{ apache_listen_port }}$"
     line: "NameVirtualHost *:{{ apache_listen_port }}"
