@@ -1,5 +1,5 @@
 ---
 - name: restart apache
   service:
-    name: "{{ apache_daemon }}"
+    name: "{{ apache_service }}"
     state: restarted

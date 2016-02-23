@@ -1,5 +1,5 @@
 ---
-- name: Ensure Apache is installed.
+- name: Ensure Apache is installed on RHEL.
   yum:
     name: "{{ item }}"
     state: installed
