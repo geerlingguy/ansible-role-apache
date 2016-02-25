@@ -3,6 +3,9 @@ apache_enablerepo: ""
 
 apache_listen_port: 80
 apache_listen_port_ssl: 443
+apache_listen_ports:
+ - "{{ apache_listen_port }}"
+ - "{{ apache_listen_port_ssl }}"
 
 apache_create_vhosts: true
 apache_vhosts_filename: "vhosts.conf"
