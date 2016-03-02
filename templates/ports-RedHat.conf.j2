@@ -1,0 +1,11 @@
+{% for port in apache_listen_port | string | split(' ') %}
+NameVirtualHost *:{{ port }}
+Listen {{ port }}
+{% endfor %}
+
+<IfDefine SSL>
+{% for port in apache_listen_port_ssl | string | split(' ') %}
+NameVirtualHost *:{{ port }}
+Listen {{ port }}
+{% endfor %}
+</IfDefine>

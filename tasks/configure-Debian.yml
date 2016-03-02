@@ -1,11 +1,8 @@
 ---
 - name: Configure Apache.
-  lineinfile:
+  template:
+    src: ports-Debian.conf.j2
     dest: "{{ apache_server_root }}/ports.conf"
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
-    state: present
-  with_items: "{{ apache_ports_configuration_items }}"
   notify: restart apache
 
 - name: Enable Apache mods.

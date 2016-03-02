@@ -2,7 +2,7 @@
 
 {# Set up VirtualHosts #}
 {% for vhost in apache_vhosts %}
-<VirtualHost *:{{ vhost.port | default(apache_listen_port) }}>
+<VirtualHost *:{{ string(vhost.port).split(' ').join(' *:') | default(string(apache_listen_port).split(' ')[0]) }}>
   ServerName {{ vhost.servername }}
 {% if vhost.serveralias is defined %}
   ServerAlias {{ vhost.serveralias }}
@@ -31,7 +31,7 @@
 
 {# Set up SSL VirtualHosts. #}
 {% for vhost in apache_vhosts_ssl %}
-<VirtualHost *:{{ vhost.port | default(apache_listen_port_ssl) }}>
+<VirtualHost *:{{ string(vhost.port).split(' ').join(' *:') | default(string(apache_listen_port_ssl).split(' ')[0]) }}>
   ServerName {{ vhost.servername }}
 {% if vhost.serveralias is defined %}
   ServerAlias {{ vhost.serveralias }}

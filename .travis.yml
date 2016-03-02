@@ -47,6 +47,17 @@ script:
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
+  - 'sudo docker exec "$(cat ${container_id})" mkdir -p /var/www/vhosts/example_com'
+  - 'sudo docker exec "$(cat ${container_id})" mkdir -p /var/www/vhosts/example_port_com'
+
+  - 'sudo docker exec "$(cat ${container_id})" bash -c "echo foo >| /var/www/vhosts/example_com/index.html"'
+  - 'sudo docker exec "$(cat ${container_id})" bash -c "echo foo >| /var/www/vhosts/example_port_com/index.html"'
+
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm curl --header Host:example.com localhost:80'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm curl --header Host:example.com localhost:443'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm curl --header Host:example-port.com localhost:83'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm curl --header Host:example-port.com localhost:84'
+
   # Clean up
   - 'sudo docker stop "$(cat ${container_id})"'
 
