@@ -43,7 +43,7 @@ You can add or override global Apache configuration settings in the role-provide
       - servername: "local.dev"
         documentroot: "/var/www/html"
 
-Add a set of properties per virtualhost, including `servername` (required), `documentroot` (required), `serveradmin` (optional), `serveralias` (optional) and `extra_parameters` (optional: you can add whatever additional configuration lines you'd like in here).
+Add a set of properties per virtualhost, including `servername` (required), `documentroot` (required), `serveradmin` (optional), `serveralias` (optional), `port` (optional: defaults to `apache_listen_port`) and `extra_parameters` (optional: you can add whatever additional configuration lines you'd like in here).
 
 Here's an example using `extra_parameters` to add a RewriteRule to redirect all requests to the `www.` site:
 

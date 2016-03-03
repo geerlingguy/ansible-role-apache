@@ -8,6 +8,9 @@
     apache_vhosts:
       - servername: "example.com"
         documentroot: "/var/www/vhosts/example_com"
+      - servername: "example-port.com"
+        port: '83 84'
+        documentroot: "/var/www/vhosts/example_port_com"
 
   roles:
     - role_under_test

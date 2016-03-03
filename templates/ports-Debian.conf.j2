@@ -1,0 +1,15 @@
+{% for port in apache_listen_port | string | split(' ') %}
+Listen {{ port }}
+{% endfor %}
+
+<IfModule ssl_module>
+{% for port in apache_listen_port_ssl | string | split(' ') %}
+Listen {{ port }}
+{% endfor %}
+</IfModule>
+
+<IfModule mod_gnutls.c>
+{% for port in apache_listen_port_ssl | string | split(' ') %}
+Listen {{ port }}
+{% endfor %}
+</IfModule>

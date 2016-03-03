@@ -2,10 +2,24 @@
 - name: Configure Apache.
   lineinfile:
     dest: "{{ apache_server_root }}/conf/{{ apache_daemon }}.conf"
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
+    line: "Include conf/ports.conf"
     state: present
-  with_items: "{{ apache_ports_configuration_items }}"
+  notify: restart apache
+
+- name: Remove Listen directives from Apache configuration.
+  lineinfile:
+    dest: "{{ item[0] }}"
+    regexp: "^{{ item[1] }}"
+    state: absent
+  with_nested:
+    - ["{{ apache_server_root }}/conf/{{ apache_daemon }}.conf", "{{ apache_server_root }}/conf.d/ssl.conf"]
+    - "{{ [apache_listen_port, apache_listen_port_ssl] | join(' ') | split(' ') }}"
+  notify: restart apache
+
+- name: Create Apache ports.conf.
+  template:
+    src: ports-Redhat.conf.j2
+    dest: "{{ apache_server_root }}/conf/ports.conf"
   notify: restart apache
 
 - name: Check whether certificates defined in vhosts exist.
