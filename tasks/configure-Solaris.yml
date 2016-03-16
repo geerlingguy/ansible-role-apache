@@ -5,7 +5,7 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
-  with_items: apache_ports_configuration_items
+  with_items: "{{ apache_ports_configuration_items }}"
   notify: restart apache
 
 - name: Add apache vhosts configuration.

@@ -5,7 +5,7 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
-  with_items: apache_ports_configuration_items
+  with_items: "{{ apache_ports_configuration_items }}"
   notify: restart apache
 
 - name: Enable Apache mods.
@@ -13,20 +13,20 @@
     src: "{{ apache_server_root }}/mods-available/{{ item }}"
     dest: "{{ apache_server_root }}/mods-enabled/{{ item }}"
     state: link
-  with_items: apache_mods_enabled
+  with_items: "{{ apache_mods_enabled }}"
   notify: restart apache
 
 - name: Disable Apache mods.
   file:
     path: "{{ apache_server_root }}/mods-enabled/{{ item }}"
     state: absent
-  with_items: apache_mods_disabled
+  with_items: "{{ apache_mods_disabled }}"
   notify: restart apache
 
 - name: Check whether certificates defined in vhosts exist.
-  stat: path={{ item.certificate_file }}
+  stat: "path={{ item.certificate_file }}"
   register: apache_ssl_certificates
-  with_items: apache_vhosts_ssl
+  with_items: "{{ apache_vhosts_ssl }}"
 
 - name: Add apache vhosts configuration.
   template:
