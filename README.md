@@ -1,7 +1,5 @@
 # Ansible Role: Apache 2.x
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-apache.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-apache)
-
 An Ansible Role that installs Apache 2.x on RHEL/CentOS and Debian/Ubuntu.
 
 This is a fork of: https://github.com/geerlingguy/ansible-role-apache
