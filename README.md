@@ -4,6 +4,10 @@
 
 An Ansible Role that installs Apache 2.x on RHEL/CentOS and Debian/Ubuntu.
 
+This is a fork of: https://github.com/geerlingguy/ansible-role-apache
+
+The main difference is, that this version let you define which ports to listen.
+
 ## Requirements
 
 If you are using SSL/TLS, you will need to provide your own certificate and key files. You can generate a self-signed certificate with a command like `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout example.key -out example.crt`.
@@ -104,9 +108,18 @@ None.
 
 *Inside `vars/main.yml`*:
 
-    apache_listen_port: 8080
+    apache_listen_port:
+      - 80
+      - 8080
     apache_vhosts:
-      - {servername: "example.com", documentroot: "/var/www/vhosts/example_com"}
+     - servername: "example.com"
+       documentroot: "/var/www/html/main"
+       serveralias: "main.example.com"
+       port: 80
+     - servername: "example.com"
+       documentroot: "/var/www/html/admin_interface"
+       serveralias: "admin.example.com"
+       port: 8080
 
 ## License
 
