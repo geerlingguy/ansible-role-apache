@@ -1,6 +1,6 @@
 # Ansible Role: Apache 2.x
 
-An Ansible Role that installs Apache 2.x on RHEL/CentOS and Debian/Ubuntu.
+An Ansible Role that installs Apache 2.x on RHEL/CentOS.
 
 This is a fork of: https://github.com/geerlingguy/ansible-role-apache
 
