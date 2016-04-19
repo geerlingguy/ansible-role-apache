@@ -62,10 +62,10 @@ And an example that tries to proxy for an the internal hosts `backend.example.co
         serveralias: "example.com"
         documentroot: "/var/www/html"
         reverse_proxies:
-	  - path: "/backend"
-	    url: "http://backend.example.com/"
-	  - path: "/apps"
-	    url: "http://apps.example.com/"
+          - path: "/backend"
+            url: "http://backend.example.com/"
+          - path: "/apps"
+            url: "http://apps.example.com/"
 
 Note that on Debian/Ubuntu systems you need to enable the modules `proxy.load` and `proxy_http.load` using the `apache_mods_enabled` directive, or otherwise the reverse proxy will not work.
 
