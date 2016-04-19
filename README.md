@@ -58,7 +58,7 @@ The `|` denotes a multiline scalar block in YAML, so newlines are preserved in t
 
 And an example that tries to proxy for an the internal hosts `backend.example.com` and `apps.example.com`:
 
-- servername: "www.example.com"
+      - servername: "www.example.com"
         serveralias: "example.com"
         documentroot: "/var/www/html"
         reverse_proxies:
