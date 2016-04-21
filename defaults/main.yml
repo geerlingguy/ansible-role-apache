@@ -1,6 +1,7 @@
 ---
 apache_enablerepo: ""
 
+apache_listen_ip: "*"
 apache_listen_port: 80
 apache_listen_port_ssl: 443
 
