@@ -16,10 +16,14 @@
 {% endif %}
 {% if vhost.documentroot is defined %}
   <Directory "{{ vhost.documentroot }}">
-    AllowOverride All
-    Options -Indexes FollowSymLinks
-    Order allow,deny
-    Allow from all
+    {% if vhost.directory_parameters is defined %}
+      {{ vhost.directory_parameters }}
+    {% else %}
+      AllowOverride All
+      Options -Indexes FollowSymLinks
+      Order allow,deny
+      Allow from all
+    {% endif %}
   </Directory>
 {% endif %}
 {% if vhost.extra_parameters is defined %}
@@ -55,10 +59,14 @@
 {% endif %}
 {% if vhost.documentroot is defined %}
   <Directory "{{ vhost.documentroot }}">
-    AllowOverride All
-    Options -Indexes FollowSymLinks
-    Order allow,deny
-    Allow from all
+    {% if vhost.directory_parameters is defined %}
+      {{ vhost.directory_parameters }}
+    {% else %}
+      AllowOverride All
+      Options -Indexes FollowSymLinks
+      Order allow,deny
+      Allow from all
+    {% endif %}
   </Directory>
 {% endif %}
 {% if vhost.extra_parameters is defined %}
