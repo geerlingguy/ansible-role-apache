@@ -20,6 +20,7 @@ galaxy_info:
       - raring
       - saucy
       - trusty
+      - xenial
     - name: Suse
       versions:
       - all
