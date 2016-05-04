@@ -23,7 +23,7 @@
     AuthName "Restricted Area"
     AuthUserFile "{{ vhost.authuserfile }}"
     Require valid-user
-{% elseif apache_vhosts_version == "2.2" %}
+{% elif apache_vhosts_version == "2.2" %}
     Order allow,deny
     Allow from all
 {% else %}
