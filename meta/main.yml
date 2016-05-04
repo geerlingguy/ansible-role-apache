@@ -6,7 +6,7 @@ galaxy_info:
   description: Apache 2.x for RedHat/CentOS/Debian/Ubuntu/Solaris/Suse.
   company: "Midwestern Mac, LLC"
   license: "license (BSD, MIT)"
-  min_ansible_version: 1.4
+  min_ansible_version: 1.9
   platforms:
     - name: EL
       versions:
