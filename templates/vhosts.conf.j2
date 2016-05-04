@@ -18,7 +18,12 @@
   <Directory "{{ vhost.documentroot }}">
     AllowOverride All
     Options -Indexes +FollowSymLinks
-{% if apache_vhosts_version == "2.2" %}
+{% if vhost.authuserfile is defined %}
+    AuthType Basic
+    AuthName "Restricted Area"
+    AuthUserFile "{{ vhost.authuserfile }}"
+    Require valid-user
+{% elseif apache_vhosts_version == "2.2" %}
     Order allow,deny
     Allow from all
 {% else %}
