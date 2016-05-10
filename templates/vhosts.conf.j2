@@ -24,7 +24,7 @@
 {% else %}
     Require all granted
 {% endif %}
-{% if vhost.extra_parameters_directory %}
+{% if vhost.extra_parameters_directory is defined %}
   {{ vhost.extra_parameters_directory }}
 {% endif %}
   </Directory>
