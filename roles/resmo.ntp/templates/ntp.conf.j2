@@ -1,0 +1,63 @@
+# {{ ansible_managed }}
+
+driftfile {{ ntp_config_driftfile }}
+
+{% for pool in ntp_config_pool %}
+pool {{ pool }}
+{% endfor %}
+
+{% for server in ntp_config_server %}
+server {{ server }}
+{% endfor %}
+
+{% if ntp_config_statistics %}
+statistics {{ ntp_config_statistics }}
+{% endif %}
+
+{% for filegen in ntp_config_filegen %}
+filegen {{ filegen }}
+{% endfor %}
+
+{% for listen in ntp_config_listen %}
+interface listen {{ listen }}
+{% endfor %}
+
+{% for restrict in ntp_config_restrict %}
+restrict {{ restrict }}
+{% endfor %}
+
+{% if ntp_config_crypto %}
+crypto
+{% endif %}
+
+{% if ntp_config_includefile %}
+includefile  {{ ntp_config_includefile }}
+{% endif %}
+
+{% if ntp_config_keys %}
+keys {{ ntp_config_keys }}
+{% endif %}
+
+{% if ntp_config_trustedkey %}
+trustedkey {{ ntp_config_trustedkey }}
+{% endif %}
+
+{% if ntp_config_requestkey %}
+requestkey  {{ ntp_config_requestkey }}
+{% endif %}
+
+{% if ntp_config_controlkey %}
+controlkey {{ ntp_config_controlkey }}
+{% endif %}
+
+{% if ntp_config_broadcast %}
+broadcast {{ ntp_config_broadcast }}
+{% endif %}
+
+{% if ntp_config_broadcastclient %}
+broadcastclient
+{% endif %}
+
+{% if ntp_config_multicastclient %}
+multicastclient {{ ntp_config_multicastclient }}
+{% endif %}

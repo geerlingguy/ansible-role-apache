@@ -1,0 +1,45 @@
+---
+- name: add python packages
+  apt: name={{item}} state=present
+  with_items:
+    - python
+    - python-dev
+    - python-distribute
+    - python-pip
+    - python-psycopg2
+  when: ansible_os_family == 'Debian'
+
+- name: add pip packages
+  pip: name={{item}} state=present
+  with_items:
+    - mechanize
+    - beautifulsoup
+    - https://github.com/wizhippo/fdb/archive/interbase.zip
+
+- name: add caching packages
+  apt: name={{item}} state=present
+  with_items:
+    - memcached
+    - varnish
+  when: ansible_os_family == 'Debian'
+
+- name: add Rabbit mq
+  apt: name={{item}} state=present
+  with_items:
+    - rabbitmq-server
+  when: ansible_os_family == 'Debian'
+
+- name: enable Rabbit mq plugins
+  command: rabbitmq-plugins enable rabbitmq_management
+  notify:
+    - restart rabbitmq
+  when: ansible_os_family == 'Debian'
+
+# used by contract expiry notices
+# used by ezpublish to generate video thumbnails
+- name: add applciation dep packages
+  apt: name={{item}} state=present
+  with_items:
+    - html2ps
+    - ffmpeg
+  when: ansible_os_family == 'Debian'

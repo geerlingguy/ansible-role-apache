@@ -1,0 +1,39 @@
+---
+- name: Upgrade all packages
+  apt: upgrade=dist update_cache=yes
+
+- name: Check for reboot hint
+  stat: path=/var/run/reboot-required get_md5=no
+  register: reboot_hint      
+
+- name: Reboot server
+  when: (reboot_hint.stat.exists is defined and reboot_hint.stat.exists)
+  shell: sleep 2 && /sbin/shutdown -r now "Ansible rebooting"
+  async: 1
+  poll: 0
+  ignore_errors: yes
+  register: rebooting
+
+- name: Wait for the server to finish rebooting
+  when: rebooting|changed
+  become: no
+  local_action: wait_for port=22 host="{{ inventory_hostname }}" search_regex=OpenSSH delay=15 timeout=300
+
+- name: Check if packages need to be autoremoved
+  command: apt-get --dry-run autoremove
+  register: check_autoremove
+  changed_when: False
+ 
+- name: Autoremove unused packages
+  command: apt-get -y autoremove
+  when: "'packages will be REMOVED' in check_autoremove.stdout"
+    
+- name: Check if packages need to be autocleaned
+  command: apt-get --dry-run autoclean
+  register: check_autoclean
+  changed_when: False
+
+- name: Clean up package cache 
+  when: "'Del' in check_autoclean.stdout"
+  command: apt-get -y autoclean
+

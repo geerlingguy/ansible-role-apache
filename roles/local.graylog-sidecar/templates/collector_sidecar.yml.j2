@@ -1,0 +1,14 @@
+--
+server_url: {{ graylog_server_url }}
+node_id: {{ ansible_hostname }}-graylog-collector-sidecar
+collector_id: file:/etc/graylog/collector-sidecar/collector-id
+tags:
+    - linux
+update_interval: 10
+log_path: /var/log/graylog/collector-sidecar
+backends:
+    - name: nxlog
+      enabled: true
+      binary_path: /usr/bin/nxlog
+      configuration_path: /etc/graylog/collector-sidecar/generated/nxlog.conf
+

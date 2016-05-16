@@ -1,0 +1,5 @@
+---
+- name: restart graylog-collector-sidecar
+  service: name=graylog-collector-sidecar state=restarted
+  tags: [ 'service', 'graylog-collector-sidecar' ]
+

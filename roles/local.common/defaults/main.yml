@@ -1,0 +1,3 @@
+---
+common_sudoer_user: dhammond
+common_graylog_server: graylog.travelonly.net

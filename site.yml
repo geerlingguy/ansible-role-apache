@@ -1,0 +1,8 @@
+---
+- name: Apply common configuration to all nodes
+  hosts: all
+  become: yes
+  roles:
+    - role: local.fudge
+    - role: local.common
+    - role: resmo.ntp

@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  remote_user: root
+  vars:
+    solr_version: "3.6.2"
+    java_packages:
+      - openjdk-7-jdk
+  roles:
+    - geerlingguy.java
+    - ansible-role-solr

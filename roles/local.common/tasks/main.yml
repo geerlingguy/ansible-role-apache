@@ -1,0 +1,25 @@
+---
+- name: add ansible sudoer user
+  template: src=ansible.sudoer.j2 dest=/etc/sudoers.d/ansible
+
+- name: log to graylog
+  template: src=10-graylog.conf.j2 dest=/etc/rsyslog.d/10-graylog.conf
+  notify:
+    - restart rsyslog
+  when: common_graylog_server is defined
+
+- name: Install deps used by ansible (Debian)
+  apt: name="{{item}}" state=present
+  with_items:
+    - unzip
+    - git
+    - mc
+  when: ansible_os_family == 'Debian'
+
+- name: Install deps used by ansible (RedHat)
+  apt: name="{{item}}" state=present
+  with_items:
+    - unzip
+    - git
+    - mc
+  when: ansible_os_family == "Redhat"

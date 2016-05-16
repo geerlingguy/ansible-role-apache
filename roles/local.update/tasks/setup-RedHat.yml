@@ -1,0 +1,22 @@
+---
+- name: Upgrade all packages
+  yum: name=* state=latest
+
+- name: Check for reboot hint
+  shell: if [ $(readlink -f /vmlinuz) != /boot/vmlinuz-$(uname -r) ]; then echo 'reboot'; else echo 'no'; fi
+  ignore_errors: true
+  register: reboot_hint
+
+- name: Reboot server
+  when: reboot_hint.stdout.find("reboot") != -1
+  shell: sleep 2 && /sbin/shutdown -r now "Ansible rebooting"
+  async: 1
+  poll: 0
+  ignore_errors: yes
+  register: rebooting
+
+- name: Wait for the server to finish rebooting
+  when: rebooting|changed
+  become: no
+  local_action: wait_for port=22 host="{{ inventory_hostname }}" search_regex=OpenSSH delay=15 timeout=300
+

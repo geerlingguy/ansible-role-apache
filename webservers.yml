@@ -1,0 +1,63 @@
+---
+- hosts: webservers
+  become: true
+  vars:
+    php_packages:
+      - php7.0
+      - php7.0-bcmath
+      - php7.0-cli
+      - php7.0-common
+      - php7.0-curl
+      - php7.0-dev
+      - php7.0-fpm
+      - php7.0-gd
+      - php7.0-imap
+      - php7.0-interbase
+      - php7.0-intl
+      - php7.0-json
+      - php7.0-ldap
+      - php7.0-mbstring
+      - php7.0-mcrypt
+      - php7.0-mysql
+      - php7.0-pgsql
+      - php7.0-readline
+      - php7.0-tidy
+      - php7.0-xmlrpc
+      - php7.0-xsl
+      - php-memcached
+      - php-xdebug
+      - composer
+    # these will be manged elsewhere ubuntu's defaults
+    php_enable_webserver: no
+    php_enable_php_config: no
+    php_enable_php_fpm: no
+    php_enable_apc: no
+    php_opcache_enable: no
+    php_use_managed_ini: no
+
+    apache_mods_enabled:
+      - proxy.load
+      - proxy_fcgi.load
+      - proxy_ajp.load
+      - proxy_http.load
+      - env.load
+      - rewrite.load
+      - setenvif.load
+      - expires.load
+      - ssl.load
+      - headers.load
+    apache_confs_enabled:
+      - php7.0-fpm.conf
+    apache_create_vhosts: false
+
+  roles:
+    - { role: local.fudge }
+    - { role: local.common }
+    - { role: resmo.ntp }
+    - { role: geerlingguy.php }
+    - { role: geerlingguy.apache }
+    - { role: geerlingguy.java }
+    - { role: geerlingguy.solr }
+    - { role: local.solr.ezfind}
+    - { role: local.webserver }
+    - { role: local.kettle }

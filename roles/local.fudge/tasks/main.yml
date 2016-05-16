@@ -1,0 +1,5 @@
+---
+- name: Set known RedHat variants ansible_os_family to RedHat
+  when: ansible_os_family == "SHMZ"
+  set_fact: ansible_os_family="RedHat"
+
