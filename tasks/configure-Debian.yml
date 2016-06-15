@@ -30,7 +30,7 @@
 
 - name: Add htpasswd configuration.
   htpasswd: path={{ item.file }} name={{ item.username }} password={{ item.password }} state=present
-  with_items: apache_htpasswd
+  with_items: "{{ apache_htpasswd }}"
   when: apache_htpasswd
 
 - name: Add apache vhosts configuration.
