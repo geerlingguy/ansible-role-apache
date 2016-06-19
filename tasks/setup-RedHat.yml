@@ -1,4 +1,9 @@
 ---
+- name: Ensure libselinux-python is installed on RHEL.
+  yum:
+    name: "libselinux-python"
+    state: installed
+
 - name: Ensure Apache is installed on RHEL.
   yum:
     name: "{{ item }}"
