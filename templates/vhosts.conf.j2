@@ -7,6 +7,9 @@
 {% if vhost.serveralias is defined %}
   ServerAlias {{ vhost.serveralias }}
 {% endif %}
+{% if vhost.alias is defined %}
+  Alias {{ vhost.alias }}
+{% endif %}
 {% if vhost.documentroot is defined %}
   DocumentRoot {{ vhost.documentroot }}
 {% endif %}
@@ -40,6 +43,9 @@
   ServerName {{ vhost.servername }}
 {% if vhost.serveralias is defined %}
   ServerAlias {{ vhost.serveralias }}
+{% endif %}
+{% if vhost.alias is defined %}
+  Alias {{ vhost.alias }}
 {% endif %}
 {% if vhost.documentroot is defined %}
   DocumentRoot {{ vhost.documentroot }}
