@@ -14,6 +14,10 @@ env:
       version: latest
       init: /sbin/init
       run_opts: ""
+    - repository: geerlingguy/docker-ubuntu1604-ansible
+      version: latest
+      init: /lib/systemd/systemd
+      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     - repository: geerlingguy/docker-ubuntu1404-ansible
       version: latest
       init: /sbin/init
