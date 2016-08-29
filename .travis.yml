@@ -24,7 +24,7 @@ services:
 
 before_install:
   # Pull container.
-  - 'sudo docker pull ${distribution}:${version}'
+  - 'sudo docker pull ${repository}:${version}'
 
 script:
   - container_id=$(mktemp)
