@@ -40,11 +40,11 @@ On Debian/Ubuntu, a default virtualhost is included in Apache's configuration. S
 You can add or override global Apache configuration settings in the role-provided vhosts file (assuming `apache_create_vhosts` is true) using this variable. By default it only sets the DirectoryIndex configuration.
 
     apache_vhosts:
-      # Additional optional properties: 'serveradmin, serveralias, extra_parameters'.
+      # Additional optional properties: 'serveradmin, serveralias, extra_parameters, reverse_proxies'.
       - servername: "local.dev"
         documentroot: "/var/www/html"
 
-Add a set of properties per virtualhost, including `servername` (required), `documentroot` (required), `serveradmin` (optional), `serveralias` (optional) and `extra_parameters` (optional: you can add whatever additional configuration lines you'd like in here).
+Add a set of properties per virtualhost, including `servername` (required), `documentroot` (required), `serveradmin` (optional), `serveralias` (optional), `extra_parameters` (optional: you can add whatever additional configuration lines you'd like in here), and `reverse_proxies` (optional, you can add as many reverse proxy rules you'd like).
 
 Here's an example using `extra_parameters` to add a RewriteRule to redirect all requests to the `www.` site:
 
@@ -56,6 +56,21 @@ Here's an example using `extra_parameters` to add a RewriteRule to redirect all 
           RewriteRule ^(.*)$ http://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 The `|` denotes a multiline scalar block in YAML, so newlines are preserved in the resulting configuration file output.
+
+And an example that tries to proxy for an the internal hosts `backend.example.com` and `apps.example.com`:
+
+      - servername: "www.example.com"
+        serveralias: "example.com"
+        documentroot: "/var/www/html"
+        reverse_proxies:
+          - path: "/backend"
+            url: "http://backend.example.com/"
+          - path: "/apps"
+            url: "http://apps.example.com/"
+
+Note that on Debian/Ubuntu systems you need to enable the modules `proxy.load` and `proxy_http.load` using the `apache_mods_enabled` directive, or otherwise the reverse proxy will not work.
+
+SSL configuration is done through the `apache_vhosts_ssl` parameter:
 
     apache_vhosts_ssl: []
 

@@ -29,6 +29,14 @@
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
 {% endif %}
+{% if vhost.reverse_proxies is defined %}
+
+{% for proxy in vhost.reverse_proxies %}
+  ProxyPass "{{ proxy.path }}" "{{ proxy.url }}"
+  ProxyPassReverse "{{ proxy.path }}" "{{ proxy.url }}"
+
+{% endfor %}
+{% endif %}
 </VirtualHost>
 
 {% endfor %}
@@ -75,6 +83,14 @@
 {% endif %}
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
+{% endif %}
+{% if vhost.reverse_proxies is defined %}
+
+{% for proxy in vhost.reverse_proxies %}
+  ProxyPass "{{ proxy.path }}" "{{ proxy.url }}"
+  ProxyPassReverse "{{ proxy.path }}" "{{ proxy.url }}"
+
+{% endfor %}
 {% endif %}
 </VirtualHost>
 
