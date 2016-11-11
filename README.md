@@ -36,15 +36,22 @@ On Debian/Ubuntu, a default virtualhost is included in Apache's configuration. S
     apache_global_vhost_settings: |
       DirectoryIndex index.php index.html
       # Add other global settings on subsequent lines.
+      
+You can use Basic Auth to password-protect your virtual hosts using this variable. Uncomment the example lines and add the `authuserfile` variable in your `apache_vhost` configuration below. It should point to the same location as `apache_htpasswd.file`.
+
+    apache_htpasswd:
+      # - file: "/var/www/.htpasswd"
+      #   username: "myuser"
+      #   password: "mypassword"
 
 You can add or override global Apache configuration settings in the role-provided vhosts file (assuming `apache_create_vhosts` is true) using this variable. By default it only sets the DirectoryIndex configuration.
 
     apache_vhosts:
-      # Additional optional properties: 'serveradmin, serveralias, extra_parameters'.
+      # Additional optional properties: 'serveradmin, serveralias, authuserfile, extra_parameters'.
       - servername: "local.dev"
         documentroot: "/var/www/html"
 
-Add a set of properties per virtualhost, including `servername` (required), `documentroot` (required), `serveradmin` (optional), `serveralias` (optional) and `extra_parameters` (optional: you can add whatever additional configuration lines you'd like in here).
+Add a set of properties per virtualhost, including `servername` (required), `documentroot` (required), `serveradmin` (optional), `serveralias` (optional), `authuserfile` (optional) and `extra_parameters` (optional: you can add whatever additional configuration lines you'd like in here).
 
 Here's an example using `extra_parameters` to add a RewriteRule to redirect all requests to the `www.` site:
 
