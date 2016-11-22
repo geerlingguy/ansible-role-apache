@@ -17,7 +17,11 @@
 {% if vhost.documentroot is defined %}
   <Directory "{{ vhost.documentroot }}">
     AllowOverride All
+{% if vhost.options is defined %}
+    Options {{ vhost.options }}
+{% else %}
     Options -Indexes +FollowSymLinks
+{% endif %}
 {% if apache_vhosts_version == "2.2" %}
     Order allow,deny
     Allow from all
@@ -64,7 +68,11 @@
 {% if vhost.documentroot is defined %}
   <Directory "{{ vhost.documentroot }}">
     AllowOverride All
+{% if vhost.options is defined %}
+    Options {{ vhost.options }}
+{% else %}
     Options -Indexes +FollowSymLinks
+{% endif %}
 {% if apache_vhosts_version == "2.2" %}
     Order allow,deny
     Allow from all
