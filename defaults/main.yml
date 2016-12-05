@@ -15,6 +15,10 @@ apache_remove_default_vhost: false
 apache_global_vhost_settings: |
   DirectoryIndex index.php index.html
 
+# Create default <Directory "{{apache_vhosts.documentroot}}">-Directive
+# Set this to `false` for your own <Directory>-Directive in apache_vhosts.extra_parameters
+apache_documentroot_directory_defaults: true
+
 apache_vhosts:
   # Additional properties: 'serveradmin, serveralias, extra_parameters'.
   - servername: "local.dev"
