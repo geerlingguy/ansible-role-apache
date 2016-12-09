@@ -103,6 +103,27 @@ Set initial Apache daemon state to be enforced when this role is run. This shoul
 
 If you would like to only create SSL vhosts when the vhost certificate is present (e.g. when using Let’s Encrypt), set `apache_ignore_missing_ssl_certificate` to `false`. When doing this, you might need to run your playbook more than once so all the vhosts are configured (if another part of the playbook generates the SSL certificates).
 
+## .htaccess-based Basic Authorization
+
+If you require Basic Auth support, you can add it either through a custom template, or by adding `extra_parameters` to a VirtualHost configuration, like so:
+
+    extra_parameters: |
+      <Directory "/var/www/password-protected-directory">
+        Require valid-user
+        AuthType Basic
+        AuthName "Please authenticate"
+        AuthUserFile /var/www/password-protected-directory/.htpasswd
+      </Directory>
+
+To password protect everything within a VirtualHost directive, use the `Location` block instead of `Directory`:
+
+    <Location "/">
+      Require valid-user
+      ....
+    </Location>
+
+You would need to generate/upload your own `.htpasswd` file in your own playbook. There may be other roles that support this functionality in a more integrated way.
+
 ## Dependencies
 
 None.
