@@ -46,6 +46,11 @@ apache_mods_enabled:
   - ssl.load
 apache_mods_disabled: []
 
+apache_conf_enabled:
+  - other-vhosts-access-log.conf
+  - charset.conf
+apache_conf_disabled: []
+
 # Set initial apache state. Recommended values: `started` or `stopped`
 apache_state: started
 
