@@ -29,6 +29,7 @@
     dest: "{{ apache_server_root }}/conf-enabled/{{ item }}"
     state: link
   with_items: "{{ apache_conf_enabled }}"
+  when: ansible_lsb.major_release|int >= 12
   notify: restart apache
 
 - name: Disable Apache configuration snippet.
@@ -36,6 +37,7 @@
     path: "{{ apache_server_root }}/conf-enabled/{{ item }}"
     state: absent
   with_items: "{{ apache_conf_disabled }}"
+  when: ansible_lsb.major_release|int >= 12
   notify: restart apache
 
 - name: Check whether certificates defined in vhosts exist.
