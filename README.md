@@ -101,7 +101,7 @@ Set initial Apache daemon state to be enforced when this role is run. This shoul
 
     apache_packages_state: installed
 
-If you have enabled any additional repositories such as _ondrej/apache2_, [geerlingguy.repo-epel](https://github.com/geerlingguy/ansible-role-repo-epel) or [geerlingguy.repo-remi](https://github.com/geerlingguy/ansible-role-repo-remi), you may want an easy way to upgrade versions. By default, this is set to `installed`. You can now override this variable to `latest`. Combined with `apache_enablerepo`, a user now doesn't need to manually uninstall the existing Apache packages before installing them from a different repository.
+If you have enabled any additional repositories such as _ondrej/apache2_, [geerlingguy.repo-epel](https://github.com/geerlingguy/ansible-role-repo-epel), or [geerlingguy.repo-remi](https://github.com/geerlingguy/ansible-role-repo-remi), you may want an easy way to upgrade versions. You can set this to `latest` (combined with `apache_enablerepo` on RHEL) and can directly upgrade to a different Apache version from a different repo (instead of uninstalling and reinstalling Apache).
 
     apache_ignore_missing_ssl_certificate: true
 
