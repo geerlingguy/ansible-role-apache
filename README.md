@@ -99,6 +99,10 @@ The list of packages to be installed. This defaults to a set of platform-specifi
 
 Set initial Apache daemon state to be enforced when this role is run. This should generally remain `started`, but you can set it to `stopped` if you need to fix the Apache config during a playbook run or otherwise would not like Apache started at the time this role is run.
 
+    apache_packages_state: installed
+
+If you have enabled any additional repositories such as _ondrej/apache2_, [geerlingguy.repo-epel](https://github.com/geerlingguy/ansible-role-repo-epel) or [geerlingguy.repo-remi](https://github.com/geerlingguy/ansible-role-repo-remi), you may want an easy way to upgrade versions. By default, this is set to `installed`. You can now override this variable to `latest`. Combined with `apache_enablerepo`, a user now doesn't need to manually uninstall the existing Apache packages before installing them from a different repository.
+
     apache_ignore_missing_ssl_certificate: true
 
 If you would like to only create SSL vhosts when the vhost certificate is present (e.g. when using Let’s Encrypt), set `apache_ignore_missing_ssl_certificate` to `false`. When doing this, you might need to run your playbook more than once so all the vhosts are configured (if another part of the playbook generates the SSL certificates).
