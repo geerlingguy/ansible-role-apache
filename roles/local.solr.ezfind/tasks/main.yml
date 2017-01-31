@@ -1,0 +1,52 @@
+---
+- name: Check if eZ Find solr core is already installed.
+  stat: "path={{ solr_home }}/ezp-default/conf/solrconfig.xml"
+  register: solr_ezfind_file
+
+- name: Download eZ Find.
+  get_url:
+    url: "https://github.com/ezsystems/ezfind/archive/master.zip"
+    dest: "{{ solr_workspace }}/ezfind-master.zip"
+    force: no
+  when: not solr_ezfind_file.stat.exists
+
+- name: Expand eZ Find.
+  unarchive:
+    src: "{{ solr_workspace }}/ezfind-master.zip"
+    dest: "{{ solr_workspace }}"
+    creates: "{{ solr_workspace }}/ezfind-master/java/solr/solr.xml"
+    copy: no
+
+- name: Copy eZ Find solr core into place.
+  command: "cp -r {{ solr_workspace }}/ezfind-master/java/solr/ezp-default {{ solr_home }}"
+  when: not solr_ezfind_file.stat.exists
+
+- name: Ensure eZ Find solr core lib directory exists.
+  file:
+    path: "{{ solr_home }}/ezp-default/lib"
+    state: directory
+  when: not solr_ezfind_file.stat.exists
+
+- name: Copy eZ Find solr core libs into place.
+  command: "cp -f {{ solr_workspace }}/ezfind-master/java/solr/lib/ezsystems-ezfind-solr-extension-solr-4.10.1.jar {{ solr_home }}/ezp-default/lib/ezsystems-ezfind-solr-extension-solr-4.10.1.jar"
+  when: not solr_ezfind_file.stat.exists
+
+- name: Copy eZ Find solr core solrconfig.xml
+  template: src=solrconfig.xml dest="{{ solr_home }}/ezp-default/conf/solrconfig.xml"
+  notify:
+    - restart solr
+  when: not solr_ezfind_file.stat.exists
+
+- name: Copy eZ Find solr core core.properties
+  template: src=core.properties dest="{{ solr_home }}/ezp-default/core.properties"
+  notify:
+    - restart solr
+  when: not solr_ezfind_file.stat.exists
+
+- name: Ensure Solr home files are owned by the solr_user.
+  file:
+    path: "{{ solr_home }}"
+    owner: "{{ solr_user }}"
+    group: "{{ solr_user }}"
+    recurse: yes
+  when: not solr_ezfind_file.stat.exists

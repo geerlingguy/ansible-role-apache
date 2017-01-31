@@ -1,0 +1,40 @@
+---
+- name: mailserver
+  apt: name={{item}} state=present
+  with_items:
+    - postfix
+    - postfix-pgsql
+    - dovecot
+    - dovecot-pgsql
+    - postgrey
+    - amavis
+    - clamav
+    - clamav-daemon
+    - spamassassin
+    - pyzor
+    - razor
+    - arj
+    - cabextract
+    - lzop
+    - nomarch
+    - p7zip-full
+    - ripole
+    - rpm2cpio
+    - tnef
+    - unzip
+    - unrar-free
+    - zip
+    - zoo
+    - libdbd-pg-perl
+  when: ansible_os_family == 'Debian'
+
+- name: update virus db freshclam
+  command: freshclam
+  when: ansible_os_family == 'Debian'
+
+- name: clamav-daemon restart
+  service: namee=lamav-daemon state=restarted enabled=yes
+  when: ansible_os_family == 'Debian'
+
+- user: name=vmail comment="Virtual maildir handler" uid=17.00 group=mail shell=/sbin/nologin home=/var/vmail
+- file: path=/var/vmail state=directory mode="0770" owner=vmail group=vmail

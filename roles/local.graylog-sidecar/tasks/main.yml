@@ -1,0 +1,49 @@
+---
+- name: Install the required libdb1 package in Redhat derivatives
+  yum: name=libdb1
+  when: ansible_os_family == "Redhat"
+  tags: [ 'package', 'nxlog' ]
+
+- name: Install the required libdb1 package in Debian derivatives
+  apt:  name=libdb1
+  when: ansible_os_family == 'Debian'
+  tags: [ 'package', 'nxlog' ]
+
+- name: Install the required nxlog package in Redhat derivatives
+  yum: name=https://nxlog.co/system/files/products/files/1/nxlog-ce-2.9.1504-1_rhel7.x86_64.rpm
+  when: ansible_os_family == "Redhat"
+  tags: [ 'package', 'nxlog' ]
+
+- name: Install the required nxlog package in Debian derivatives
+  apt:  deb=https://nxlog.co/system/files/products/files/1/nxlog-ce_2.9.1504_ubuntu_1404_amd64.deb
+  when: ansible_os_family == 'Debian'
+  tags: [ 'package', 'nxlog' ]
+
+- name: Stop and disable nxlog service
+  service: name=nxlog state=stopped enabled=no
+  tags: [ 'service', 'nxlog' ]
+  
+- name: Install the required collector-sidecar package in Redhat derivatives
+  yum: name=https://github.com/Graylog2/collector-sidecar/releases/download/0.0.3/collector-sidecar-0.0.3-2.x86_64.rpm
+  when: ansible_os_family == "Redhat"
+  tags: [ 'package', 'graylog-collector-sidecar' ]
+
+- name: Install the required collector-sidecar package in Debian derivatives
+  apt:  deb=https://github.com/Graylog2/collector-sidecar/releases/download/0.0.3/collector-sidecar_0.0.3-2_amd64.deb
+  when: ansible_os_family == 'Debian'
+  tags: [ 'package', 'graylog-collector-sidecar' ]
+  
+- name: Copy collector_sidecar.yml template file
+  template: src=collector_sidecar.yml dest=/etc/graylog/collector-sidecar/collector_sidecar.yml
+  notify:
+    - restart graylog-collector-sidecar
+  tags: [ 'configuration', 'package', 'graylog-collector-sidecar' ]
+    
+- name: Install the graylog-collector-sidecar service
+  shell: graylog-collector-sidecar -service install
+  tags: [ 'package', 'graylog-collector-sidecar' ]     
+  
+- name: make sure graylog-collector-sidecar is running and enabled at boot
+  service: name=graylog-collector-sidecar state=started enabled=yes
+  tags: [ 'service', 'graylog-collector-sidecar' ]
+

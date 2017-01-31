@@ -1,0 +1,14 @@
+---
+ntp_config_pool:
+  - '0.ubuntu.pool.ntp.org iburst'
+  - '1.ubuntu.pool.ntp.org iburst'
+  - '2.ubuntu.pool.ntp.org iburst'
+  - '3.ubuntu.pool.ntp.org iburst'
+ntp_config_listen: [all]
+ntp_config_restrict:
+  - '-4 default kod notrap nomodify nopeer noquery limited'
+  - '-6 default kod notrap nomodify nopeer noquery limited'
+  - '127.0.0.1'
+  - '::1'
+  - 'source notrap nomodify noquery'
+  - '10.0.0.0 mask 255.0.0.0 nomodify notrap nopeer'

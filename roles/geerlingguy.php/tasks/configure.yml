@@ -1,0 +1,44 @@
+---
+- name: Ensure configuration directories exist.
+  file:
+    path: "{{ item }}"
+    state: directory
+    follow: true
+  with_flattened:
+    - "{{ php_conf_paths }}"
+    - "{{ php_extension_conf_paths }}"
+
+- name: Place PHP configuration file in place.
+  template:
+    src: php.ini.j2
+    dest: "{{ item }}/php.ini"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ php_conf_paths }}"
+  notify: restart webserver
+  when: php_use_managed_ini
+
+- name: Place APC configuration file in place.
+  template:
+    src: apc.ini.j2
+    dest: "{{ item }}/{{ php_apc_conf_filename }}"
+    owner: root
+    group: root
+    force: yes
+    mode: 0644
+  with_items: "{{ php_extension_conf_paths }}"
+  when: php_enable_apc
+  notify: restart webserver
+
+- name: Place OpCache configuration file in place.
+  template:
+    src: opcache.ini.j2
+    dest: "{{ item }}/{{ php_opcache_conf_filename }}"
+    owner: root
+    group: root
+    force: yes
+    mode: 0644
+  with_items: "{{ php_extension_conf_paths }}"
+  when: php_opcache_enable
+  notify: restart webserver

@@ -1,0 +1,37 @@
+---
+- name: Check if eZ Find solr core is already installed.
+  stat: path=/opt/data-integration/LICENSE.txt
+  register: kettle_file
+
+- name: Download kettle.
+  get_url:
+    url: "http://iweb.dl.sourceforge.net/project/pentaho/Data%20Integration/6.1/{{kettle_pentaho_pdi_filename}}"
+    dest: "/root/{{kettle_pentaho_pdi_filename}}"
+    force: no
+  when: not kettle_file.stat.exists
+
+# can't use unarchive here a there is a bug that can't handle a filename in the archive
+- name: install kettle
+  command: unzip -o -d /opt /root/pdi-ce-6.1.0.1-196.zip
+  when: not kettle_file.stat.exists
+
+# could set KETTLE_HOME
+- name: add kettle repository config directory
+  file:
+    path: /root/.kettle
+    state: directory
+
+- name: add kettle repository config
+  template:
+    src: repositories.xml.j2
+    dest: /root/.kettle/repositories.xml
+
+- name: add interclient jdbc driver
+  copy:
+    src: interclient.jar
+    dest: /opt/data-integration/lib/interclient.jar
+
+- cron: name="kettle monthly" minute="0" hour="4" day="1" month="*/1" job="cd /opt/data-integration && ./kitchen.sh -rep=Travelonly -job=\"monthly\""
+- cron: name="kettle weekly" minute="0" hour="4" weekday="0" job="cd /opt/data-integration && ./kitchen.sh -rep=Travelonly -job=\"weekly\""
+- cron: name="kettle daily" minute="0" hour="4" day="*/1" job="cd /opt/data-integration && ./kitchen.sh -rep=Travelonly -job=\"daily\""
+- cron: name="kettle hourly" minute="0" hour="*/1" job="cd /opt/data-integration && ./kitchen.sh -rep=Travelonly -job=\"hourly\""

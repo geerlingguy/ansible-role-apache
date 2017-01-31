@@ -1,0 +1,45 @@
+---
+- include: user.yml
+  when: solr_create_user
+
+- name: Set solr_filename for Solr 4.x.
+  set_fact:
+    "solr_filename=solr-{{ solr_version }}"
+  when: "solr_version.split('.')[0] == '4'"
+
+- name: Set solr_filename for Solr 3.x.
+  set_fact:
+    solr_filename: "apache-solr-{{ solr_version }}"
+  when: "solr_version.split('.')[0] == '3'"
+
+- name: Download Solr.
+  get_url:
+    url: "{{ solr_mirror }}/lucene/solr/{{ solr_version }}/{{ solr_filename }}.tgz"
+    dest: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
+    force: no
+
+- name: Expand Solr.
+  unarchive:
+    src: "{{ solr_workspace }}/{{ solr_filename }}.tgz"
+    dest: "{{ solr_workspace }}"
+    creates: "{{ solr_workspace }}/{{ solr_filename }}/dist/{{ solr_filename }}.war"
+    copy: no
+
+- name: Check if Solr is already installed.
+  stat: "path={{ solr_install_path }}/dist/{{ solr_filename }}.war"
+  register: solr_war_file
+
+- name: Copy Solr into place.
+  command: "cp -r {{ solr_workspace }}/{{ solr_filename }} {{ solr_install_path }}"
+  when: not solr_war_file.stat.exists
+
+- name: Ensure Solr install files are owned by the solr_user.
+  file:
+    path: "{{ solr_install_path }}"
+    owner: "{{ solr_user }}"
+    group: "{{ solr_user }}"
+    recurse: yes
+  when: not solr_war_file.stat.exists
+
+- include: solr-home.yml
+- include: init-script.yml

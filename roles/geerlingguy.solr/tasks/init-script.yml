@@ -1,0 +1,25 @@
+---
+- name: Ensure log file is created and has proper permissions.
+  file:
+    path: "/var/log/solr.log"
+    state: touch
+    owner: "{{ solr_user }}"
+    group: root
+    mode: 0664
+  changed_when: false
+
+- name: Copy solr init script into place.
+  template:
+    src: "solr-init-{{ ansible_os_family }}.j2"
+    dest: "/etc/init.d/{{ solr_service_name }}"
+    mode: 0755
+
+- name: Ensure daemon is installed (Debian).
+  apt: name=daemon state=installed
+  when: ansible_os_family == "Debian"
+
+- name: Ensure solr is started and enabled on boot.
+  service:
+    name: "{{ solr_service_name }}"
+    state: started
+    enabled: yes
