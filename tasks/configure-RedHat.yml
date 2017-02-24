@@ -22,3 +22,14 @@
     mode: 0644
   notify: restart apache
   when: apache_create_vhosts
+
+- name: Hardening apache config
+  blockinfile:
+    dest: /etc/httpd/conf.d/security.conf
+    create: yes
+    owner: root
+    group: root
+    block: |
+      ServerTokens Prod
+      ServerSignature Off
+  notify: restart apache
