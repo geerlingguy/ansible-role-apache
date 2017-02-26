@@ -69,7 +69,7 @@
     line: 'ServerTokens {{ apache_servertokens }}'
   notify: restart apache
   when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version | version_compare('12.04', '>')) or
-        (ansible_distribution == 'Debian' or ansible_distribution_version | version_compare('7', '>'))
+        (ansible_distribution == 'Debian' and ansible_distribution_version | version_compare('7', '>'))
   
 - name: Configure apache ServerSignature Ubuntu 12.04 or Debian 7
   lineinfile:
@@ -87,4 +87,4 @@
     line: 'ServerSignature {{ apache_serversignature }}'
   notify: restart apache
   when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version | version_compare('12.04', '>')) or
-        (ansible_distribution == 'Debian' or ansible_distribution_version | version_compare('7', '>'))
+        (ansible_distribution == 'Debian' and ansible_distribution_version | version_compare('7', '>'))
