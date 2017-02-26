@@ -53,16 +53,36 @@
   notify: restart apache
   when: apache_remove_default_vhost
   
-- name: Configure apache ServerTokens
+- name: Configure apache ServerTokens Ubuntu 12.04
   lineinfile:
     dest: /etc/apache2/conf.d/security
     regexp: '^ServerTokens'
     line: 'ServerTokens {{ apache_servertokens }}'
   notify: restart apache
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04'
   
-- name: Configure apache ServerSignature
+- name: Configure apache ServerTokens Ubuntu > 12.04 and Debian
+  lineinfile:
+    dest: /etc/apache2/conf-available/security.conf
+    regexp: '^ServerTokens'
+    line: 'ServerTokens {{ apache_servertokens }}'
+  notify: restart apache
+  when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version|int >= '12') or
+        (ansible_distribution == 'Debian')
+  
+- name: Configure apache ServerSignature Ubuntu 12.04
   lineinfile:
     dest: /etc/apache2/conf.d/security
     regexp: '^ServerSignature'
     line: 'ServerSignature {{ apache_serversignature }}'
   notify: restart apache
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04'
+  
+- name: Configure apache ServerSignature Ubuntu > 12.04 and Debian
+  lineinfile:
+    dest: /etc/apache2/conf-available/security.conf
+    regexp: '^ServerSignature'
+    line: 'ServerSignature {{ apache_serversignature }}'
+  notify: restart apache
+  when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version|int >= '12') or
+        (ansible_distribution == 'Debian')
