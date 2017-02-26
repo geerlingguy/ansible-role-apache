@@ -67,7 +67,7 @@
     regexp: '^ServerTokens'
     line: 'ServerTokens {{ apache_servertokens }}'
   notify: restart apache
-  when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version|int >= '12') or
+  when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version | version_compare('12.04', '>=')) or
         (ansible_distribution == 'Debian')
   
 - name: Configure apache ServerSignature Ubuntu 12.04
@@ -84,5 +84,5 @@
     regexp: '^ServerSignature'
     line: 'ServerSignature {{ apache_serversignature }}'
   notify: restart apache
-  when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version|int >= '12') or
+  when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version | version_compare('12.04', '>=')) or
         (ansible_distribution == 'Debian')
