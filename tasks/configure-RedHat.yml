@@ -30,6 +30,6 @@
     owner: root
     group: root
     block: |
-      ServerTokens Prod
-      ServerSignature Off
+      ServerTokens {{ apache_servertokens }}
+      ServerSignature {{ apache_serversignature }}
   notify: restart apache
