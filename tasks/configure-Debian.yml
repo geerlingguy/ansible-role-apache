@@ -53,14 +53,14 @@
   notify: restart apache
   when: apache_remove_default_vhost
   
-- name: Hardening apache config for ServerTokens
+- name: Configure apache ServerTokens
   lineinfile:
     dest: /etc/apache2/conf.d/security
     regexp: '^ServerTokens'
     line: 'ServerTokens {{ apache_servertokens }}'
   notify: restart apache
   
-- name: Hardening apache config for ServerSignature
+- name: Configure apache ServerSignature
   lineinfile:
     dest: /etc/apache2/conf.d/security
     regexp: '^ServerSignature'

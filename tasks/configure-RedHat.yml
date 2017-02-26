@@ -23,7 +23,7 @@
   notify: restart apache
   when: apache_create_vhosts
 
-- name: Hardening apache config
+- name: Configure apache ServerTokens and ServerSignature
   blockinfile:
     dest: /etc/httpd/conf.d/security.conf
     create: yes
