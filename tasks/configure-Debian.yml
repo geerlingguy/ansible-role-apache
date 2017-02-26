@@ -53,36 +53,38 @@
   notify: restart apache
   when: apache_remove_default_vhost
   
-- name: Configure apache ServerTokens Ubuntu 12.04
+- name: Configure apache ServerTokens Ubuntu 12.04 or Debian 7
   lineinfile:
     dest: /etc/apache2/conf.d/security
     regexp: '^ServerTokens'
     line: 'ServerTokens {{ apache_servertokens }}'
   notify: restart apache
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04'
+  when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04') or
+        (ansible_distribution == 'Debian' and ansible_distribution_version == '7')
   
-- name: Configure apache ServerTokens Ubuntu > 12.04 and Debian
+- name: Configure apache ServerTokens Ubuntu > 12.04 or Debian > 7
   lineinfile:
     dest: /etc/apache2/conf-available/security.conf
     regexp: '^ServerTokens'
     line: 'ServerTokens {{ apache_servertokens }}'
   notify: restart apache
   when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version | version_compare('12.04', '>')) or
-        (ansible_distribution == 'Debian')
+        (ansible_distribution == 'Debian' or ansible_distribution_version | version_compare('7', '>'))
   
-- name: Configure apache ServerSignature Ubuntu 12.04
+- name: Configure apache ServerSignature Ubuntu 12.04 or Debian 7
   lineinfile:
     dest: /etc/apache2/conf.d/security
     regexp: '^ServerSignature'
     line: 'ServerSignature {{ apache_serversignature }}'
   notify: restart apache
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04'
+  when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '12.04') or
+        (ansible_distribution == 'Debian' and ansible_distribution_version == '7')
   
-- name: Configure apache ServerSignature Ubuntu > 12.04 and Debian
+- name: Configure apache ServerSignature Ubuntu > 12.04 or Debian > 7
   lineinfile:
     dest: /etc/apache2/conf-available/security.conf
     regexp: '^ServerSignature'
     line: 'ServerSignature {{ apache_serversignature }}'
   notify: restart apache
   when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version | version_compare('12.04', '>')) or
-        (ansible_distribution == 'Debian')
+        (ansible_distribution == 'Debian' or ansible_distribution_version | version_compare('7', '>'))
