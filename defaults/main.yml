@@ -56,3 +56,10 @@ apache_restart_state: restarted
 # Apache package state; use `installed` to make sure it's installed, or `latest` if
 # you want to upgrade or switch versions using a new repo.
 apache_packages_state: installed
+
+# Set settings for ServerTokens and ServerSignature in apache. 
+# These are the default provided by apache
+# Possible values for ServerTokens: Full | OS | Minimal | Minor | Major | Prod
+# Possible values for ServerSignature: On | Off | EMail
+apache_servertokens: "OS"
+apache serversignature: "On"
