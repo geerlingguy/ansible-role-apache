@@ -62,4 +62,4 @@ apache_packages_state: installed
 # Possible values for ServerTokens: Full | OS | Minimal | Minor | Major | Prod
 # Possible values for ServerSignature: On | Off | EMail
 apache_servertokens: "OS"
-apache serversignature: "On"
+apache_serversignature: "On"
