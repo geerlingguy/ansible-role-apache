@@ -2,7 +2,7 @@
 
 {# Set up VirtualHosts #}
 {% for vhost in apache_vhosts %}
-<VirtualHost {{ apache_listen_ip }}:{{ apache_listen_port }}>
+<VirtualHost {{ apache_listen_ip }}:{{ vhost.listenport }}>
   ServerName {{ vhost.servername }}
 {% if vhost.serveralias is defined %}
   ServerAlias {{ vhost.serveralias }}
