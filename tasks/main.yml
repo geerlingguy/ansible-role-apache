@@ -3,8 +3,7 @@
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 
-# If AmazonLinuxm include needed variables.
-- name: Include OS-specific variables.
+- name: Include variables for Amazon Linux.
   include_vars: "AmazonLinux.yml"
   when: ansible_distribution == "Amazon" and ansible_distribution_major_version == "NA"
 
