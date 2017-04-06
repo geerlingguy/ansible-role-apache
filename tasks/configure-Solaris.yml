@@ -20,9 +20,15 @@
 
   - name: Configure Apache (Add listen port for every vhost).
   blockinfile:
-    dest: "{{ apache_server_root }}/conf/{{ apache_daemon }}.conf"
+    dest: "{{ apache_server_root }}/{{ apache_daemon }}.conf"
     insertafter: "^Listen {{ apache_listen_port }}"
-    block: "{% set return = joiner(\"\\n\") %}{% for item in apache_vhosts %}{% if item.listenport is defined and apache_listen_port != item.listenport %}{{ return() }}Listen {{ item.listenport }}{% endif %}{% endfor %}"
+    block: "\
+    {% set return = joiner(\"\\n\") %}\
+    {% for item in apache_vhosts %}\
+      {% if item.listenport is defined and apache_listen_port != item.listenport %}\
+{{ return() }}Listen {{ item.listenport }}\
+      {% endif %}\
+    {% endfor %}"
     owner: root
     group: root
     mode: 0644
