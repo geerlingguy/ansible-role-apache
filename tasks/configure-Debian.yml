@@ -10,7 +10,7 @@
 
 - name: Enable Apache mods.
   file:
-    src: "{{ apache_server_root }}/mods-available/{{ item }}"
+    src: "{{ apache_server_root }}/mods-available/{{ item }}.load"
     dest: "{{ apache_server_root }}/mods-enabled/{{ item }}"
     state: link
   with_items: "{{ apache_mods_enabled }}"
