@@ -26,6 +26,9 @@
 {% endif %}
   </Directory>
 {% endif %}
+
+  ServerSignature Off
+
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
 {% endif %}
@@ -73,6 +76,9 @@
 {% endif %}
   </Directory>
 {% endif %}
+
+  ServerSignature Off
+
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
 {% endif %}
