@@ -47,6 +47,10 @@ You can add or override global Apache configuration settings in the role-provide
 
 Add a set of properties per virtualhost, including `servername` (required), `documentroot` (required), `allow_override` (optional: defaults to the value of `apache_allow_override`), `options` (optional: defaults to the value of `apache_options`), `serveradmin` (optional), `serveralias` (optional) and `extra_parameters` (optional: you can add whatever additional configuration lines you'd like in here).
 
+    apache_documentroot_directory_defaults: true
+
+As the vhost file template automatically sets a default &lt;Directory&gt; directive for your document root, you can disable this by settings this value to `false` and add your own &lt;Directory&gt; directive for your document root via `extra_parameters`.
+
 Here's an example using `extra_parameters` to add a RewriteRule to redirect all requests to the `www.` site:
 
       - servername: "www.local.dev"

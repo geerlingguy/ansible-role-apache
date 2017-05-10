@@ -14,7 +14,7 @@
 {% if vhost.serveradmin is defined %}
   ServerAdmin {{ vhost.serveradmin }}
 {% endif %}
-{% if vhost.documentroot is defined %}
+{% if vhost.documentroot is defined and apache_documentroot_directory_defaults %}
   <Directory "{{ vhost.documentroot }}">
     AllowOverride {{ vhost.allow_override | default(apache_allow_override) }}
     Options {{ vhost.options | default(apache_options) }}
@@ -61,7 +61,7 @@
 {% if vhost.serveradmin is defined %}
   ServerAdmin {{ vhost.serveradmin }}
 {% endif %}
-{% if vhost.documentroot is defined %}
+{% if vhost.documentroot is defined and apache_documentroot_directory_defaults %}
   <Directory "{{ vhost.documentroot }}">
     AllowOverride {{ vhost.allow_override | default(apache_allow_override) }}
     Options {{ vhost.options | default(apache_options) }}
