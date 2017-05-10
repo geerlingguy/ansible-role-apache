@@ -22,3 +22,19 @@
     mode: 0644
   notify: restart apache
   when: apache_create_vhosts
+
+- name: Remove default vhost configurations
+  file:
+    path: "{{ apache_conf_path }}{{ item }}"
+    state: absent
+  notify: restart apache
+  with_items: "{{ apache_default_vhost_filenames }}"
+  when: apache_remove_default_vhost
+
+- name: Remove default vhost ssl configurations
+  file:
+    path: "{{ apache_conf_path }}{{ item }}"
+    state: absent
+  notify: restart apache
+  with_items: "{{ apache_default_vhost_ssl_filenames }}"
+  when: apache_remove_default_vhost_ssl

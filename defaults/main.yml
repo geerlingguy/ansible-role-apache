@@ -9,9 +9,21 @@ apache_create_vhosts: true
 apache_vhosts_filename: "vhosts.conf"
 apache_vhosts_template: "vhosts.conf.j2"
 
-# On Debian/Ubuntu, a default virtualhost is included in Apache's configuration.
-# Set this to `true` to remove that default.
+# Delete default virtualhost files included in Apache's configuration.
+# The set of files varies with OS and Apache version.
+# This role by default removes:
+# for Apache 2.2: 000-default, welcome.conf, userdir.conf, autoindex.conf
+# for Apache 2.4: 000-default.conf, welcome.conf, userdir.conf, autoindex.conf
+# Set this to `true` to remove these default files.
 apache_remove_default_vhost: false
+
+# Delete default SSL virtualhost files included in Apache's configuration.
+# The set of files varies with OS and Apache version.
+# This role by default removes:
+# for Apache 2.2: ssl.conf
+# for Apache 2.4: ssl.conf
+# Set this to `true` to remove these default files.
+apache_remove_default_vhost_ssl: false
 
 apache_global_vhost_settings: |
   DirectoryIndex index.php index.html
