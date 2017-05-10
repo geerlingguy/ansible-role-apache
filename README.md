@@ -88,7 +88,12 @@ The default values for the `AllowOverride` and `Options` directives for the `doc
       - ssl.load
     apache_mods_disabled: []
 
-(Debian/Ubuntu ONLY) Which Apache mods to enable or disable (these will be symlinked into the appropriate location). See the `mods-available` directory inside the apache configuration directory (`/etc/apache2/mods-available` by default) for all the available mods.
+    apache_conf_enabled:
+      - other-vhosts-access-log.conf
+      - charset.conf
+    apache_conf_disabled: []
+
+(Debian/Ubuntu ONLY) Which Apache modules and configuration snippets to enable or disable (these will be symlinked into the appropriate location). See the `mods-available` and `conf-available` directories inside the Apache configuration directory (`/etc/apache2/mods-available` and `/etc/apache2/conf-available` by default) for all the available modules and configuration snippets.
 
     apache_packages:
       - [platform-specific]
