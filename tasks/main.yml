@@ -12,6 +12,10 @@
     apache_packages: "{{ __apache_packages | list }}"
   when: apache_packages is not defined
 
+- name: Define ansible_container
+  set_fact:
+    ansible_container: "{{ lookup('env', 'ANSIBLE_CONTAINER') | default('0') }}"
+
 # Setup/install tasks.
 - include: "setup-{{ ansible_os_family }}.yml"
   static: no
@@ -42,3 +46,4 @@
     name: "{{ apache_service }}"
     state: "{{ apache_state }}"
     enabled: yes
+  when: ansible_container == '0'
