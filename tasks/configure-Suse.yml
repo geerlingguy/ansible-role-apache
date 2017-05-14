@@ -22,3 +22,11 @@
     mode: 0644
   notify: restart apache
   when: apache_create_vhosts
+
+- name: Override default Apache configurations.
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ apache_server_root }}/{{ item.dest }}"
+    force: "{{ item.force | default('yes') }}"
+  notify: restart apache
+  with_items: apache_config_files
