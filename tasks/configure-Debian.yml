@@ -58,5 +58,5 @@
     src: "{{ item.src }}"
     dest: "{{ apache_server_root }}/{{ item.dest }}"
     force: "{{ item.force | default('yes') }}"
+  with_items: "{{ apache_config_files }}"
   notify: restart apache
-  with_items: apache_config_files
