@@ -17,7 +17,7 @@
   static: no
   with_first_found:
   - files: setup-{{ ansible_os_family }}.yml
-  - skip: yes
+    skip: yes
 
 # Figure out what version of Apache is installed.
 - name: Get installed version of Apache.
@@ -41,7 +41,7 @@
   static: no
   with_first_found:
   - files: configure-{{ ansible_os_family }}.yml
-  - skip: yes
+    skip: yes
 
 - name: Ensure Apache has selected state and enabled on boot.
   service:
