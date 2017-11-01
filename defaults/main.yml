@@ -42,8 +42,8 @@ apache_ssl_cipher_suite: "AES256+EECDH:AES256+EDH"
 
 # Only used on Debian/Ubuntu.
 apache_mods_enabled:
-  - rewrite.load
-  - ssl.load
+  - rewrite
+  - ssl
 apache_mods_disabled: []
 
 # Set initial apache state. Recommended values: `started` or `stopped`
