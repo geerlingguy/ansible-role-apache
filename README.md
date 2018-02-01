@@ -63,10 +63,10 @@ The `|` denotes a multiline scalar block in YAML, so newlines are preserved in t
 No SSL vhosts are configured by default, but you can add them using the same pattern as `apache_vhosts`, with a few additional directives, like the following example:
 
     apache_vhosts_ssl:
-      - servername: "local.dev",
-        documentroot: "/var/www/html",
-        certificate_file: "/home/vagrant/example.crt",
-        certificate_key_file: "/home/vagrant/example.key",
+      - servername: "local.dev"
+        documentroot: "/var/www/html"
+        certificate_file: "/home/vagrant/example.crt"
+        certificate_key_file: "/home/vagrant/example.key"
         certificate_chain_file: "/path/to/certificate_chain.crt"
         extra_parameters: |
           RewriteCond %{HTTP_HOST} !^www\. [NC]
