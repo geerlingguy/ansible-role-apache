@@ -13,8 +13,13 @@
   when: apache_packages is not defined
 
 # Setup/install tasks.
-- include: "setup-{{ ansible_os_family }}.yml"
+- include: "{{ os_family }}"
   static: no
+  with_first_found:
+  - files: setup-{{ ansible_os_family }}.yml
+    skip: yes
+  loop_control:
+    loop_var: os_family
 
 # Figure out what version of Apache is installed.
 - name: Get installed version of Apache.
@@ -34,8 +39,13 @@
   when: "apache_version.split('.')[1] == '4'"
 
 # Configure Apache.
-- include: "configure-{{ ansible_os_family }}.yml"
+- include: "{{ os_family }}"
   static: no
+  with_first_found:
+  - files: configure-{{ ansible_os_family }}.yml
+    skip: yes
+  loop_control:
+    loop_var: os_family
 
 - name: Ensure Apache has selected state and enabled on boot.
   service:
