@@ -11,9 +11,3 @@ __apache_packages:
   - web/server/apache-24
   - web/server/apache-24/module/apache-ssl
   - web/server/apache-24/module/apache-security
-
-apache_ports_configuration_items:
-  - regexp: "^Listen "
-    line: "Listen {{ apache_listen_port }}"
-  - regexp: "^#?NameVirtualHost "
-    line: "NameVirtualHost {{ apache_listen_ip }}:{{ apache_listen_port }}"

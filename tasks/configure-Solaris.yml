@@ -1,11 +1,12 @@
 ---
-- name: Configure Apache.
+- name: Configure Apache httpd.conf (lineinfile - legacy).
   lineinfile:
     dest: "{{ apache_server_root }}/{{ apache_daemon }}.conf"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
   with_items: "{{ apache_ports_configuration_items }}"
+  when: item.line is defined
   notify: restart apache
 
 - name: Add apache vhosts configuration.

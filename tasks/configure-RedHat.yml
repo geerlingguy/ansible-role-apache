@@ -1,11 +1,42 @@
 ---
-- name: Configure Apache.
+- name: Install SELinux Python dependencies.
+  package:
+    name: libselinux-python
+    state: present
+
+- name: Enable Apache mods.
+  apache2_module:
+    name: "{{ item | regex_replace('(\\w+)\\.load','\\1') }}"
+    state: present
+  with_items: "{{ apache_mods_enabled }}"
+  notify: restart apache
+
+- name: Disable Apache mods.
+  apache2_module:
+    name: "{{ item | regex_replace('(\\w+)\\.load','\\1') }}"
+    state: absent
+  with_items: "{{ apache_mods_disabled }}"
+  notify: restart apache
+
+- name: Configure Apache httpd.conf (lineinfile - legacy).
   lineinfile:
     dest: "{{ apache_server_root }}/conf/{{ apache_daemon }}.conf"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
   with_items: "{{ apache_ports_configuration_items }}"
+  when: item.line is defined
+  notify: restart apache
+
+- name: Configure Apache ssl.conf (replace).
+  replace:
+    dest: "{{ apache_server_root }}/conf.d/ssl.conf"
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  with_items: "{{ apache_ports_configuration_items }}"
+  when:
+    - item.replace is defined
+    - '"ssl.load" in apache_mods_enabled or "ssl" in apache_mods_enabled'
   notify: restart apache
 
 - name: Check whether certificates defined in vhosts exist.

@@ -3,6 +3,7 @@ apache_enablerepo: ""
 
 apache_listen_ip: "*"
 apache_listen_port: 80
+# supported on Debian, RedHat/Amazon Linux and SUSE
 apache_listen_port_ssl: 443
 
 apache_create_vhosts: true
@@ -40,10 +41,11 @@ apache_ignore_missing_ssl_certificate: true
 apache_ssl_protocol: "All -SSLv2 -SSLv3"
 apache_ssl_cipher_suite: "AES256+EECDH:AES256+EDH"
 
-# Only used on Debian/Ubuntu.
+# Only used on Debian, RedHat and SUSE based OS.
+# You can use either the old format of this role (e.g. rewrite.role) or use mod name as below
 apache_mods_enabled:
-  - rewrite.load
-  - ssl.load
+  - rewrite
+  - ssl
 apache_mods_disabled: []
 
 # Set initial apache state. Recommended values: `started` or `stopped`
