@@ -19,11 +19,9 @@ galaxy_info:
         - all
     - name: Ubuntu
       versions:
-        - precise
-        - raring
-        - saucy
         - trusty
         - xenial
+        - bionic
     - name: Suse
       versions:
         - all
