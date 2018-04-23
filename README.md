@@ -1,8 +1,29 @@
 # Ansible Role: Apache 2.x
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-apache.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-apache)
+[![Build Status](https://travis-ci.org/wcm-io-devops/ansible-role-apache.svg?branch=master)](https://travis-ci.org/wcm-io-devops/ansible-role-apache)
 
 An Ansible Role that installs Apache 2.x on RHEL/CentOS, Debian/Ubuntu, SLES and Solaris.
+
+## <img src="http://wcm.io/images/favicon-16@2x.png"/> wcm.io fork
+
+wcm.io started to maintain a own fork to integrate changes to the original [geerlingguy.apache](https://github.com/geerlingguy/ansible-role-apache) repository faster.
+
+The wcm.io fork adds the following features on top of the original functionality:
+
+* pull request [#150](https://github.com/geerlingguy/ansible-role-apache/pull/150)
+    * `apache_listen_port` and `apache_listen_port_ssl` support on Debian, RedHat/Amazon Linux and SUSE
+    * `apache_mods_enabled` support on Debian, RedHat/Amazon Linux and SUSE.
+
+**Namespace**
+
+This role is published within the `wcm-io-devops` namespace.
+
+**Versioning**
+
+The version numbers of this fork will follow the versions of the forked repository.
+
+In order to keep the original version, wcm.io releases will add a fourth version number, which
+increments with every wcm.io release, e.g. `3.0.0.1` and `3.0.0.2`.
 
 ## Requirements
 
@@ -139,7 +160,7 @@ None.
       vars_files:
         - vars/main.yml
       roles:
-        - { role: geerlingguy.apache }
+        - { role: wcm-io-devops.apache }
 
 *Inside `vars/main.yml`*:
 
@@ -154,3 +175,5 @@ MIT / BSD
 ## Author Information
 
 This role was created in 2014 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+
+This fork is maintained by [wcm.io](http://wcm.io/).
