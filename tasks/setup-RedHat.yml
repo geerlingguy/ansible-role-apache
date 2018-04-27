@@ -1,7 +1,16 @@
 ---
-- name: Ensure Apache is installed on RHEL.
+- name: Ensure Apache is installed (via yum).
   yum:
     name: "{{ item }}"
     state: "{{ apache_packages_state }}"
     enablerepo: "{{ apache_enablerepo }}"
   with_items: "{{ apache_packages }}"
+  when: ansible_distribution != 'Fedora'
+
+- name: Ensure Apache is installed (via dnf).
+  dnf:
+    name: "{{ item }}"
+    state: "{{ apache_packages_state }}"
+    enablerepo: "{{ apache_enablerepo }}"
+  with_items: "{{ apache_packages }}"
+  when: ansible_distribution == 'Fedora'
