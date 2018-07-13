@@ -14,6 +14,10 @@ apache_vhosts_template: "vhosts.conf.j2"
 # Set this to `true` to remove that default.
 apache_remove_default_vhost: false
 
+# Delete default SSL virtualhost files includes in Apache's configuration
+# This currently only has an effect on RedHat based OS, where the default virtualhost is removed from ssl.conf
+apache_remove_default_vhost_ssl: false
+
 apache_global_vhost_settings: |
   DirectoryIndex index.php index.html
 
