@@ -30,7 +30,7 @@
 
 - name: Configure Apache ssl.conf (replace).
   replace:
-    dest: "{{ apache_server_root }}/conf.d/ssl.conf"
+    dest: "{{ apache_conf_path }}/ssl.conf"
     regexp: "{{ item.regexp }}"
     replace: "{{ item.replace }}"
   with_items: "{{ apache_ports_configuration_items }}"
@@ -53,3 +53,18 @@
     mode: 0644
   notify: restart apache
   when: apache_create_vhosts
+
+- name: Remove default vhost configurations
+  file:
+    path: "{{ apache_conf_path }}/{{ item }}"
+    state: absent
+  notify: restart apache
+  with_items: "{{ apache_default_vhost_filenames }}"
+  when: apache_remove_default_vhost
+
+- name: Remove default ssl vhost configurations
+  replace:
+    dest: "{{ apache_conf_path }}/ssl.conf"
+    regexp: "##\\n##\\s*SSL Virtual Host Context(.*\\n)*</VirtualHost>"
+  when: apache_remove_default_vhost_ssl
+  notify: restart apache

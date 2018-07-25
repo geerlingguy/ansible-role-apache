@@ -14,6 +14,9 @@ The wcm.io fork adds the following features on top of the original functionality
     * `apache_listen_port` and `apache_listen_port_ssl` support on Debian, RedHat/Amazon Linux and SUSE
     * `apache_mods_enabled` support on Debian, RedHat/Amazon Linux and SUSE.
 
+* Issue https://github.com/geerlingguy/ansible-role-apache/issues/81
+* Issue https://github.com/geerlingguy/ansible-role-apache/issues/21
+
 **Namespace**
 
 This role is published within the `wcm-io-devops` namespace.
@@ -53,7 +56,11 @@ If set to true, a vhosts file, managed by this role's variables (see below), wil
 
     apache_remove_default_vhost: false
 
-On Debian/Ubuntu, a default virtualhost is included in Apache's configuration. Set this to `true` to remove that default virtualhost configuration file.
+On Debian/Ubuntu RedHat/CentOS, default virtualhosts are included in Apache's configuration. Set this to `true` to remove that default virtualhost configuration file.
+
+    apache_remove_default_vhost_ssl: false
+
+On RedHat/CentOS based systems a default virtualhost is present in the ssl.conf. Set this to `true` to remove that virtualhost from ssl.conf configuration file.
 
     apache_global_vhost_settings: |
       DirectoryIndex index.php index.html

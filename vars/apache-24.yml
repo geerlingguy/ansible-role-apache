@@ -1,6 +1,10 @@
 ---
 apache_vhosts_version: "2.4"
-apache_default_vhost_filename: 000-default.conf
+apache_default_vhost_filenames:
+  - 000-default.conf
+  - welcome.conf
+  - userdir.conf
+  - autoindex.conf
 
 apache_ports_configuration_items:
   # Debian/Ubuntu and RedHat/CentOS/Amazon Linux Regex for http
