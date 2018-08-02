@@ -1,4 +1,4 @@
-# Ansible Role: Apache 2.x
+# wcm-io-devops.apache
 
 [![Build Status](https://travis-ci.org/wcm-io-devops/ansible-role-apache.svg?branch=master)](https://travis-ci.org/wcm-io-devops/ansible-role-apache)
 
@@ -23,7 +23,8 @@ This role is published within the `wcm-io-devops` namespace.
 
 **Versioning**
 
-The version numbers of this fork will follow the versions of the forked repository.
+The version numbers of this fork will follow the versions of the
+[forked](https://github.com/geerlingguy/ansible-role-apache) repository.
 
 In order to keep the original version, wcm.io releases will add a fourth version number, which
 increments with every wcm.io release, e.g. `3.0.0.1` and `3.0.0.2`.

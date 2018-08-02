@@ -2,10 +2,12 @@
 dependencies: []
 
 galaxy_info:
-  author: geerlingguy
-  description: Apache 2.x for Linux.
-  company: "Midwestern Mac, LLC"
-  license: "license (BSD, MIT)"
+  galaxy_info:
+  author: Tobias Richter
+  description: Apache 2.x for Linux. (fork of geerlingguy.apache)
+  company: pro!vision
+  issue_tracker_url: https://wcm-io.atlassian.net
+  license: Apache
   min_ansible_version: 2.4
   platforms:
     - name: EL
