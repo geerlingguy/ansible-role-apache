@@ -2,7 +2,7 @@
 dependencies: []
 
 galaxy_info:
-  galaxy_info:
+  role_name: apache
   author: Tobias Richter
   description: Apache 2.x for Linux. (fork of geerlingguy.apache)
   company: pro!vision
