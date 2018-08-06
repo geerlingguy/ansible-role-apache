@@ -1,8 +1,33 @@
-# Ansible Role: Apache 2.x
+# wcm_io_devops.apache
 
-[![Build Status](https://travis-ci.org/geerlingguy/ansible-role-apache.svg?branch=master)](https://travis-ci.org/geerlingguy/ansible-role-apache)
+[![Build Status](https://travis-ci.org/wcm-io-devops/ansible-role-apache.svg?branch=master)](https://travis-ci.org/wcm-io-devops/ansible-role-apache)
 
 An Ansible Role that installs Apache 2.x on RHEL/CentOS, Debian/Ubuntu, SLES and Solaris.
+
+## <img src="http://wcm.io/images/favicon-16@2x.png"/> wcm.io fork
+
+wcm.io started to maintain a own fork to integrate changes to the original [geerlingguy.apache](https://github.com/geerlingguy/ansible-role-apache) repository faster.
+
+The wcm.io fork adds the following features on top of the original functionality:
+
+* pull request [#150](https://github.com/geerlingguy/ansible-role-apache/pull/150)
+    * `apache_listen_port` and `apache_listen_port_ssl` support on Debian, RedHat/Amazon Linux and SUSE
+    * `apache_mods_enabled` support on Debian, RedHat/Amazon Linux and SUSE.
+
+* Issue https://github.com/geerlingguy/ansible-role-apache/issues/81
+* Issue https://github.com/geerlingguy/ansible-role-apache/issues/21
+
+**Namespace**
+
+This role is published within the `wcm-io-devops` namespace.
+
+**Versioning**
+
+The version numbers of this fork will follow the versions of the
+[forked](https://github.com/geerlingguy/ansible-role-apache) repository.
+
+In order to keep the original version, wcm.io releases will add a fourth version number, which
+increments with every wcm.io release, e.g. `3.0.0.1` and `3.0.0.2`.
 
 ## Requirements
 
@@ -32,7 +57,11 @@ If set to true, a vhosts file, managed by this role's variables (see below), wil
 
     apache_remove_default_vhost: false
 
-On Debian/Ubuntu, a default virtualhost is included in Apache's configuration. Set this to `true` to remove that default virtualhost configuration file.
+On Debian/Ubuntu RedHat/CentOS, default virtualhosts are included in Apache's configuration. Set this to `true` to remove that default virtualhost configuration file.
+
+    apache_remove_default_vhost_ssl: false
+
+On RedHat/CentOS based systems a default virtualhost is present in the ssl.conf. Set this to `true` to remove that virtualhost from ssl.conf configuration file.
 
     apache_global_vhost_settings: |
       DirectoryIndex index.php index.html
@@ -139,7 +168,7 @@ None.
       vars_files:
         - vars/main.yml
       roles:
-        - { role: geerlingguy.apache }
+        - { role: wcm_io_devops.apache }
 
 *Inside `vars/main.yml`*:
 
@@ -154,3 +183,5 @@ MIT / BSD
 ## Author Information
 
 This role was created in 2014 by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible for DevOps](https://www.ansiblefordevops.com/).
+
+This fork is maintained by [wcm.io](http://wcm.io/).

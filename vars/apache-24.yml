@@ -1,8 +1,29 @@
 ---
 apache_vhosts_version: "2.4"
-apache_default_vhost_filename: 000-default.conf
+apache_default_vhost_filenames:
+  - 000-default.conf
+  - welcome.conf
+  - userdir.conf
+  - autoindex.conf
+
 apache_ports_configuration_items:
+  # Debian/Ubuntu and RedHat/CentOS/Amazon Linux Regex for http
   - {
-    regexp: "^Listen ",
-    line: "Listen {{ apache_listen_port }}"
+      regexp: "^Listen\\s+\\d+$",
+      line: "Listen {{ apache_listen_port }}"
+  }
+  # RedHat/CentOS 7, Amazon Linux
+  - {
+      regexp: "^Listen\\s+\\d+\\s+https$",
+      replace: "Listen {{ apache_listen_port_ssl }} https"
+  }
+  # Debian, SUSE
+  - {
+      regexp: "^(\\s*<IfModule\\s+.+>(?:\\n+\\s+#.+)*\\s+)Listen\\s+\\d+",
+      replace: "\\1Listen {{ apache_listen_port_ssl }}"
+  }
+  # SUSE
+  - {
+      regexp: "^(# - name-based virtual hosting:\\n(?:#\\n)*)#?\\s*NameVirtualHost\\s+.*:\\d+",
+      replace: "\\1NameVirtualHost {{ apache_listen_ip }}:{{ apache_listen_port }}"
   }

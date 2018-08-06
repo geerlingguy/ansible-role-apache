@@ -1,12 +1,29 @@
 ---
 apache_vhosts_version: "2.2"
-apache_default_vhost_filename: 000-default
+apache_default_vhost_filenames:
+  - 000-default
+  - welcome.conf
+  - userdir.conf
+  - autoindex.conf
+
 apache_ports_configuration_items:
+  # Debian, Ubuntu and RedHat
   - {
-    regexp: "^Listen ",
+    regexp: "^Listen\\s+\\d+$",
     line: "Listen {{ apache_listen_port }}"
   }
+  # Debian/Ubuntu
   - {
     regexp: "^#?NameVirtualHost ",
     line: "NameVirtualHost {{ apache_listen_ip }}:{{ apache_listen_port }}"
+  }
+  # Debian/Ubuntu (SSL)
+  - {
+    regexp: "^(<IfModule\\s+.+>(?:\\n+\\s+#.+)*\\s+)Listen\\s+\\d+$",
+    replace: "\\1Listen {{ apache_listen_port_ssl }}"
+  }
+  # RedHat/CentOS 6 (SSL)
+  - {
+    regexp: "^(LoadModule\\s+ssl_module\\s+.*(?:\\n.*)*)Listen\\s+\\d+$",
+    replace: "\\1Listen {{ apache_listen_port_ssl }}"
   }
