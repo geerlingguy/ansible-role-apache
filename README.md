@@ -1,4 +1,4 @@
-# wcm-io-devops.apache
+# wcm_io_devops.apache
 
 [![Build Status](https://travis-ci.org/wcm-io-devops/ansible-role-apache.svg?branch=master)](https://travis-ci.org/wcm-io-devops/ansible-role-apache)
 
@@ -168,7 +168,7 @@ None.
       vars_files:
         - vars/main.yml
       roles:
-        - { role: wcm-io-devops.apache }
+        - { role: wcm_io_devops.apache }
 
 *Inside `vars/main.yml`*:
 
