@@ -26,8 +26,9 @@ This role is published within the `wcm-io-devops` namespace.
 The version numbers of this fork will follow the versions of the
 [forked](https://github.com/geerlingguy/ansible-role-apache) repository.
 
-In order to keep the original version, wcm.io releases will add a fourth version number, which
-increments with every wcm.io release, e.g. `3.0.0.1` and `3.0.0.2`.
+In order to keep the original version, wcm.io releases will add a fourth
+version number divided by a `-`, which increments with every wcm.io
+release, e.g. `3.0.0-1` and `3.0.0-2`.
 
 ## Requirements
 
