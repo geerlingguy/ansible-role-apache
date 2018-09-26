@@ -5,7 +5,9 @@
 
 - name: Include variables for Amazon Linux.
   include_vars: "AmazonLinux.yml"
-  when: ansible_distribution == "Amazon" and ansible_distribution_major_version == "NA"
+  when:
+    - ansible_distribution == "Amazon"
+    - ansible_distribution_major_version == "NA"
 
 - name: Define apache_packages.
   set_fact:
@@ -19,7 +21,7 @@
 - name: Get installed version of Apache.
   command: "{{ apache_daemon_path }}{{ apache_daemon }} -v"
   changed_when: false
-  check_mode: no
+  check_mode: false
   register: _apache_version
 
 - name: Create apache_version variable.
@@ -42,4 +44,4 @@
   service:
     name: "{{ apache_service }}"
     state: "{{ apache_state }}"
-    enabled: yes
+    enabled: true
