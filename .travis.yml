@@ -7,7 +7,6 @@ env:
     - ROLE_NAME: apache
   matrix:
     - MOLECULE_DISTRO: centos7
-      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
     - MOLECULE_DISTRO: centos6
     - MOLECULE_DISTRO: ubuntu1804
     - MOLECULE_DISTRO: ubuntu1604
