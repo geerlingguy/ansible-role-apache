@@ -13,6 +13,9 @@ galaxy_info:
     - name: EL
       versions:
         - all
+    - name: Fedora
+      versions:
+        - all
     - name: Amazon
       versions:
         - all
@@ -24,9 +27,6 @@ galaxy_info:
         - trusty
         - xenial
         - bionic
-    - name: Suse
-      versions:
-        - all
     - name: Solaris
       versions:
         - 11.3
@@ -35,5 +35,6 @@ galaxy_info:
     - apache
     - webserver
     - html
+    - httpd
 
-allow_duplicates: yes
+allow_duplicates: true
