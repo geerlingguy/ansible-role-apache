@@ -18,4 +18,4 @@
       changed_when: false
 
   roles:
-    - role: geerlingguy.apache
+    - role: wcm_io_devops.apache
