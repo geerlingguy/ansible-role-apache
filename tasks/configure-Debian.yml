@@ -23,6 +23,19 @@
   with_items: "{{ apache_mods_disabled }}"
   notify: restart apache
 
+- name: Configure Apache mods.
+  copy:
+    content: >
+      <IfModule {{ item.key }}_module>
+        {{ item.value }}
+      </IfModule>
+    dest: "{{ apache_server_root }}/mods-available/{{ item.key }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+  with_dict: "{{ apache_mods_config }}"
+
 - name: Check whether certificates defined in vhosts exist.
   stat: "path={{ item.certificate_file }}"
   register: apache_ssl_certificates

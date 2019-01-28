@@ -88,8 +88,15 @@ The default values for the `AllowOverride` and `Options` directives for the `doc
       - rewrite.load
       - ssl.load
     apache_mods_disabled: []
+    apache_mods_config:
+      mpm_prefork: |
+        StartServers     3
+        MinSpareServers  3
+        MaxSpareServers  5
+        MaxRequestWorkers 25
+        MaxConnectionsPerChild   1024
 
-(Debian/Ubuntu ONLY) Which Apache mods to enable or disable (these will be symlinked into the appropriate location). See the `mods-available` directory inside the apache configuration directory (`/etc/apache2/mods-available` by default) for all the available mods.
+(Debian/Ubuntu ONLY) Which Apache mods to enable or disable (these will be symlinked into the appropriate location). See the `mods-available` directory inside the apache configuration directory (`/etc/apache2/mods-available` by default) for all the available mods. `apache_mods_config` entries will be converted into conf files (under `/etc/apache2/mods-available/` by default). The contents will be wrapped in `<IfModule>` statements.
 
     apache_packages:
       - [platform-specific]
