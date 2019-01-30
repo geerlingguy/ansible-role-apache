@@ -22,7 +22,7 @@
     state: absent
   with_items: "{{ apache_mods_disabled }}"
   notify: restart apache
-  
+
 - name: Enable Apache configuration snippets.
   file:
     src: "{{ apache_server_root }}/conf-available/{{ item }}"
