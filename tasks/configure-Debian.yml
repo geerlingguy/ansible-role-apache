@@ -23,7 +23,7 @@
   with_items: "{{ apache_mods_disabled }}"
   notify: restart apache
   
-- name: Enable Apache configuration snippet.
+- name: Enable Apache configuration snippets.
   file:
     src: "{{ apache_server_root }}/conf-available/{{ item }}"
     dest: "{{ apache_server_root }}/conf-enabled/{{ item }}"
@@ -31,7 +31,7 @@
   with_items: "{{ apache_conf_enabled }}"
   notify: restart apache
 
-- name: Disable Apache configuration snippet.
+- name: Disable Apache configuration snippets.
   file:
     path: "{{ apache_server_root }}/conf-enabled/{{ item }}"
     state: absent
