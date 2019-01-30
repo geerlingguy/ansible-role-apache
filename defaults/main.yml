@@ -26,14 +26,14 @@ apache_allow_override: "All"
 apache_options: "-Indexes +FollowSymLinks"
 
 apache_vhosts_ssl: []
-  # Additional properties:
-  # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
-  # - servername: "local.dev",
-  #   documentroot: "/var/www/html",
-  #   certificate_file: "/path/to/certificate.crt",
-  #   certificate_key_file: "/path/to/certificate.key",
-  #   # Optional.
-  #   certificate_chain_file: "/path/to/certificate_chain.crt"
+# Additional properties:
+# 'serveradmin, serveralias, allow_override, options, extra_parameters'.
+# - servername: "local.dev",
+#   documentroot: "/var/www/html",
+#   certificate_file: "/path/to/certificate.crt",
+#   certificate_key_file: "/path/to/certificate.key",
+#   # Optional.
+#   certificate_chain_file: "/path/to/certificate_chain.crt"
 
 apache_ignore_missing_ssl_certificate: true
 
@@ -57,3 +57,7 @@ apache_state: started
 # Set apache state when configuration changes are made. Recommended values:
 # `restarted` or `reloaded`
 apache_restart_state: restarted
+
+# Apache package state; use `present` to make sure it's installed, or `latest`
+# if you want to upgrade or switch versions using a new repo.
+apache_packages_state: present
