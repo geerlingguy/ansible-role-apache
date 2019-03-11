@@ -17,16 +17,23 @@
 # Setup/install tasks.
 - include_tasks: "setup-{{ ansible_os_family }}.yml"
 
+- name: Find Apache daemon binary
+  stat:
+    path: "{{ item }}"
+  with_items: "{{ apache_daemon | list }}"
+  register: apache_daemon_stat
+
 # Figure out what version of Apache is installed.
 - name: Get installed version of Apache.
-  command: "{{ apache_daemon_path }}{{ apache_daemon }} -v"
+  command: "{{ item }} -v"
+  with_items: "{{ apache_daemon_stat.results | selectattr('stat.exists') | map(attribute='item') | first }}"
   changed_when: false
   check_mode: false
   register: _apache_version
 
 - name: Create apache_version variable.
   set_fact:
-    apache_version: "{{ _apache_version.stdout.split()[2].split('/')[1] }}"
+    apache_version: "{{ _apache_version.results[0].stdout.split()[2].split('/')[1] }}"
 
 - name: Include Apache 2.2 variables.
   include_vars: apache-22.yml
