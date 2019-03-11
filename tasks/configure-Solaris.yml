@@ -1,7 +1,7 @@
 ---
 - name: Configure Apache.
   lineinfile:
-    dest: "{{ apache_server_root }}/{{ apache_daemon }}.conf"
+    dest: "{{ apache_server_root }}/httpd.conf"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
