@@ -28,6 +28,12 @@ galaxy_info:
     - name: Solaris
       versions:
         - 11.3
+    - name: opensuse
+      versions:
+        - all
+    - name: SLES
+      versions:
+        - all
   galaxy_tags:
     - web
     - apache
