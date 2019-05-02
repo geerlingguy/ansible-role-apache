@@ -4,20 +4,6 @@
     name: libselinux-python
     state: present
 
-- name: Enable Apache mods.
-  apache2_module:
-    name: "{{ item | regex_replace('(\\w+)\\.load','\\1') }}"
-    state: present
-  with_items: "{{ apache_mods_enabled }}"
-  notify: restart apache
-
-- name: Disable Apache mods.
-  apache2_module:
-    name: "{{ item | regex_replace('(\\w+)\\.load','\\1') }}"
-    state: absent
-  with_items: "{{ apache_mods_disabled }}"
-  notify: restart apache
-
 - name: Configure Apache httpd.conf (lineinfile - legacy).
   lineinfile:
     dest: "{{ apache_server_root }}/conf/{{ apache_daemon }}.conf"
