@@ -10,14 +10,14 @@
 
 - name: Enable Apache mods.
   apache2_module:
-    name: "{{ item }}"
+    name: "{{ item|regex_replace('\\.load$', '') }}"
     state: present
   with_items: "{{ apache_mods_enabled }}"
   notify: restart apache
 
 - name: Disable Apache mods.
   apache2_module:
-    name: "{{ item }}"
+    name: "{{ item|regex_replace('\\.load$', '') }}"
     state: absent
   with_items: "{{ apache_mods_disabled }}"
   notify: restart apache
