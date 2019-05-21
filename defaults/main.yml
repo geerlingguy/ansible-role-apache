@@ -40,9 +40,11 @@ apache_vhosts_ssl: []
 
 apache_vhosts_individual:
   # Additional properties:
-  # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
+  # 'serveradmin, serveralias, allow_override, options, extra_parameters, vhostname'.
+  # vhostname is the name minus the file extension of the vhost file used for this vhost configuration
   - servername: "local.dev"
     documentroot: "/var/www/html"
+    vhostname: "vhost"
 # Additional properties (if using SSL):
 # 'certificate_file, certificate_key_file, certificate_chain_file'.
 #   certificate_file: "/path/to/certificate.crt",
