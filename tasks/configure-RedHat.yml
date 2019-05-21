@@ -27,3 +27,14 @@
     mode: 0644
   notify: restart apache
   when: apache_create_vhosts
+
+- name: Add apache individual vhosts configuration.
+  template:
+    src: "{{ apache_vhosts_individual_template }}"
+    dest: "{{ apache_conf_path }}/{{ item.vhostname }}.{{ apache_vhost_filename_extension }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+  with_items: "{{ apache_vhosts_individual }}"
+  when: apache_create_individual_vhosts 
