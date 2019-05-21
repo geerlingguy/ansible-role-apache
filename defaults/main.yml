@@ -6,8 +6,11 @@ apache_listen_port: 80
 apache_listen_port_ssl: 443
 
 apache_create_vhosts: true
+apache_create_individual_vhosts: false
 apache_vhosts_filename: "vhosts.conf"
+apache_vhost_filename_extension: "vhost.conf"
 apache_vhosts_template: "vhosts.conf.j2"
+apache_vhosts_individual_template: "vhosts.individual.conf.j2"
 
 # On Debian/Ubuntu, a default virtualhost is included in Apache's configuration.
 # Set this to `true` to remove that default.
@@ -30,6 +33,20 @@ apache_vhosts_ssl: []
 # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
 # - servername: "local.dev",
 #   documentroot: "/var/www/html",
+#   certificate_file: "/path/to/certificate.crt",
+#   certificate_key_file: "/path/to/certificate.key",
+#   # Optional.
+#   certificate_chain_file: "/path/to/certificate_chain.crt"
+
+apache_vhosts_individual:
+  # Additional properties:
+  # 'serveradmin, serveralias, allow_override, options, extra_parameters, vhostname, directoryindex'.
+  # vhostname is the name minus the file extension of the vhost file used for this vhost configuration
+  - servername: "local.dev"
+    documentroot: "/var/www/html"
+    vhostname: "vhost"
+# Additional properties (if using SSL):
+# 'certificate_file, certificate_key_file, certificate_chain_file'.
 #   certificate_file: "/path/to/certificate.crt",
 #   certificate_key_file: "/path/to/certificate.key",
 #   # Optional.
