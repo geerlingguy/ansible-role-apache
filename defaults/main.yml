@@ -8,7 +8,7 @@ apache_listen_port_ssl: 443
 apache_create_vhosts: true
 apache_create_individual_vhosts: false
 apache_vhosts_filename: "vhosts.conf"
-apache_vhosts_filename_extension: ".vhosts.conf"
+apache_vhost_filename_extension: "vhost.conf"
 apache_vhosts_template: "vhosts.conf.j2"
 apache_vhosts_individual_template: "vhosts.individual.conf.j2"
 
