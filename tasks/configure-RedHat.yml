@@ -15,7 +15,8 @@
 
 - name: Check whether certificates defined in vhosts exist for individual vhost configuration.
   stat: path={{ item.certificate_file }}
-  register: apache_ssl_certificates
+  register: apache_ssl_certificates_individual
+  when: item.certificate_file is defined
   with_items: "{{ apache_vhosts_individual }}"
 
 - name: Add apache vhosts configuration.
@@ -37,4 +38,4 @@
     mode: 0644
   notify: restart apache
   with_items: "{{ apache_vhosts_individual }}"
-  when: apache_create_individual_vhosts 
+  when: apache_create_individual_vhosts
