@@ -1,18 +1,51 @@
 {{ apache_global_vhost_settings }}
 
-{# Set up VirtualHosts #}
+{# Set up VirtualHost #}
 <VirtualHost {{ apache_listen_ip }}:{{ apache_listen_port }}>
-  ServerName {{ item.servername }}
-{% if item.serveralias is defined %}
-  ServerAlias {{ item.serveralias }}
+  ServerName {{ item.0.servername }}
+{% if item.0.serveralias is defined %}
+  ServerAlias {{ item.0.serveralias }}
 {% endif %}
-{% if item.documentroot is defined %}
-  DocumentRoot "{{ item.documentroot }}"
+{% if item.0.documentroot is defined %}
+  DocumentRoot "{{ item.0.documentroot }}"
 {% endif %}
-{% if item.serveradmin is defined %}
-  ServerAdmin {{ item.serveradmin }}
+{% if item.0.serveradmin is defined %}
+  ServerAdmin {{ item.0.serveradmin }}
 {% endif %}
-{% if item.certificate_file is defined %}
+{% if item.0.documentroot is defined %}
+  <Directory "{{ item.0.documentroot }}">
+    AllowOverride {{ item.0.allow_override | default(apache_allow_override) }}
+    Options {{ item.0.options | default(apache_options) }}
+{% if apache_vhosts_version == "2.2" %}
+    Order allow,deny
+    Allow from all
+{% else %}
+    Require all granted
+{% endif %}
+{% if item.0.directoryindex is defined %}
+    DirectoryIndex "{{ item.0.directoryindex }}"
+{% endif %}
+  </Directory>
+{% endif %}
+{% if item.0.extra_parameters is defined %}
+  {{ item.0.extra_parameters }}
+{% endif %}
+</VirtualHost>
+
+{# Set up SSL VirtualHost #}
+{% if item.0.certificate_file is defined %}
+{% if apache_ignore_missing_ssl_certificate or item.1.stat.exists %}
+<VirtualHost {{ apache_listen_ip }}:{{ apache_listen_port_ssl }}>
+  ServerName {{ item.0.servername }}
+{% if item.0.serveralias is defined %}
+  ServerAlias {{ item.0.serveralias }}
+{% endif %}
+{% if item.0.documentroot is defined %}
+  DocumentRoot "{{ item.0.documentroot }}"
+{% endif %}
+{% if item.0.serveradmin is defined %}
+  ServerAdmin {{ item.0.serveradmin }}
+{% endif %}
   SSLEngine on
   SSLCipherSuite {{ apache_ssl_cipher_suite }}
   SSLProtocol {{ apache_ssl_protocol }}
@@ -20,28 +53,29 @@
 {% if apache_vhosts_version == "2.4" %}
   SSLCompression off
 {% endif %}
-  SSLCertificateFile {{ item.certificate_file }}
-  SSLCertificateKeyFile {{ item.certificate_key_file }}
-{% if item.certificate_chain_file is defined %}
-  SSLCertificateChainFile {{ item.certificate_chain_file }}
+  SSLCertificateFile {{ item.0.certificate_file }}
+  SSLCertificateKeyFile {{ item.0.certificate_key_file }}
+{% if item.0.certificate_chain_file is defined %}
+  SSLCertificateChainFile {{ item.0.certificate_chain_file }}
 {% endif %}
-{% endif %}
-{% if item.documentroot is defined %}
-  <Directory "{{ item.documentroot }}">
-    AllowOverride {{ item.allow_override | default(apache_allow_override) }}
-    Options {{ item.options | default(apache_options) }}
+{% if item.0.documentroot is defined %}
+  <Directory "{{ item.0.documentroot }}">
+    AllowOverride {{ item.0.allow_override | default(apache_allow_override) }}
+    Options {{ item.0.options | default(apache_options) }}
 {% if apache_vhosts_version == "2.2" %}
     Order allow,deny
     Allow from all
 {% else %}
     Require all granted
 {% endif %}
-{% if item.directoryindex is defined %}
-    DirectoryIndex "{{ item.directoryindex }}"
+{% if item.0.directoryindex is defined %}
+    DirectoryIndex "{{ item.0.directoryindex }}"
 {% endif %}
   </Directory>
 {% endif %}
-{% if item.extra_parameters is defined %}
-  {{ item.extra_parameters }}
+{% if item.0.extra_parameters is defined %}
+  {{ item.0.extra_parameters }}
 {% endif %}
 </VirtualHost>
+{% endif %}
+{% endif %}
