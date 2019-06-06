@@ -1,6 +1,7 @@
 {{ apache_global_vhost_settings }}
 
 {# Set up VirtualHost #}
+{% if item.0.certificate_file is not defined %}
 <VirtualHost {{ apache_listen_ip }}:{{ apache_listen_port }}>
   ServerName {{ item.0.servername }}
 {% if item.0.serveralias is defined %}
@@ -31,6 +32,7 @@
   {{ item.0.extra_parameters }}
 {% endif %}
 </VirtualHost>
+{% endif %}
 
 {# Set up SSL VirtualHost #}
 {% if item.0.certificate_file is defined %}

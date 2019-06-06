@@ -44,4 +44,4 @@
   with_together:
     - "{{ apache_vhosts_individual }}"
     - "{{ apache_ssl_certificates_individual.results }}"
-  when: apache_create_individual_vhosts
+  when: apache_create_vhosts

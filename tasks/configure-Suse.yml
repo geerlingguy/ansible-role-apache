@@ -14,9 +14,13 @@
   with_items: "{{ apache_vhosts_ssl }}"
 
 - name: Check whether certificates defined in vhosts exist for individual vhost configuration.
-  stat: path={{ item.certificate_file }}
+  stat:
+    path: "{{ item.certificate_file }}"
   register: apache_ssl_certificates_individual
+  when: item.certificate_file is defined
   with_items: "{{ apache_vhosts_individual }}"
+- debug:
+    var: apache_ssl_certificates_individual
 
 - name: Add apache vhosts configuration.
   template:
@@ -26,4 +30,17 @@
     group: root
     mode: 0644
   notify: restart apache
+  when: apache_create_vhosts
+
+- name: Add apache individual vhosts configuration.
+  template:
+    src: "{{ apache_vhosts_individual_template }}"
+    dest: "{{ apache_conf_path }}/{{ item.0.vhostname }}.{{ apache_vhost_filename_extension }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+  with_together:
+    - "{{ apache_vhosts_individual }}"
+    - "{{ apache_ssl_certificates_individual.results }}"
   when: apache_create_vhosts
