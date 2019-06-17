@@ -14,6 +14,9 @@
     apache_packages: "{{ __apache_packages | list }}"
   when: apache_packages is not defined
 
+# Setup/install tasks.
+- include_tasks: "setup-{{ ansible_os_family }}.yml"
+
 - name: Make sure all the DocumentRoot folders exist
   file:
     path: "{{ item.documentroot }}"
@@ -21,9 +24,6 @@
     mode: 0755
   loop: "{{ apache_vhosts + apache_vhosts_ssl }}"
   when: item.documentroot is defined
-
-# Setup/install tasks.
-- include_tasks: "setup-{{ ansible_os_family }}.yml"
 
 # Figure out what version of Apache is installed.
 - name: Get installed version of Apache.
