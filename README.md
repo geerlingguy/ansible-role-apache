@@ -55,6 +55,7 @@ The IP address and ports on which apache should be listening. Useful if you have
     apache_vhosts_template: "vhosts.conf.j2"
 
 If set to true, a vhosts file, managed by this role's variables (see below), will be created and placed in the Apache configuration folder. If set to false, you can place your own vhosts file into Apache's configuration folder and skip the convenient (but more basic) one added by this role. You can also override the template used and set a path to your own template, if you need to further customize the layout of your VirtualHosts.
+If `apache_create_vhosts` is set to false the `vhosts.conf` will be deleted during provisioning.
 
     apache_remove_default_vhost: false
 
