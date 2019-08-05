@@ -47,6 +47,13 @@
   notify: restart apache
   when: apache_create_vhosts
 
+- name: Remove apache vhosts configuration.
+  file:
+    path: "{{ apache_conf_path }}/sites-available/{{ apache_vhosts_filename }}"
+    state: absent
+  notify: restart apache
+  when: not apache_create_vhosts
+
 - name: Add vhost symlink in sites-enabled.
   file:
     src: "{{ apache_conf_path }}/sites-available/{{ apache_vhosts_filename }}"
