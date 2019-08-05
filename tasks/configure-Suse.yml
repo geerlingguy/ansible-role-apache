@@ -45,11 +45,11 @@
     group: root
     mode: 0644
   notify: restart apache
-  when: apache_create_vhosts
+  when: apache_create_vhosts | bool
 
 - name: Remove apache vhosts configuration.
   file:
     path: "{{ apache_conf_path }}/{{ apache_vhosts_filename }}"
     state: absent
   notify: restart apache
-  when: not apache_create_vhosts
+  when: not apache_create_vhosts | bool
