@@ -6,7 +6,7 @@ env:
   global:
     - ROLE_NAME: apache
   matrix:
-    - MOLECULE_DISTRO: ubi8
+    # - MOLECULE_DISTRO: ubi8
     - MOLECULE_DISTRO: centos7
     - MOLECULE_DISTRO: centos6
     - MOLECULE_DISTRO: ubuntu1804
