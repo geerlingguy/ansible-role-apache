@@ -17,6 +17,21 @@
 # Setup/install tasks.
 - include_tasks: "setup-{{ ansible_os_family }}.yml"
 
+# Make sure selinux allows us to use the configured ports.  We know it is 
+# enabled if the ansible_selinux fact is defined, has a value, and its status
+# is "enabled".
+- name: Configure SELinux to allow Apache to listen on http and https ports.
+  seport:
+    ports: "{{ apache_listen_port }},{{ apache_listen_port_ssl }}"
+    proto: tcp
+    setype: http_port_t
+    state: present
+  when: 
+    - ansible_selinux is defined
+    - ansible_selinux
+    - ansible_selinux.status == "enabled"
+
+
 # Figure out what version of Apache is installed.
 - name: Get installed version of Apache.
   command: "{{ apache_daemon_path }}{{ apache_daemon }} -v"
