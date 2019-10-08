@@ -41,7 +41,7 @@
   register: apache_ssl_certificates
   with_items: "{{ apache_vhosts_ssl }}"
 
-- name: Add apache vhosts configuration.
+- name: Add apache vhosts single configuration file.
   template:
     src: "{{ apache_vhosts_template }}"
     dest: "{{ apache_conf_path }}/sites-available/{{ apache_vhosts_filename }}"
@@ -49,7 +49,9 @@
     group: root
     mode: 0644
   notify: restart apache
-  when: apache_create_vhosts
+  when:
+    - apache_create_vhosts
+    - not apache_vhosts_separate_files
 
 - name: Add vhost symlink in sites-enabled.
   file:
@@ -57,7 +59,50 @@
     dest: "{{ apache_conf_path }}/sites-enabled/{{ apache_vhosts_filename }}"
     state: link
   notify: restart apache
-  when: apache_create_vhosts
+  when:
+    - apache_create_vhosts
+    - not apache_vhosts_separate_files
+
+- name: Add apache vhosts configurations.
+  template:
+    src: vhosts-hosts.conf.j2
+    dest: "{{ apache_conf_path }}/sites-available/{{ vhost.servername }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+  with_items: "{{ apache_vhosts }}"
+  loop_control:
+    loop_var: vhost
+  when:
+    - apache_create_vhosts
+    - apache_vhosts_separate_files
+
+- name: Add apache ssl vhosts configurations.
+  template:
+    src: vhosts-ssl-hosts.conf.j2
+    dest: "{{ apache_conf_path }}/sites-available/{{ vhost.servername }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+  with_items: "{{ apache_vhosts_ssl }}"
+  loop_control:
+    loop_var: vhost
+  when:
+    - apache_create_vhosts
+    - apache_vhosts_separate_files
+
+- name: Add vhost symlinks in sites-enabled.
+  file:
+    src: "{{ apache_conf_path }}/sites-available/{{ item.servername }}.conf"
+    dest: "{{ apache_conf_path }}/sites-enabled/{{ item.servername }}.conf"
+    state: link
+  notify: restart apache
+  with_items: "{{ apache_vhosts + apache_vhosts_ssl }}"
+  when:
+    - apache_create_vhosts
+    - apache_vhosts_separate_files
 
 - name: Remove default vhost in sites-enabled.
   file:
