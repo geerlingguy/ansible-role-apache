@@ -50,8 +50,8 @@
     mode: 0644
   notify: restart apache
   when:
-    - apache_create_vhosts
-    - not apache_vhosts_separate_files
+    - apache_create_vhosts | bool
+    - not apache_vhosts_separate_files | bool
 
 - name: Add vhost symlink in sites-enabled.
   file:
@@ -60,8 +60,8 @@
     state: link
   notify: restart apache
   when:
-    - apache_create_vhosts
-    - not apache_vhosts_separate_files
+    - apache_create_vhosts | bool
+    - not apache_vhosts_separate_files | bool
 
 - name: Add apache vhosts configurations.
   template:
@@ -75,8 +75,8 @@
   loop_control:
     loop_var: vhost
   when:
-    - apache_create_vhosts
-    - apache_vhosts_separate_files
+    - apache_create_vhosts | bool
+    - apache_vhosts_separate_files | bool
 
 - name: Add apache ssl vhosts configurations.
   template:
@@ -90,8 +90,8 @@
   loop_control:
     loop_var: vhost
   when:
-    - apache_create_vhosts
-    - apache_vhosts_separate_files
+    - apache_create_vhosts | bool
+    - apache_vhosts_separate_files| bool
 
 - name: Add vhost symlinks in sites-enabled.
   file:
@@ -101,12 +101,12 @@
   notify: restart apache
   with_items: "{{ apache_vhosts + apache_vhosts_ssl }}"
   when:
-    - apache_create_vhosts
-    - apache_vhosts_separate_files
+    - apache_create_vhosts | bool
+    - apache_vhosts_separate_files | bool
 
 - name: Remove default vhost in sites-enabled.
   file:
     path: "{{ apache_conf_path }}/sites-enabled/{{ apache_default_vhost_filename }}"
     state: absent
   notify: restart apache
-  when: apache_remove_default_vhost
+  when: apache_remove_default_vhost | bool
