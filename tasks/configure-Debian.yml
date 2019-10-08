@@ -36,6 +36,14 @@
   notify: restart apache
   with_dict: "{{ apache_mods_config }}"
 
+- name: Enable Apache mod configs.
+  file:
+    src: "{{ apache_server_root }}/mods-available/{{ item }}"
+    dest: "{{ apache_server_root }}mods-enabled/{{ item }}"
+    state: link
+  notify: restart apache
+  with_dict: "{{ apache_mods_config }}"
+
 - name: Check whether certificates defined in vhosts exist.
   stat: "path={{ item.certificate_file }}"
   register: apache_ssl_certificates
