@@ -28,7 +28,7 @@
     state: present
   when:
     - ansible_selinux is defined
-    - ansible_selinux != ""
+    - ansible_selinux
     - ansible_selinux.status == "enabled"
 
 
