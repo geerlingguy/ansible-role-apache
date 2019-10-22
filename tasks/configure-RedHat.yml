@@ -8,6 +8,22 @@
   with_items: "{{ apache_ports_configuration_items }}"
   notify: restart apache
 
+- name: Apply ssl_protocol config in the global ssl.conf
+  lineinfile:
+    dest: "{{ apache_conf_path }}/ssl.conf"
+    regexp: ^SSLProtocol
+    line: "SSLProtocol {{ apache_ssl_protocol }}"
+    state: present
+  notify: restart apache
+
+- name: Apply apache_ssl_cipher_suite config in the global ssl.conf
+  lineinfile:
+    dest: "{{ apache_conf_path }}/ssl.conf"
+    regexp: ^SSLCipherSuite
+    line: "SSLCipherSuite {{ apache_ssl_cipher_suite }}"
+    state: present
+  notify: restart apache
+
 - name: Check whether certificates defined in vhosts exist.
   stat: path={{ item.certificate_file }}
   register: apache_ssl_certificates
