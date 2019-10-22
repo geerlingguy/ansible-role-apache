@@ -40,6 +40,22 @@
 - name: Configure Apache.
   include_tasks: "configure-{{ ansible_os_family }}.yml"
 
+- name: Do an apache config syntax check before restarting it
+  command: apachectl -t
+  changed_when: false
+  ignore_errors: true
+  register: _apache_syntax_check_output
+
+- name: Print the error if the apache config syntax check failed
+  debug:
+    var: _apache_syntax_check_output.stderr_lines
+  when: _apache_syntax_check_output.rc != 0
+
+- name: Exit if the apache config syntax check failed
+  fail:
+    msg: Apache config syntax check (apachectl -t) failed . Exiting now to avoid a crash when restarting the daemon
+  when: _apache_syntax_check_output.rc != 0
+
 - name: Ensure Apache has selected state and enabled on boot.
   service:
     name: "{{ apache_service }}"
