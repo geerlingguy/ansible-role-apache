@@ -5,6 +5,14 @@ apache_listen_ip: "*"
 apache_listen_port: 80
 apache_listen_port_ssl: 443
 
+# Set granularity for footer line showing server name and version number under server-generated documents.
+# `On` (default), `Off` or `Email` will display this information by adding the Virtual Server host email;
+apache_config_signature_visibility: "Off"
+
+# set granularity of apache version displayed
+# Full (or not specified), Prod[uctOnly], Major, Minor, Min[imal] or OS
+apache_config_version_visibility: "Prod"
+
 apache_create_vhosts: true
 apache_vhosts_filename: "vhosts.conf"
 apache_vhosts_template: "vhosts.conf.j2"
