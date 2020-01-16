@@ -1,8 +1,36 @@
 ---
 - name: Install SELinux Python dependencies.
   package:
-    name: libselinux-python
+    name: >-
+      {{ ( (ansible_facts.distribution_major_version | int) < 8) | ternary('libselinux-python','python3-libselinux') }}
     state: present
+
+- name: Remove default vhost configurations
+  file:
+    path: "{{ apache_conf_path }}/{{ item }}"
+    state: absent
+  notify: restart apache
+  with_items: "{{ apache_default_vhost_filenames }}"
+  when: apache_remove_default_vhost | bool
+
+- name: Remove default ssl vhost configurations
+  replace:
+    dest: "{{ apache_conf_path }}/ssl.conf"
+    regexp: "[#|\\s]*SSL Virtual Host Context(.*\\n)*</VirtualHost>"
+  when: apache_remove_default_vhost_ssl | bool
+  notify: restart apache
+
+- name: Check if localhost cert exists (RHEL 8 and later).
+  stat:
+    path: /etc/pki/tls/certs/localhost.crt
+  register: localhost_cert
+  when: ansible_distribution_major_version | int >= 8
+
+- name: Ensure httpd certs are installed (RHEL 8 and later).
+  command: /usr/libexec/httpd-ssl-gencerts
+  when:
+    - ansible_distribution_major_version | int >= 8
+    - not localhost_cert.stat.exists
 
 - name: Enable Apache mods.
   apache2_module:
@@ -54,35 +82,9 @@
   notify: restart apache
   when: apache_create_vhosts | bool
 
-- name: Check if localhost cert exists (RHEL 8 and later).
-  stat:
-    path: /etc/pki/tls/certs/localhost.crt
-  register: localhost_cert
-  when: ansible_distribution_major_version | int >= 8
-
-- name: Ensure httpd certs are installed (RHEL 8 and later).
-  command: /usr/libexec/httpd-ssl-gencerts
-  when:
-    - ansible_distribution_major_version | int >= 8
-    - not localhost_cert.stat.exists
 - name: Remove apache vhosts configuration.
   file:
     path: "{{ apache_conf_path }}/{{ apache_vhosts_filename }}"
     state: absent
   notify: restart apache
   when: not apache_create_vhosts
-
-- name: Remove default vhost configurations
-  file:
-    path: "{{ apache_conf_path }}/{{ item }}"
-    state: absent
-  notify: restart apache
-  with_items: "{{ apache_default_vhost_filenames }}"
-  when: apache_remove_default_vhost | bool
-
-- name: Remove default ssl vhost configurations
-  replace:
-    dest: "{{ apache_conf_path }}/ssl.conf"
-    regexp: "##\\n##\\s*SSL Virtual Host Context(.*\\n)*</VirtualHost>"
-  when: apache_remove_default_vhost_ssl | bool
-  notify: restart apache
