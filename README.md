@@ -45,7 +45,7 @@ You can add or override global Apache configuration settings in the role-provide
       - servername: "local.dev"
         documentroot: "/var/www/html"
 
-Add a set of properties per virtualhost, including `servername` (required), `documentroot` (required), `allow_override` (optional: defaults to the value of `apache_allow_override`), `options` (optional: defaults to the value of `apache_options`), `serveradmin` (optional), `serveralias` (optional) and `extra_parameters` (optional: you can add whatever additional configuration lines you'd like in here).
+Add a set of properties per virtualhost, including `servername` (required), `documentroot` (required), `allow_override` (optional: defaults to the value of `apache_allow_override`), `options` (optional: defaults to the value of `apache_options`), `serveradmin` (optional), `serveralias` (optional), `envvars` (optional) and `extra_parameters` (optional: you can add whatever additional configuration lines you'd like in here).
 
 Here's an example using `extra_parameters` to add a RewriteRule to redirect all requests to the `www.` site:
 
@@ -55,6 +55,15 @@ Here's an example using `extra_parameters` to add a RewriteRule to redirect all 
         extra_parameters: |
           RewriteCond %{HTTP_HOST} !^www\. [NC]
           RewriteRule ^(.*)$ http://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+Here's an example using `envvars` to add an environment variable:
+
+      - servername: "www.local.dev"
+        serveralias: "local.dev"
+        documentroot: "/var/www/html"
+        envvars:
+          - ENVIRONMENT_TYPE: staging
+          - API_KEY: 12345
 
 The `|` denotes a multiline scalar block in YAML, so newlines are preserved in the resulting configuration file output.
 

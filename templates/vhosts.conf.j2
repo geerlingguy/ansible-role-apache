@@ -26,6 +26,13 @@
 {% endif %}
   </Directory>
 {% endif %}
+{% if vhost.envvars is defined %}
+
+{% for env_var in vhost.envvars %}
+  SetEnv {{ env_var }} {{ vhost.envvars[env_var] }}
+{% endfor %}
+
+{% endif %}
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
 {% endif %}
@@ -72,6 +79,13 @@
     Require all granted
 {% endif %}
   </Directory>
+{% endif %}
+{% if vhost.envvars is defined %}
+
+{% for env_var in vhost.envvars %}
+  SetEnv {{ env_var }} {{ vhost.envvars[env_var] }}
+{% endfor %}
+
 {% endif %}
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
