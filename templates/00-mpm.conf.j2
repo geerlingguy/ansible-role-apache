@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+{% if apache_mpm_module == 'event' %}
+LoadModule mpm_event_module modules/mod_mpm_event.so
+{% elif apache_mpm_module == 'worker' %}
+LoadModule mpm_worker_module modules/mod_mpm_worker.so
+{% else %}
+LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
+{% endif %}

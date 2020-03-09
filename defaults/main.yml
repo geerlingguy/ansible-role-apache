@@ -56,3 +56,8 @@ apache_restart_state: restarted
 # Apache package state; use `present` to make sure it's installed, or `latest`
 # if you want to upgrade or switch versions using a new repo.
 apache_packages_state: present
+
+# MPM module to be used
+# https://httpd.apache.org/docs/2.4/en/mod/#core
+# Tipically: prefork, worker or event
+apache_mpm_module: prefork

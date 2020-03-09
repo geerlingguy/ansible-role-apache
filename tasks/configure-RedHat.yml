@@ -23,6 +23,31 @@
   notify: restart apache
   when: apache_create_vhosts | bool
 
+- name: Configure MPM module
+  template:
+    src: "00-mpm.conf.j2"
+    dest: "{{ apache_modules_conf_path }}/00-mpm.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+
+- name: Comment modules not supported by MPM worker/event
+  block:
+    - name: php_module
+      lineinfile:
+        path: "{{apache_conf_path}}/php.conf"
+        regexp: "^(php_value .*)"
+        line: '#\1'
+        backrefs: yes
+      register: x
+      until: not x.changed
+      retries: 9999
+      delay: 0
+      ignore_errors: true
+  when: apache_mpm_module == 'event' or apache_mpm_module == 'worker'
+
+
 - name: Check if localhost cert exists (RHEL 8 and later).
   stat:
     path: /etc/pki/tls/certs/localhost.crt
