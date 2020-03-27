@@ -36,7 +36,7 @@
   block:
     - name: php_module
       lineinfile:
-        path: "{{apache_conf_path}}/php.conf"
+        path: "{{ apache_conf_path }}/php.conf"
         regexp: "^(php_value .*)"
         line: '#\1'
         backrefs: yes
