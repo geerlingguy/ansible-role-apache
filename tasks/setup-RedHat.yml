@@ -1,5 +1,6 @@
 ---
 - name: Ensure Apache is installed on RHEL.
+  become: True
   package:
     name: "{{ apache_packages }}"
     state: "{{ apache_packages_state }}"

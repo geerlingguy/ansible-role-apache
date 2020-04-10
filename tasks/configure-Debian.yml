@@ -1,5 +1,6 @@
 ---
 - name: Configure Apache.
+  become: True
   lineinfile:
     dest: "{{ apache_server_root }}/ports.conf"
     regexp: "{{ item.regexp }}"
@@ -9,6 +10,7 @@
   notify: restart apache
 
 - name: Enable Apache mods.
+  become: True
   file:
     src: "{{ apache_server_root }}/mods-available/{{ item }}"
     dest: "{{ apache_server_root }}/mods-enabled/{{ item }}"
@@ -17,6 +19,7 @@
   notify: restart apache
 
 - name: Disable Apache mods.
+  become: True
   file:
     path: "{{ apache_server_root }}/mods-enabled/{{ item }}"
     state: absent
@@ -29,6 +32,7 @@
   with_items: "{{ apache_vhosts_ssl }}"
 
 - name: Add apache vhosts configuration.
+  become: True
   template:
     src: "{{ apache_vhosts_template }}"
     dest: "{{ apache_conf_path }}/sites-available/{{ apache_vhosts_filename }}"

@@ -1,5 +1,6 @@
 ---
 - name: Configure Apache.
+  become: True
   lineinfile:
     dest: "{{ apache_server_root }}/conf/{{ apache_daemon }}.conf"
     regexp: "{{ item.regexp }}"
@@ -14,6 +15,7 @@
   with_items: "{{ apache_vhosts_ssl }}"
 
 - name: Add apache vhosts configuration.
+  become: True
   template:
     src: "{{ apache_vhosts_template }}"
     dest: "{{ apache_conf_path }}/{{ apache_vhosts_filename }}"
