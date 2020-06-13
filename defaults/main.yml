@@ -19,7 +19,7 @@ apache_global_vhost_settings: |
 apache_vhosts:
   # Additional properties:
   # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
-  - servername: "local.dev"
+  - servername: "{{ inventory_hostname }}"
     documentroot: "/var/www/html"
 
 apache_allow_override: "All"
