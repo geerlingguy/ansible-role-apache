@@ -23,6 +23,21 @@
   with_items: "{{ apache_mods_disabled }}"
   notify: restart apache
 
+- name: Enable Apache configuration drop-ins.
+  file:
+    src: "{{ apache_server_root }}/conf-available/{{ item }}"
+    dest: "{{ apache_server_root }}/conf-enabled/{{ item }}"
+    state: link
+  with_items: "{{ apache_conf_enabled }}"
+  notify: restart apache
+
+- name: Disable Apache configuration drop-ins.
+  file:
+    path: "{{ apache_server_root }}/conf-enabled/{{ item }}"
+    state: absent
+  with_items: "{{ apache_conf_disabled }}"
+  notify: restart apache
+
 - name: Check whether certificates defined in vhosts exist.
   stat: "path={{ item.certificate_file }}"
   register: apache_ssl_certificates

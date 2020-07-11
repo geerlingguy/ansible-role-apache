@@ -91,6 +91,12 @@ The default values for the `AllowOverride` and `Options` directives for the `doc
 
 (Debian/Ubuntu ONLY) Which Apache mods to enable or disable (these will be symlinked into the appropriate location). See the `mods-available` directory inside the apache configuration directory (`/etc/apache2/mods-available` by default) for all the available mods.
 
+    apache_conf_enabled: []
+    apache_conf_disabled:
+      - serve-cgi-bin.conf
+
+(Debian/Ubuntu ONLY) Which Apache conf to enable or disable (these will be symlinked into the appropriate location). See the `conf-available` directory inside the apache configuration directory (`/etc/apache2/conf-available` by default) for all the available drop-in configurations.
+
     apache_packages:
       - [platform-specific]
 
