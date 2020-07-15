@@ -9,8 +9,8 @@ apache_default_vhost_filenames:
 apache_ports_configuration_items:
   # Debian/Ubuntu and RedHat/CentOS/Amazon Linux Regex for http
   - {
-    regexp: "^Listen\\s+\\d+$",
-    line: "Listen {{ apache_listen_port }}"
+    regexp: "^Listen\\s+(.*:)*\\d+$",
+    line: "Listen {{ apache_listen_ip }}:{{ apache_listen_port }}"
   }
   # RedHat/CentOS 7, Amazon Linux
   - {
@@ -19,8 +19,8 @@ apache_ports_configuration_items:
   }
   # Debian, SUSE
   - {
-    regexp: "^(\\s*<IfModule\\s+.+>(?:\\n+\\s+#.+)*\\s+)Listen\\s+\\d+",
-    replace: "\\1Listen {{ apache_listen_port_ssl }}"
+    regexp: "^(\\s*<IfModule\\s+.+>(?:\\n+\\s+#.+)*\\s+)Listen\\s+(.*:)*\\d+",
+    replace: "\\1Listen {{ apache_listen_ip }}:{{ apache_listen_port_ssl }}"
   }
   # SUSE
   - {
