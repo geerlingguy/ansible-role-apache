@@ -45,6 +45,7 @@
   changed_when: false
   ignore_errors: true
   register: _apache_syntax_check_output
+  when: not ansible_check_mode
 
 - name: Print error and exit if the apache config syntax check failed.
   block:
