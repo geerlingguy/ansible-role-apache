@@ -45,6 +45,7 @@
   changed_when: false
   ignore_errors: true
   register: _apache_syntax_check_output
+  when: not ansible_check_mode
 
 - name: Print error and exit if the apache config syntax check failed.
   block:
@@ -57,7 +58,7 @@
       fail:
         msg: Apache config syntax check (apachectl -t) failed . Exiting now to avoid a crash when restarting the daemon
 
-  when: _apache_syntax_check_output.rc != 0
+  when: not ansible_check_mode and _apache_syntax_check_output.rc != 0
 
 - name: Ensure Apache has selected state and enabled on boot.
   service:
