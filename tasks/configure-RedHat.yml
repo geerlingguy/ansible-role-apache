@@ -1,4 +1,8 @@
 ---
+- name: Change vhosts path on RHEL 8 hosts
+  set_fact:
+    _apache_vhosts_path: "{{ apache_server_root + '/vhosts.d' if ansible_pkg_mgr == 'dnf' else apache_conf_path }}"
+
 - name: Install SELinux Python dependencies.
   package:
     name: >-
@@ -75,7 +79,7 @@
 - name: Add apache vhosts configuration.
   template:
     src: "{{ apache_vhosts_template }}"
-    dest: "{{ apache_conf_path }}/{{ apache_vhosts_filename }}"
+    dest: "{{ _apache_vhosts_path }}/{{ apache_vhosts_filename }}"
     owner: root
     group: root
     mode: 0644
@@ -84,7 +88,7 @@
 
 - name: Remove apache vhosts configuration.
   file:
-    path: "{{ apache_conf_path }}/{{ apache_vhosts_filename }}"
+    path: "{{ _apache_vhosts_path }}/{{ apache_vhosts_filename }}"
     state: absent
   notify: restart apache
   when: not apache_create_vhosts
