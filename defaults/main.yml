@@ -62,3 +62,7 @@ apache_restart_state: restarted
 # Apache package state; use `present` to make sure it's installed, or `latest`
 # if you want to upgrade or switch versions using a new repo.
 apache_packages_state: present
+
+# On RHEL/CentOS, in some occasions you might want to use a custom directory for your
+# virtual host files instead of /etc/httpd/conf.d. Use this variable then.
+#apache_rhel_custom_vhosts_path: /etc/httpd/vhosts.d

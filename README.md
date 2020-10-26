@@ -139,6 +139,11 @@ If you have enabled any additional repositories such as _ondrej/apache2_, [geerl
 
 If you would like to only create SSL vhosts when the vhost certificate is present (e.g. when using Let’s Encrypt), set `apache_ignore_missing_ssl_certificate` to `false`. When doing this, you might need to run your playbook more than once so all the vhosts are configured (if another part of the playbook generates the SSL certificates).
 
+    #apache_rhel_custom_vhosts_path: /etc/httpd/vhosts.d
+    
+On RHEL/CentOS, in some occasions you might want to use a custom directory for your
+virtual host files instead of `/etc/httpd/conf.d`. Use this variable then.
+
 ## .htaccess-based Basic Authorization
 
 If you require Basic Auth support, you can add it either through a custom template, or by adding `extra_parameters` to a VirtualHost configuration, like so:
