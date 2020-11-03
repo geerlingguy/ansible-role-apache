@@ -12,10 +12,6 @@ defaults:
   run:
     working-directory: 'geerlingguy.apache'
 
-# See: https://github.com/ansible/galaxy/issues/46
-# notifications:
-#   webhooks: https://galaxy.ansible.com/api/v1/notifications/
-
 jobs:
 
   lint:
