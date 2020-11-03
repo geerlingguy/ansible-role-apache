@@ -47,9 +47,9 @@ jobs:
       matrix:
         distro:
           - centos8
-          - centos7
-          - ubuntu2004
-          - debian10
+          # - centos7
+          # - ubuntu2004
+          # - debian10
 
     steps:
       - name: Check out the codebase.
@@ -67,7 +67,9 @@ jobs:
 
       - name: Run Molecule tests.
         run: |
+          ls
           cd molecule
+          ls
           molecule test
         env:
           PY_COLORS: '1'
