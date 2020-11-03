@@ -66,11 +66,7 @@ jobs:
         run: pip3 install molecule[docker]
 
       - name: Run Molecule tests.
-        run: |
-          ls
-          cd molecule
-          ls
-          molecule test
+        run: molecule test
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
