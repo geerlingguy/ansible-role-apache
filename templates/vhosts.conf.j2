@@ -24,6 +24,7 @@
 {% else %}
     Require all granted
 {% endif %}
+    {{ vhost.directory_extras | default("") | indent(4) }}
   </Directory>
 {% endif %}
 {% if vhost.extra_parameters is defined %}
@@ -71,6 +72,7 @@
 {% else %}
     Require all granted
 {% endif %}
+    {{ vhost.directory_extras | default("") | indent(4) }}
   </Directory>
 {% endif %}
 {% if vhost.extra_parameters is defined %}
