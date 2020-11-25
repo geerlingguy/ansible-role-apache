@@ -25,6 +25,11 @@ apache_vhosts:
 apache_allow_override: "All"
 apache_options: "-Indexes +FollowSymLinks"
 
+# http proxy properties
+apache_vhost_proxy_balancer_name: "myset"
+apache_vhost_proxy_lbmethod: "bytraffic"
+apache_vhost_proxy_path: ""
+
 apache_vhosts_ssl: []
 # Additional properties:
 # 'serveradmin, serveralias, allow_override, options, extra_parameters'.

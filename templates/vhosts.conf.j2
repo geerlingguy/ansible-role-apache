@@ -26,6 +26,24 @@
 {% endif %}
   </Directory>
 {% endif %}
+
+{% if vhost.proxy is defined %}
+  {{ "Setup Proxies" | comment }}
+{% if vhost.proxy.members is defined %}
+  <Proxy "balancer://{{ vhost.proxy.balancername | default(apache_vhost_proxy_balancer_name) }}">
+{% for pmember in vhost.proxy.members %}
+    BalancerMember {{ pmember.host }}
+{% endfor %}
+    ProxySet lbmethod={{ vhost.proxy.lbmethod | default(apache_vhost_proxy_lbmethod) }}
+  </Proxy>
+  ProxyPass "/{{ vhost.proxy.path | default(apache_vhost_proxy_path) }}"  "balancer://{{ vhost.proxy.balancername | default(apache_vhost_proxy_balancer_name) }}/"
+  ProxyPassReverse "/{{ vhost.proxy.path | default(apache_vhost_proxy_path) }}"  "balancer://{{ vhost.proxy.balancername | default(apache_vhost_proxy_balancer_name) }}/"
+{% else %}
+  ProxyPass "/{{ vhost.proxy.path | default(apache_vhost_proxy_path) }}"  "{{ vhost.proxy.host }}/"
+  ProxyPassReverse "/{{ vhost.proxy.path | default(apache_vhost_proxy_path) }}"  "{{ vhost.proxy.host }}/"
+{% endif %}
+{% endif %}
+
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
 {% endif %}
@@ -73,6 +91,24 @@
 {% endif %}
   </Directory>
 {% endif %}
+
+{% if vhost.proxy is defined %}
+  {{ "Setup Proxies" | comment }}
+{% if vhost.proxy.members is defined %}
+  <Proxy "balancer://{{ vhost.proxy.balancername | default(apache_vhost_proxy_balancer_name) }}">
+{% for pmember in vhost.proxy.members %}
+    BalancerMember {{ pmember.host }}
+{% endfor %}
+    ProxySet lbmethod={{ vhost.proxy.lbmethod | default(apache_vhost_proxy_lbmethod) }}
+  </Proxy>
+  ProxyPass "/{{ vhost.proxy.path | default(apache_vhost_proxy_path) }}"  "balancer://{{ vhost.proxy.balancername | default(apache_vhost_proxy_balancer_name) }}/"
+  ProxyPassReverse "/{{ vhost.proxy.path | default(apache_vhost_proxy_path) }}"  "balancer://{{ vhost.proxy.balancername | default(apache_vhost_proxy_balancer_name) }}/"
+{% else %}
+  ProxyPass "/{{ vhost.proxy.path | default(apache_vhost_proxy_path) }}"  "{{ vhost.proxy.host }}/"
+  ProxyPassReverse "/{{ vhost.proxy.path | default(apache_vhost_proxy_path) }}"  "{{ vhost.proxy.host }}/"
+{% endif %}
+{% endif %}
+
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
 {% endif %}
