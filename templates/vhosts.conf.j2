@@ -26,6 +26,13 @@
 {% endif %}
   </Directory>
 {% endif %}
+
+{% if vhost.redirectmatches is defined %}
+  {{ "Setup RedirectMatch" | comment }}
+{% for redirectmatch in vhost.redirectmatches %}
+  RedirectMatch "{{ redirectmatch.from }}" "{{ redirectmatch.to }}"
+{% endfor %}{% endif %}
+
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
 {% endif %}
@@ -73,6 +80,13 @@
 {% endif %}
   </Directory>
 {% endif %}
+
+{% if vhost.redirectmatches is defined %}
+  {{ "Setup RedirectMatch" | comment }}
+{% for redirectmatch in vhost.redirectmatches %}
+  RedirectMatch "{{ redirectmatch.from }}" "{{ redirectmatch.to }}"
+{% endfor %}{% endif %}
+
 {% if vhost.extra_parameters is defined %}
   {{ vhost.extra_parameters }}
 {% endif %}
