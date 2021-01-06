@@ -64,5 +64,7 @@ apache_packages_state: present
 apache_config_ssl_upload_enable: false
 apache_config_ssl_upload_crt_src: ssl/*.crt
 apache_config_ssl_upload_crt_dest: /etc/ssl/certs/
+apache_config_ssl_upload_chain_src: ssl/*.ca
+apache_config_ssl_upload_chain_dest: /etc/ssl/certs/
 apache_config_ssl_upload_key_src: ssl/*.key
 apache_config_ssl_upload_key_dest: /etc/ssl/private/

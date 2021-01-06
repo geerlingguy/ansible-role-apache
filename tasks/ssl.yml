@@ -8,6 +8,13 @@
         state: directory
         mode: 0755
 
+    - name: Ensure SSL certificate chain directory exists.
+      file:
+        path: "{{ apache_config_ssl_upload_chain_dest | default('/etc/ssl/certs/') }}"
+        state: directory
+        mode: 0755
+      when: apache_config_ssl_upload_chain_dest is defined
+
     - name: Ensure SSL key directory exists.
       file:
         path: "{{ apache_config_ssl_upload_key_dest | default('/etc/ssl/private/') }}"
@@ -23,6 +30,17 @@
         mode: 0640
       with_fileglob: "{{ apache_config_ssl_upload_crt_src }}"
       notify: restart apache
+
+    - name: Upload SSL certificate chains.
+      copy:
+        src: "{{ item }}"
+        dest: "{{ apache_config_ssl_upload_chain_dest | default('/etc/ssl/certs/') }}"
+        decrypt: yes
+        backup: yes
+        mode: 0640
+      with_fileglob: "{{ apache_config_ssl_upload_chain_src }}"
+      notify: restart apache
+      when: apache_config_ssl_upload_chain_src is defined
 
     - name: Upload SSL keys.
       copy:
