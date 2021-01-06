@@ -108,6 +108,14 @@ If you have enabled any additional repositories such as _ondrej/apache2_, [geerl
 
 If you would like to only create SSL vhosts when the vhost certificate is present (e.g. when using Let’s Encrypt), set `apache_ignore_missing_ssl_certificate` to `false`. When doing this, you might need to run your playbook more than once so all the vhosts are configured (if another part of the playbook generates the SSL certificates).
 
+    apache_config_ssl_upload_enable: true
+    apache_config_ssl_upload_crt_src: ssl/*.crt
+    apache_config_ssl_upload_crt_dest: /etc/ssl/certs/
+    apache_config_ssl_upload_key_src: ssl/*.key
+    apache_config_ssl_upload_key_dest: /etc/ssl/private/
+
+Optionally this role can upload SSL certs and keys if you supply them. Keys and certs can be individually vaulted.
+
 ## .htaccess-based Basic Authorization
 
 If you require Basic Auth support, you can add it either through a custom template, or by adding `extra_parameters` to a VirtualHost configuration, like so:

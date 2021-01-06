@@ -36,6 +36,10 @@
   include_vars: apache-24.yml
   when: "apache_version.split('.')[1] == '4'"
 
+# Optionally upload SSL certs.
+- name: Upload SSL certs.
+  include_tasks: "ssl.yml"
+
 # Configure Apache.
 - name: Configure Apache.
   include_tasks: "configure-{{ ansible_os_family }}.yml"

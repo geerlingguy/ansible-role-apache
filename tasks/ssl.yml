@@ -1,0 +1,35 @@
+# https://github.com/nginxinc/ansible-role-nginx-config/blob/879d44ad1eed9d75ed5d755cdc4180742ac0056b/tasks/config/upload-config.yml
+---
+- name: Upload SSL certificates and keys.
+  block:
+    - name: Ensure SSL certificate directory exists.
+      file:
+        path: "{{ apache_config_ssl_upload_crt_dest | default('/etc/ssl/certs/') }}"
+        state: directory
+        mode: 0755
+
+    - name: Ensure SSL key directory exists.
+      file:
+        path: "{{ apache_config_ssl_upload_key_dest | default('/etc/ssl/private/') }}"
+        state: directory
+        mode: 0755
+
+    - name: Upload SSL certificates.
+      copy:
+        src: "{{ item }}"
+        dest: "{{ apache_config_ssl_upload_crt_dest | default('/etc/ssl/certs/') }}"
+        decrypt: yes
+        backup: yes
+        mode: 0640
+      with_fileglob: "{{ apache_config_ssl_upload_crt_src }}"
+
+    - name: Upload SSL keys.
+      copy:
+        src: "{{ item }}"
+        dest: "{{ apache_config_ssl_upload_key_dest | default('/etc/ssl/private/') }}"
+        decrypt: yes
+        backup: yes
+        mode: 0640
+      with_fileglob: "{{ apache_config_ssl_upload_key_src }}"
+      no_log: true
+  when: apache_config_ssl_upload_enable | bool
