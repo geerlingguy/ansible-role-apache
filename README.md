@@ -114,7 +114,7 @@ If you would like to only create SSL vhosts when the vhost certificate is presen
     apache_config_ssl_upload_key_src: ssl/*.key
     apache_config_ssl_upload_key_dest: /etc/ssl/private/
 
-Optionally this role can upload SSL certs and keys if you supply them. Keys and certs can be individually vaulted.
+Optionally this role can upload SSL certs and keys if you supply them (chain is available along with crt and key, but is not mandatory). Keys and certs can be individually vaulted.
 
 ## .htaccess-based Basic Authorization
 
