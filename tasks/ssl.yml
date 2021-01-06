@@ -22,6 +22,7 @@
         backup: yes
         mode: 0640
       with_fileglob: "{{ apache_config_ssl_upload_crt_src }}"
+      notify: restart apache
 
     - name: Upload SSL keys.
       copy:
@@ -32,4 +33,5 @@
         mode: 0640
       with_fileglob: "{{ apache_config_ssl_upload_key_src }}"
       no_log: true
+      notify: restart apache
   when: apache_config_ssl_upload_enable | bool
