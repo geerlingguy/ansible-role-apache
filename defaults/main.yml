@@ -53,6 +53,13 @@ apache_state: started
 # `restarted` or `reloaded`
 apache_restart_state: restarted
 
+# Set apache service behavior on boot. Recommended values: `true` or `false`
+apache_enabled_on_boot: true
+
+# Set apache service management from ansible. Recommended values: `true` or
+# `false`
+apache_enable_service: true
+
 # Apache package state; use `present` to make sure it's installed, or `latest`
 # if you want to upgrade or switch versions using a new repo.
 apache_packages_state: present
