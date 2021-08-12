@@ -12,36 +12,41 @@
 - name: Define apache_packages.
   set_fact:
     apache_packages: "{{ __apache_packages | list }}"
-  when: apache_packages is not defined
+  when: (not (apache_packages | default([], true)))
 
 # Setup/install tasks.
 - include_tasks: "setup-{{ ansible_os_family }}.yml"
 
-# Figure out what version of Apache is installed.
-- name: Get installed version of Apache.
-  command: "{{ apache_daemon_path }}{{ apache_daemon }} -v"
-  changed_when: false
-  check_mode: false
-  register: _apache_version
+- name: Configure Apache only if it's not absent
+  block:
 
-- name: Create apache_version variable.
-  set_fact:
-    apache_version: "{{ _apache_version.stdout.split()[2].split('/')[1] }}"
+    # Figure out what version of Apache is installed.
+    - name: Get installed version of Apache.
+      command: "{{ apache_daemon_path }}{{ apache_daemon }} -v"
+      changed_when: false
+      check_mode: false
+      register: _apache_version
 
-- name: Include Apache 2.2 variables.
-  include_vars: apache-22.yml
-  when: "apache_version.split('.')[1] == '2'"
+    - name: Create apache_version variable.
+      set_fact:
+        apache_version: "{{ _apache_version.stdout.split()[2].split('/')[1] }}"
 
-- name: Include Apache 2.4 variables.
-  include_vars: apache-24.yml
-  when: "apache_version.split('.')[1] == '4'"
+    - name: Include Apache 2.2 variables.
+      include_vars: apache-22.yml
+      when: "apache_version.split('.')[1] == '2'"
 
-# Configure Apache.
-- name: Configure Apache.
-  include_tasks: "configure-{{ ansible_os_family }}.yml"
+    - name: Include Apache 2.4 variables.
+      include_vars: apache-24.yml
+      when: "apache_version.split('.')[1] == '4'"
 
-- name: Ensure Apache has selected state and enabled on boot.
-  service:
-    name: "{{ apache_service }}"
-    state: "{{ apache_state }}"
-    enabled: true
+    # Configure Apache.
+    - name: Configure Apache.
+      include_tasks: "configure-{{ ansible_os_family }}.yml"
+
+    - name: Ensure Apache has selected state and enabled on boot.
+      service:
+        name: "{{ apache_service }}"
+        state: "{{ apache_state }}"
+        enabled: "{{ apache_boot }}"
+
+  when: ('absent' != apache_packages_state | default('present', true))
