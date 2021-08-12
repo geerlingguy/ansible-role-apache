@@ -49,6 +49,9 @@ apache_mods_disabled: []
 # Set initial apache state. Recommended values: `started` or `stopped`
 apache_state: started
 
+# Whether the service should start on boot. Choices: `yes` or `no`
+apache_boot: yes
+
 # Set apache state when configuration changes are made. Recommended values:
 # `restarted` or `reloaded`
 apache_restart_state: restarted
@@ -56,3 +59,9 @@ apache_restart_state: restarted
 # Apache package state; use `present` to make sure it's installed, or `latest`
 # if you want to upgrade or switch versions using a new repo.
 apache_packages_state: present
+
+# For Debian OSes only: Whether to install recommended packages. This is set to `yes` by default.
+apache_versions_install_recommends: yes
+# APT specific variables.
+apache_apt_update_cache: yes
+apache_apt_cache_valid_time: 3600
