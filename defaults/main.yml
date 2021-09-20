@@ -56,3 +56,10 @@ apache_restart_state: restarted
 # Apache package state; use `present` to make sure it's installed, or `latest`
 # if you want to upgrade or switch versions using a new repo.
 apache_packages_state: present
+
+# Security.conf filename, to change
+apache_security_filename: "security.conf"
+apache_security_template: "security.conf.j2"
+apache_security_server_tokens: "Minor"
+apache_security_server_signature: "Off"
+apache_security_trace: "Off"

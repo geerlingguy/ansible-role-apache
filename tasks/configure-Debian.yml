@@ -40,6 +40,15 @@
   notify: restart apache
   when: apache_create_vhosts | bool
 
+- name: Add apache security configuration.
+  template:
+    src: "{{ apache_security_template }}"
+    dest: "{{ apache_security_conf_path }}/{{ apache_security_filename }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+
 - name: Add vhost symlink in sites-enabled.
   file:
     src: "{{ apache_conf_path }}/sites-available/{{ apache_vhosts_filename }}"
