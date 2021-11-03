@@ -18,7 +18,7 @@ apache_global_vhost_settings: |
 
 apache_vhosts:
   # Additional properties:
-  # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
+  # 'serveradmin, serveralias, allow_override, options, extra_parameters, listen_port'.
   - servername: "local.dev"
     documentroot: "/var/www/html"
 
@@ -27,7 +27,7 @@ apache_options: "-Indexes +FollowSymLinks"
 
 apache_vhosts_ssl: []
 # Additional properties:
-# 'serveradmin, serveralias, allow_override, options, extra_parameters'.
+# 'serveradmin, serveralias, allow_override, options, extra_parameters, listen_port'.
 # - servername: "local.dev",
 #   documentroot: "/var/www/html",
 #   certificate_file: "/path/to/certificate.crt",
