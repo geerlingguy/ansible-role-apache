@@ -91,6 +91,19 @@ The default values for the `AllowOverride` and `Options` directives for the `doc
 
 (Debian/Ubuntu ONLY) Which Apache mods to enable or disable (these will be symlinked into the appropriate location). See the `mods-available` directory inside the apache configuration directory (`/etc/apache2/mods-available` by default) for all the available mods.
 
+    apache_mods_conf: {}
+
+(Debian/Ubuntu ONLY) Creates additional configuration files for mods in the `conf-available` diretory and symlink them in the `conf-enabled` diretory to enable them. Usage exemple:
+
+    apache_mods_conf:
+      remoteip: |
+        RemoteIPHeader X-Forwarded-For
+        RemoteIPInternalProxy 127.0.0.1/8
+    apache_mods_enabled:
+      - remoteip.load
+
+If the module is disable (specified in `apache_mods_disabled`), the associated configuration will be disable too.
+
     apache_packages:
       - [platform-specific]
 
