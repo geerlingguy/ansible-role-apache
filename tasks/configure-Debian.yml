@@ -25,6 +25,32 @@
   with_items: "{{ apache_mods_disabled }}"
   notify: restart apache
 
+- name: Add apache mods configuration.
+  copy:
+    content: "{{ item.value | default('') }}"
+    dest: "{{ apache_server_root }}/conf-available/{{ item.key }}.conf"
+  with_dict: "{{ apache_mods_conf }}"
+  when: item.key + '.load' in apache_mods_enabled
+  notify: restart apache
+
+- name: Enable Apache mods conf.
+  file:
+    src: "{{ apache_server_root }}/conf-available/{{ item.key }}.conf"
+    dest: "{{ apache_server_root }}/conf-enabled/{{ item.key }}.conf"
+    state: link
+    mode: 0644
+  with_dict: "{{ apache_mods_conf }}"
+  when: item.key + '.load' in apache_mods_enabled
+  notify: restart apache
+
+- name: Disable Apache mods conf.
+  file:
+    path: "{{ apache_server_root }}/conf-enabled/{{ item.key }}.conf"
+    state: absent
+  with_dict: "{{ apache_mods_conf }}"
+  when: item.key + '.load' in apache_mods_disabled
+  notify: restart apache
+
 - name: Check whether certificates defined in vhosts exist.
   stat: "path={{ item.certificate_file }}"
   register: apache_ssl_certificates
