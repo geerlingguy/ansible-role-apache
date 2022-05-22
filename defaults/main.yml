@@ -40,10 +40,10 @@ apache_ignore_missing_ssl_certificate: true
 apache_ssl_protocol: "All -SSLv2 -SSLv3"
 apache_ssl_cipher_suite: "AES256+EECDH:AES256+EDH"
 
-# Only used on Debian/Ubuntu.
+# Only used on Debian/Ubuntu/Redhat.
 apache_mods_enabled:
-  - rewrite.load
-  - ssl.load
+  - rewrite
+  - ssl
 apache_mods_disabled: []
 
 # Set initial apache state. Recommended values: `started` or `stopped`

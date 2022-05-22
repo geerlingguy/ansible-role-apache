@@ -11,8 +11,8 @@
 
 - name: Enable Apache mods.
   file:
-    src: "{{ apache_server_root }}/mods-available/{{ item }}"
-    dest: "{{ apache_server_root }}/mods-enabled/{{ item }}"
+    src: "{{ apache_server_root }}/mods-available/{{ item }}.load"
+    dest: "{{ apache_server_root }}/mods-enabled/{{ item }}.load"
     state: link
     mode: 0644
   with_items: "{{ apache_mods_enabled }}"
@@ -20,7 +20,7 @@
 
 - name: Disable Apache mods.
   file:
-    path: "{{ apache_server_root }}/mods-enabled/{{ item }}"
+    path: "{{ apache_server_root }}/mods-enabled/{{ item }}.load"
     state: absent
   with_items: "{{ apache_mods_disabled }}"
   notify: restart apache
