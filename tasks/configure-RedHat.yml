@@ -14,6 +14,22 @@
   register: apache_ssl_certificates
   with_items: "{{ apache_vhosts_ssl }}"
 
+- name: Enable Apache mods.
+  copy:
+    dest: "{{ apache_server_root }}/conf.modules.d/99-ansible-{{ item }}.conf"
+    content: |
+      LoadModule {{ item }}_module modules/mod_{{ item }}.so
+    mode: 0644
+  with_items: "{{ apache_mods_enabled }}"
+  notify: restart apache
+
+- name: Disable Apache mods
+  file:
+    path: "{{ apache_server_root }}/conf.modules.d/99-ansible-{{ item }}.conf"
+    state: absent
+  with_items: "{{ apache_mods_disabled }}"
+  notify: restart apache
+
 - name: Add apache vhosts configuration.
   template:
     src: "{{ apache_vhosts_template }}"
