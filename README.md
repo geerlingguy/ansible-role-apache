@@ -85,11 +85,11 @@ The SSL protocols and cipher suites that are used/allowed when clients make secu
 The default values for the `AllowOverride` and `Options` directives for the `documentroot` directory of each vhost.  A vhost can overwrite these values by specifying `allow_override` or `options`.
 
     apache_mods_enabled:
-      - rewrite.load
-      - ssl.load
+      - rewrite
+      - ssl
     apache_mods_disabled: []
 
-(Debian/Ubuntu ONLY) Which Apache mods to enable or disable (these will be symlinked into the appropriate location). See the `mods-available` directory inside the apache configuration directory (`/etc/apache2/mods-available` by default) for all the available mods.
+Which Apache mods to enable or disable (these will be symlinked into the appropriate location). See the `mods-available` directory inside the apache configuration directory (`/etc/apache2/mods-available` on Debian/Ubuntu) for all the available mods.
 
     apache_packages:
       - [platform-specific]
