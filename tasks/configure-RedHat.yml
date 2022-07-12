@@ -51,3 +51,24 @@
   when:
     - ansible_distribution_major_version | int >= 8
     - not localhost_cert.stat.exists
+
+- name: Remove default SSL VirtualHost
+  replace:
+    path: "{{ apache_server_root }}/conf.d/ssl.conf"
+    regexp: '({{pattern}})'
+    replace: '#\1'
+  loop_control:
+    loop_var: pattern
+  loop:
+    - "^<VirtualHost"
+    - "^</VirtualHost"
+    - "^DocumentRoot"
+    - "^ServerName"
+    - "^ErrorLog"
+    - "^TransferLog"
+    - "^LogLevel"
+    - "^SSLEngine"
+    - "^SSLCertificateFile"
+    - "^SSLCertificateKeyFile"
+  notify: restart apache
+  when: apache_remove_default_vhost
