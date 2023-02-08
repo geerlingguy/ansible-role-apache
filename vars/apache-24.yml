@@ -4,5 +4,5 @@ apache_default_vhost_filename: 000-default.conf
 apache_ports_configuration_items:
   - {
     regexp: "^Listen ",
-    line: "Listen {{ apache_listen_port }}"
+    line: "Listen {{ (apache_listen_ip == '*') | ternary('', apache_listen_ip+':')}}{{ apache_listen_port }}"
   }
