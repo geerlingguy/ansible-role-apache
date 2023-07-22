@@ -1,5 +1,5 @@
 ---
-- name: Configure Apache.
+- name: Configure Apache (default)
   lineinfile:
     dest: "{{ apache_server_root }}/ports.conf"
     regexp: "{{ item.regexp }}"
@@ -7,6 +7,14 @@
     state: present
   with_items: "{{ apache_ports_configuration_items }}"
   notify: restart apache
+  when: apache_port_template is not defined
+
+- name: Configure Apache ports from template
+  copy:
+    content: "{{ apache_ports_template }}"
+    dest: "{{ apache_server_root }}/ports.conf"
+    mode: 0644
+  when: apache_ports_template is defined
 
 - name: Enable Apache mods.
   file:
