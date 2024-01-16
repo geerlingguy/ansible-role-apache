@@ -46,6 +46,7 @@
     dest: "{{ apache_conf_path }}/sites-enabled/{{ apache_vhosts_filename }}"
     state: link
     mode: 0644
+    force: "{{ ansible_check_mode }}"
   notify: restart apache
   when: apache_create_vhosts | bool
 
