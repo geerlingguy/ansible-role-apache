@@ -7,7 +7,7 @@
     state: present
   with_items: "{{ apache_ports_configuration_items }}"
   notify: restart apache
-  when: apache_port_template is not defined
+  when: apache_ports_template is not defined
 
 - name: Configure Apache ports from template
   copy:
