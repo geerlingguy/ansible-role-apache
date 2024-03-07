@@ -74,6 +74,10 @@ No SSL vhosts are configured by default, but you can add them using the same pat
 
 Other SSL directives can be managed with other SSL-related role variables.
 
+    apache_ssl_no_log: true
+
+Whether to print SSL-related task output to the console when running the playbook.
+
     apache_ssl_protocol: "All -SSLv2 -SSLv3"
     apache_ssl_cipher_suite: "AES256+EECDH:AES256+EDH"
 
