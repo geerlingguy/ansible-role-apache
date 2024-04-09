@@ -21,14 +21,14 @@
     src: "{{ apache_server_root }}/mods-available/{{ item }}"
     dest: "{{ apache_server_root }}/mods-enabled/{{ item }}"
     state: link
-  with_items: "{{ apache_mods_enabled }}"
+  loop: "{{ apache_mods_enabled }}"
   notify: restart apache
 
 - name: Disable Apache mods
   ansible.builtin.file:
     path: "{{ apache_server_root }}/mods-enabled/{{ item }}"
     state: absent
-  with_items: "{{ apache_mods_disabled }}"
+  loop: "{{ apache_mods_disabled }}"
   notify: restart apache
 
 - name: Enable Apache configuration snippets
@@ -36,18 +36,19 @@
     src: "{{ apache_server_root }}/conf-available/{{ item }}"
     dest: "{{ apache_server_root }}/conf-enabled/{{ item }}"
     state: link
-  with_items: "{{ apache_conf_enabled }}"
+  loop: "{{ apache_conf_enabled }}"
   notify: restart apache
 
 - name: Disable Apache configuration snippets
   ansible.builtin.file:
     path: "{{ apache_server_root }}/conf-enabled/{{ item }}"
     state: absent
-  with_items: "{{ apache_conf_disabled }}"
+  loop: "{{ apache_conf_disabled }}"
   notify: restart apache
 
 - name: Check whether certificates defined in vhosts exist
-  ansible.builtin.stat: "path={{ item.certificate_file }}"
+  ansible.builtin.stat:
+    path: "{{ item.certificate_file }}"
   register: apache_ssl_certificates
   loop: "{{ apache_vhosts_ssl }}"
   loop_control:
