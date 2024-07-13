@@ -66,6 +66,7 @@
   <Directory "{{ vhost.documentroot }}">
     AllowOverride {{ vhost.allow_override | default(apache_allow_override) }}
     Options {{ vhost.options | default(apache_options) }}
+    DirectoryIndex {{ vhost.directory_index | default(apache_directory_index) }}
 {% if apache_vhosts_version == "2.2" %}
     Order allow,deny
     Allow from all
