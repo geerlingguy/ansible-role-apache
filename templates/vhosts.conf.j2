@@ -14,6 +14,7 @@
 {% if vhost.serveradmin is defined %}
   ServerAdmin {{ vhost.serveradmin }}
 {% endif %}
+
 {% if vhost.documentroot is defined %}
   <Directory "{{ vhost.documentroot }}">
     AllowOverride {{ vhost.allow_override | default(apache_allow_override) }}
@@ -27,6 +28,27 @@
 {% endif %}
   </Directory>
 {% endif %}
+
+{% if vhost.directory_list is defined -%}
+{% for dir in vhost.directory_list %}
+  <Directory "{{ vhost.directory_list[dir].documentroot }}">
+    {% if vhost.directory_list[dir].allow_override is defined %}
+    AllowOverride {{ vhost.directory_list[dir].allow_override }}
+    {% endif %}
+    
+    {% if vhost.directory_list[dir].options is defined %}
+    Options {{ vhost.directory_list[dir].options }}
+    {% endif %}
+{% if apache_vhosts_version == "2.2" %}
+    Order allow,deny
+    Allow from all
+{% else %}
+    Require all granted
+{% endif %}
+  </Directory>
+{% endfor %}
+{% endif %}
+
 {% if vhost.extra_parameters is defined %}
 {{ vhost.extra_parameters | indent(width=2, first=True) }}
 {% endif %}
@@ -62,6 +84,7 @@
 {% if vhost.serveradmin is defined %}
   ServerAdmin {{ vhost.serveradmin }}
 {% endif %}
+
 {% if vhost.documentroot is defined %}
   <Directory "{{ vhost.documentroot }}">
     AllowOverride {{ vhost.allow_override | default(apache_allow_override) }}
@@ -75,6 +98,27 @@
 {% endif %}
   </Directory>
 {% endif %}
+
+{% if vhost.directory_list is defined -%}
+{% for dir in vhost.directory_list %}
+  <Directory "{{ vhost.directory_list[dir].documentroot }}">
+    {% if vhost.directory_list[dir].allow_override is defined %}
+    AllowOverride {{ vhost.directory_list[dir].allow_override }}
+    {% endif %}
+    
+    {% if vhost.directory_list[dir].options is defined %}
+    Options {{ vhost.directory_list[dir].options }}
+    {% endif %}
+{% if apache_vhosts_version == "2.2" %}
+    Order allow,deny
+    Allow from all
+{% else %}
+    Require all granted
+{% endif %}
+  </Directory>
+{% endfor %}
+{% endif %}
+
 {% if vhost.extra_parameters is defined %}
 {{ vhost.extra_parameters | indent(width=2, first=True) }}
 {% endif %}
