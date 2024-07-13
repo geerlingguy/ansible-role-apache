@@ -30,14 +30,14 @@
 {% endif %}
 
 {% if vhost.directory_list is defined -%}
-{% for dir in vhost.directory_list %}
-  <Directory "{{ vhost.directory_list[dir].documentroot }}">
-    {% if vhost.directory_list[dir].allow_override is defined %}
-    AllowOverride {{ vhost.directory_list[dir].allow_override }}
+{% for directory in vhost.directory_list %}
+  <Directory "{{ directory.path }}">
+    {% if directory.allow_override is defined %}
+    AllowOverride {{ directory.allow_override }}
     {% endif %}
     
-    {% if vhost.directory_list[dir].options is defined %}
-    Options {{ vhost.directory_list[dir].options }}
+    {% if directory.options is defined %}
+    Options {{ directory.options }}
     {% endif %}
 {% if apache_vhosts_version == "2.2" %}
     Order allow,deny
@@ -100,14 +100,14 @@
 {% endif %}
 
 {% if vhost.directory_list is defined -%}
-{% for dir in vhost.directory_list %}
-  <Directory "{{ vhost.directory_list[dir].documentroot }}">
-    {% if vhost.directory_list[dir].allow_override is defined %}
-    AllowOverride {{ vhost.directory_list[dir].allow_override }}
+{% for directory in vhost.directory_list %}
+  <Directory "{{ directory.path }}">
+    {% if directory.allow_override is defined %}
+    AllowOverride {{ directory.allow_override }}
     {% endif %}
     
-    {% if vhost.directory_list[dir].options is defined %}
-    Options {{ vhost.directory_list[dir].options }}
+    {% if directory.options is defined %}
+    Options {{ directory.options }}
     {% endif %}
 {% if apache_vhosts_version == "2.2" %}
     Order allow,deny
