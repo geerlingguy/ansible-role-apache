@@ -24,6 +24,7 @@ apache_vhosts:
 
 apache_allow_override: "All"
 apache_options: "-Indexes +FollowSymLinks"
+apache_directory_index: "index.php index.html"
 
 apache_vhosts_ssl: []
 # Additional properties:
