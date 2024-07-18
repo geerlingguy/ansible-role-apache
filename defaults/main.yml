@@ -64,6 +64,6 @@ apache_packages_state: present
 
 apache_mpm: true
 
-apache_mpm_module: "event"
+apache_mpm_module: "prefork"
 
 apache_mpm_template: "mpm.conf.j2"
