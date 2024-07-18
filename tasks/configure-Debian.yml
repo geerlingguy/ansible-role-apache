@@ -57,3 +57,13 @@
     state: absent
   notify: restart apache
   when: apache_remove_default_vhost
+
+- name: Update MPM settings.
+  template:
+    src: "{{ apache_mpm_template }}"
+    dest: "{{ apache_conf_path }}/mods-available/mpm_{{ apache_mpm_module }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart apache
+  when: apache_mpm | bool
