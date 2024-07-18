@@ -62,6 +62,9 @@ apache_restart_state: restarted
 # if you want to upgrade or switch versions using a new repo.
 apache_packages_state: present
 
+# Apache MPM module configuration.
+# MPM module to use. Recommended values: `prefork` or `worker`
+
 apache_mpm: true
 
 apache_mpm_module: "prefork"
