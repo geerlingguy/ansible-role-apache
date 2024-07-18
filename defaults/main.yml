@@ -25,6 +25,7 @@ apache_vhosts:
 apache_allow_override: "All"
 apache_options: "-Indexes +FollowSymLinks"
 apache_directory_index: "index.php index.html"
+apache_directory_list: []
 
 apache_vhosts_ssl: []
 # Additional properties:
@@ -70,3 +71,5 @@ apache_mpm: true
 apache_mpm_module: "prefork"
 
 apache_mpm_template: "mpm.conf.j2"
+
+apache_mpm_config: []
