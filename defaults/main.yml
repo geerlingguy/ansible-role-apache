@@ -18,7 +18,7 @@ apache_global_vhost_settings: |
 
 apache_vhosts:
   # Additional properties:
-  # 'serveradmin, serveralias, allow_override, options, extra_parameters'.
+  # 'serveradmin, serveralias, allow_override, options, extra_parameters, listen_ip, listen_port'.
   - servername: "local.dev"
     documentroot: "/var/www/html"
 

@@ -10,6 +10,10 @@
     apache_vhosts:
       - servername: "example.com"
         documentroot: "/var/www/vhosts/example_com"
+      - servername: "local.example.com"
+        documentroot: "/var/www/vhosts/example_com"
+        listen_ip: 127.0.0.1
+        listen_port: 8080
 
   pre_tasks:
     - name: Update apt cache.
