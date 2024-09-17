@@ -6,6 +6,6 @@
   apt: "name={{ apache_packages }} state={{ apache_packages_state }}"
 
 - name: Ensure Apache packages are installed on Debian
-  apt: "name={{ package }} state={{ state }}"
-  with_items: "{{ apache_packages_extra }}"
+  apt: "name={{ item.package }} state={{ item.state }}"
+  loop: "{{ apache_packages_extra }}"
   when: apache_packages_extra is defined and apache_packages_extra | length > 0
