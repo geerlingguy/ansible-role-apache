@@ -113,11 +113,11 @@ apache_options: "-Indexes +FollowSymLinks"
 The default values for the `AllowOverride` and `Options` directives for the `documentroot` directory of each vhost.  A vhost can overwrite these values by specifying `allow_override` or `options`.
 
 ```yaml
-apache_confs_enabled: []
-apache_confss_disabled: []
+apache_conf_enabled: []
+apache_conf_disabled: []
 ```
 
-Same as Apache mods. But this is for additional confs. The corresponding direcotry is `mods-available` inside the apache apache configuration directory.
+Same as Apache mods. But this is for additional confs. The corresponding direcotry is `conf-available` inside the apache apache configuration directory.
 
 ```yaml
 apache_mods_enabled:

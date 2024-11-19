@@ -27,8 +27,8 @@
 
 - name: Enable Apache confs.
   ansible.builtin.file:
-    src: "{{ apache_server_root }}/conf-available/{{ item }}.load"
-    dest: "{{ apache_server_root }}/conf-enabled/{{ item }}.load"
+    src: "{{ apache_server_root }}/conf-available/{{ item }}.conf"
+    dest: "{{ apache_server_root }}/conf-enabled/{{ item }}.conf"
     state: link
     mode: "0644"
   with_items: "{{ apache_conf_enabled }}"
@@ -36,7 +36,7 @@
 
 - name: Disable Apache confs..
   ansible.builtin.file:
-    path: "{{ apache_server_root }}/conf-enabled/{{ item }}.load"
+    path: "{{ apache_server_root }}/conf-enabled/{{ item }}.conf"
     state: absent
   with_items: "{{ apache_conf_disabled }}"
   notify: restart apache
