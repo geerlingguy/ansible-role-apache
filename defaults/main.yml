@@ -47,7 +47,7 @@ apache_mods_enabled:
   - ssl
 apache_mods_disabled: []
 
-# Enable additional configs 
+# Enable additional configs
 apache_confs_enabled: []
 
 # Disable these configs
