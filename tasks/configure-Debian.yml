@@ -1,58 +1,74 @@
 ---
 - name: Configure Apache.
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ apache_server_root }}/ports.conf"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: present
-    mode: 0644
+    mode: "0644"
   with_items: "{{ apache_ports_configuration_items }}"
   notify: restart apache
 
 - name: Enable Apache mods.
-  file:
+  ansible.builtin.file:
     src: "{{ apache_server_root }}/mods-available/{{ item }}.load"
     dest: "{{ apache_server_root }}/mods-enabled/{{ item }}.load"
     state: link
-    mode: 0644
+    mode: "0644"
   with_items: "{{ apache_mods_enabled }}"
   notify: restart apache
 
 - name: Disable Apache mods.
-  file:
+  ansible.builtin.file:
     path: "{{ apache_server_root }}/mods-enabled/{{ item }}.load"
     state: absent
   with_items: "{{ apache_mods_disabled }}"
   notify: restart apache
 
+- name: Enable Apache confs.
+  ansible.builtin.file:
+    src: "{{ apache_server_root }}/confs-available/{{ item }}.load"
+    dest: "{{ apache_server_root }}/confs-enabled/{{ item }}.load"
+    state: link
+    mode: "0644"
+  with_items: "{{ apache_confs_enabled }}"
+  notify: restart apache
+
+- name: Disable Apache confs..
+  ansible.builtin.file:
+    path: "{{ apache_server_root }}/confs-enabled/{{ item }}.load"
+    state: absent
+  with_items: "{{ apache_confs_disabled }}"
+  notify: restart apache
+
 - name: Check whether certificates defined in vhosts exist.
-  stat: "path={{ item.certificate_file }}"
+  ansible.builtin.stat: "path={{ item.certificate_file }}"
   register: apache_ssl_certificates
   with_items: "{{ apache_vhosts_ssl }}"
   no_log: "{{ apache_ssl_no_log }}"
 
 - name: Add apache vhosts configuration.
-  template:
+  ansible.builtin.template:
     src: "{{ apache_vhosts_template }}"
     dest: "{{ apache_conf_path }}/sites-available/{{ apache_vhosts_filename }}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart apache
   when: apache_create_vhosts | bool
 
 - name: Add vhost symlink in sites-enabled.
-  file:
+  ansible.builtin.file:
     src: "{{ apache_conf_path }}/sites-available/{{ apache_vhosts_filename }}"
     dest: "{{ apache_conf_path }}/sites-enabled/{{ apache_vhosts_filename }}"
     state: link
-    mode: 0644
+    mode: "0644"
     force: "{{ ansible_check_mode }}"
   notify: restart apache
   when: apache_create_vhosts | bool
 
 - name: Remove default vhost in sites-enabled.
-  file:
+  ansible.builtin.file:
     path: "{{ apache_conf_path }}/sites-enabled/{{ apache_default_vhost_filename }}"
     state: absent
   notify: restart apache
