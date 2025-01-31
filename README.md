@@ -1,6 +1,6 @@
 # Ansible Role: Apache 2.x
 
-[![CI](https://github.com/geerlingguy/ansible-role-apache/workflows/CI/badge.svg?event=push)](https://github.com/geerlingguy/ansible-role-apache/actions?query=workflow%3ACI)
+[![CI](https://github.com/geerlingguy/ansible-role-apache/actions/workflows/ci.yml/badge.svg)](https://github.com/geerlingguy/ansible-role-apache/actions/workflows/ci.yml)
 
 An Ansible Role that installs Apache 2.x on RHEL/CentOS, Debian/Ubuntu, SLES and Solaris.
 
