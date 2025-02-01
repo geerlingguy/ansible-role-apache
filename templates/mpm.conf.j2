@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+
+<IfModule mpm_{{ apache_mpm_module }}_module>
+
+{% for mpm in apache_mpm_config %}
+
+{{ mpm.name }} {{ mpm.value }} 
+
+{% endfor %}
+
+</IfModule>

@@ -14,10 +14,14 @@
 {% if vhost.serveradmin is defined %}
   ServerAdmin {{ vhost.serveradmin }}
 {% endif %}
+
 {% if vhost.documentroot is defined %}
   <Directory "{{ vhost.documentroot }}">
     AllowOverride {{ vhost.allow_override | default(apache_allow_override) }}
     Options {{ vhost.options | default(apache_options) }}
+    {% if vhost.directory_index is defined %}
+    DirectoryIndex {{ vhost.directory_index | default(apache_directory_index) }}
+    {% endif %}
 {% if apache_vhosts_version == "2.2" %}
     Order allow,deny
     Allow from all
@@ -26,6 +30,27 @@
 {% endif %}
   </Directory>
 {% endif %}
+
+{% if vhost.directory_list is defined -%}
+{% for directory in vhost.directory_list %}
+  <Directory "{{ directory.path }}">
+    {% if directory.allow_override is defined %}
+    AllowOverride {{ directory.allow_override }}
+    {% endif %}
+    
+    {% if directory.options is defined %}
+    Options {{ directory.options }}
+    {% endif %}
+{% if apache_vhosts_version == "2.2" %}
+    Order allow,deny
+    Allow from all
+{% else %}
+    Require all granted
+{% endif %}
+  </Directory>
+{% endfor %}
+{% endif %}
+
 {% if vhost.extra_parameters is defined %}
 {{ vhost.extra_parameters | indent(width=2, first=True) }}
 {% endif %}
@@ -61,10 +86,14 @@
 {% if vhost.serveradmin is defined %}
   ServerAdmin {{ vhost.serveradmin }}
 {% endif %}
+
 {% if vhost.documentroot is defined %}
   <Directory "{{ vhost.documentroot }}">
     AllowOverride {{ vhost.allow_override | default(apache_allow_override) }}
     Options {{ vhost.options | default(apache_options) }}
+    {% if vhost.directory_index is defined %}
+    DirectoryIndex {{ vhost.directory_index | default(apache_directory_index) }}
+    {% endif %}
 {% if apache_vhosts_version == "2.2" %}
     Order allow,deny
     Allow from all
@@ -73,6 +102,27 @@
 {% endif %}
   </Directory>
 {% endif %}
+
+{% if vhost.directory_list is defined -%}
+{% for directory in vhost.directory_list %}
+  <Directory "{{ directory.path }}">
+    {% if directory.allow_override is defined %}
+    AllowOverride {{ directory.allow_override }}
+    {% endif %}
+    
+    {% if directory.options is defined %}
+    Options {{ directory.options }}
+    {% endif %}
+{% if apache_vhosts_version == "2.2" %}
+    Order allow,deny
+    Allow from all
+{% else %}
+    Require all granted
+{% endif %}
+  </Directory>
+{% endfor %}
+{% endif %}
+
 {% if vhost.extra_parameters is defined %}
 {{ vhost.extra_parameters | indent(width=2, first=True) }}
 {% endif %}

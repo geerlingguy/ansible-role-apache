@@ -9,6 +9,9 @@ apache_create_vhosts: true
 apache_vhosts_filename: "vhosts.conf"
 apache_vhosts_template: "vhosts.conf.j2"
 
+# Additional packages to install on Debian/Ubuntu.
+apache_packages_extra: []
+
 # On Debian/Ubuntu, a default virtualhost is included in Apache's configuration.
 # Set this to `true` to remove that default.
 apache_remove_default_vhost: false
@@ -24,6 +27,8 @@ apache_vhosts:
 
 apache_allow_override: "All"
 apache_options: "-Indexes +FollowSymLinks"
+apache_directory_index: "index.php index.html"
+apache_directory_list: []
 
 apache_vhosts_ssl: []
 # Additional properties:
@@ -60,3 +65,14 @@ apache_restart_state: restarted
 # Apache package state; use `present` to make sure it's installed, or `latest`
 # if you want to upgrade or switch versions using a new repo.
 apache_packages_state: present
+
+# Apache MPM module configuration.
+# MPM module to use. Recommended values: `prefork` or `worker`
+
+apache_mpm: true
+
+apache_mpm_module: "prefork"
+
+apache_mpm_template: "mpm.conf.j2"
+
+apache_mpm_config: []
