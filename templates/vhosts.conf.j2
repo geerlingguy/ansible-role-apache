@@ -48,7 +48,7 @@
   SSLEngine on
   SSLCipherSuite {{ apache_ssl_cipher_suite }}
   SSLProtocol {{ apache_ssl_protocol }}
-  SSLHonorCipherOrder On
+  SSLHonorCipherOrder off
 {% if apache_vhosts_version == "2.4" %}
   SSLCompression off
 {% endif %}
