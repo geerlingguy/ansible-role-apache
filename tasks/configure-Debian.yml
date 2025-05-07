@@ -57,3 +57,23 @@
     state: absent
   notify: restart apache
   when: apache_remove_default_vhost
+
+- name: Add apache security.conf configuration.
+  ansible.builtin.template:
+    src: "{{ apache_security_template }}"
+    dest: "{{ apache_conf_path }}/conf-available/{{ apache_security_filename }}"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart apache
+  when: apache_manage_security | bool
+
+- name: Add security.conf symlink in conf-enabled-enabled.
+  ansible.builtin.file:
+    src: "{{ apache_conf_path }}/conf-available/{{ apache_security_filename }}"
+    dest: "{{ apache_conf_path }}/conf-enabled/{{ apache_security_filename }}"
+    state: link
+    mode: '0644'
+    force: "{{ ansible_check_mode }}"
+  notify: Restart apache
+  when: apache_manage_security | bool
