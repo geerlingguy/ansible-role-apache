@@ -65,7 +65,7 @@
     owner: root
     group: root
     mode: '0644'
-  notify: Restart apache
+  notify: restart apache
   when: apache_manage_security | bool
 
 - name: Add security.conf symlink in conf-enabled-enabled.
@@ -75,5 +75,5 @@
     state: link
     mode: '0644'
     force: "{{ ansible_check_mode }}"
-  notify: Restart apache
+  notify: restart apache
   when: apache_manage_security | bool
