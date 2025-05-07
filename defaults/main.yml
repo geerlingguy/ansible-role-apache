@@ -9,6 +9,15 @@ apache_create_vhosts: true
 apache_vhosts_filename: "vhosts.conf"
 apache_vhosts_template: "vhosts.conf.j2"
 
+apache_manage_security: true
+apache_security_filename: "security.conf"
+apache_security_template: "security.conf.j2"
+
+apache_security_servertokens: prod
+apache_security_serversignature: "Off"
+apache_security_traceenable: "Off"
+apache_security_redirectmatch_git: true
+
 # On Debian/Ubuntu, a default virtualhost is included in Apache's configuration.
 # Set this to `true` to remove that default.
 apache_remove_default_vhost: false
@@ -45,6 +54,7 @@ apache_ssl_cipher_suite: "AES256+EECDH:AES256+EDH"
 apache_mods_enabled:
   - rewrite
   - ssl
+  - headers
 apache_mods_disabled: []
 
 # Set initial apache state. Recommended values: `started` or `stopped`

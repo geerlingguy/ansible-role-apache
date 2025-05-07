@@ -37,6 +37,24 @@ apache_vhosts_template: "vhosts.conf.j2"
 If set to true, a vhosts file, managed by this role's variables (see below), will be created and placed in the Apache configuration folder. If set to false, you can place your own vhosts file into Apache's configuration folder and skip the convenient (but more basic) one added by this role. You can also override the template used and set a path to your own template, if you need to further customize the layout of your VirtualHosts.
 
 ```yaml
+apache_manage_security: true
+apache_security_filename: "security.conf"
+apache_security_template: "security.conf.j2"
+```
+
+if set to true, a security file will de deployed in /etc/apache2/conf-enabled/, *Only for debian system* 
+see variable below for content of this file.
+
+```yaml
+apache_security_servertokens: prod
+apache_security_serversignature: "Off"
+apache_security_traceenable: "Off"
+apache_security_redirectmatch_git: true
+```
+
+Default value for security.conf file for debian system
+
+```yaml
 apache_remove_default_vhost: false
 ```
 
