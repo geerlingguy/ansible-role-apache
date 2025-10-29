@@ -46,6 +46,8 @@ apache_mods_enabled:
   - rewrite
   - ssl
 apache_mods_disabled: []
+apache_conf_enabled: []
+apache_conf_disabled: []
 
 # Set initial apache state. Recommended values: `started` or `stopped`
 apache_state: started

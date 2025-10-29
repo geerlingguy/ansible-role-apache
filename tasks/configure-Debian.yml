@@ -25,6 +25,22 @@
   with_items: "{{ apache_mods_disabled }}"
   notify: restart apache
 
+- name: Enable Apache config.
+  file:
+    src: "{{ apache_server_root }}/conf-available/{{ item }}.conf"
+    dest: "{{ apache_server_root }}/conf-enabled/{{ item }}.conf"
+    state: link
+    mode: 0644
+  with_items: "{{ apache_conf_enabled }}"
+  notify: restart apache
+
+- name: Disable Apache config.
+  file:
+    path: "{{ apache_server_root }}/conf-enabled/{{ item }}.conf"
+    state: absent
+  with_items: "{{ apache_conf_disabled }}"
+  notify: restart apache
+
 - name: Check whether certificates defined in vhosts exist.
   stat: "path={{ item.certificate_file }}"
   register: apache_ssl_certificates

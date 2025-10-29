@@ -122,6 +122,13 @@ apache_mods_disabled: []
 Which Apache mods to enable or disable (these will be symlinked into the appropriate location). See the `mods-available` directory inside the apache configuration directory (`/etc/apache2/mods-available` on Debian/Ubuntu) for all the available mods.
 
 ```yaml
+apache_conf_enabled: []
+apache_conf_disabled: []
+```
+
+Which Apache config to enable or disable (these will be symlinked into the appropriate location). See the `conf-available` directory inside the apache configuration directory (`/etc/apache2/conf-available` on Debian/Ubuntu) for all the available mods.
+
+```yaml
 apache_packages:
   - [platform-specific]
 ```
