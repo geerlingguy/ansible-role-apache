@@ -101,6 +101,7 @@ Whether to print SSL-related task output to the console when running the playboo
 ```yaml
 apache_ssl_protocol: "All -SSLv2 -SSLv3"
 apache_ssl_cipher_suite: "AES256+EECDH:AES256+EDH"
+apache_ssl_honor_cipher_order: "On"
 ```
 
 The SSL protocols and cipher suites that are used/allowed when clients make secure connections to your server. These are secure/sane defaults, but for maximum security, performand, and/or compatibility, you may need to adjust these settings.
